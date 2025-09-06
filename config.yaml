@@ -1,0 +1,112 @@
+# 干涉条纹图像四分类任务配置文件
+# ==========================================
+
+# 实验基本配置
+experiment_name: "resnet34_test1"        # 实验唯一标识符
+output_dir: "experiments"                # 实验结果根目录
+device: "auto"                          # 训练设备: 'cuda', 'cpu', 或 'auto' (自动检测)
+
+# 数据配置
+data_path: "data/interference_images"    # 数据集根目录路径
+# 数据目录结构应为:
+# data/interference_images/
+#   ├── train/
+#   │   ├── class0_001.npy
+#   │   ├── class1_002.npy
+#   │   └── ...
+#   └── val/
+#       ├── class0_101.npy
+#       ├── class1_102.npy
+#       └── ...
+
+# 模型配置
+model_name: "resnet34"                   # 使用的模型架构
+num_classes: 4                          # 分类数量
+
+# 训练超参数
+batch_size: 32                          # 批次大小
+epochs: 100                             # 训练轮数
+seed: 42                                # 随机种子
+
+# 学习率配置（判别性学习率）
+use_discriminative_lr: true             # 是否使用判别性学习率
+learning_rates:
+  base: 0.001                          # 基础学习率（不使用判别性学习率时）
+  classifier: 0.001                    # 分类头学习率（最高层）
+  layer_decay: 0.1                     # 层间学习率衰减因子
+  # 实际学习率分配:
+  # - 分类头(fc): 0.001
+  # - 高层(layer4): 0.001 * 0.1 = 0.0001
+  # - 中层(layer3): 0.001 * 0.01 = 0.00001
+  # - 底层(conv1,bn1,layer1,layer2): 0.001 * 0.001 = 0.000001
+
+# 优化器配置
+optimizer: "Adam"                       # 优化器类型
+weight_decay: 0.0001                   # L2正则化权重衰减
+
+# 数据加载配置
+num_workers: 4                          # 数据加载进程数
+pin_memory: true                        # 是否启用内存固定（CUDA加速）
+
+# 验证和保存配置
+validate_every: 1                       # 每隔多少个epoch进行验证
+save_every: 10                          # 每隔多少个epoch保存检查点
+early_stopping:
+  patience: 20                          # 早停耐心值
+  min_delta: 0.001                     # 最小改进阈值
+
+# TensorBoard配置
+log_images: true                        # 是否记录图像样本
+log_confusion_matrix: true              # 是否记录混淆矩阵
+log_learning_rate: true                 # 是否记录学习率变化
+
+# 数据增强配置（注意：对于干涉条纹图像，禁用几何变换）
+data_augmentation:
+  enabled: false                        # 禁用数据增强以保持物理模式
+  # 如果需要启用，可以考虑以下非几何变换:
+  # brightness_factor: 0.1              # 亮度调整范围
+  # contrast_factor: 0.1                # 对比度调整范围
+  # noise_level: 0.01                   # 添加噪声水平
+
+# 硬件优化配置
+mixed_precision: false                  # 是否使用混合精度训练（需要较新的PyTorch版本）
+compile_model: false                    # 是否编译模型（需要PyTorch 2.0+）
+
+# 调试配置
+debug:
+  enabled: false                        # 调试模式
+  max_batches_per_epoch: 10            # 调试时每个epoch最大批次数
+  profile: false                        # 是否启用性能分析
+
+# 模型保存配置
+save_options:
+  save_best_only: false                 # 是否只保存最佳模型
+  save_optimizer_state: true            # 是否保存优化器状态
+  save_scheduler_state: true            # 是否保存学习率调度器状态
+
+# 评估配置
+evaluation:
+  metrics:
+    - "accuracy"                        # 准确率
+    - "precision"                       # 精确率
+    - "recall"                          # 召回率
+    - "f1"                             # F1分数
+  class_names:                          # 类别名称
+    - "Class 0"
+    - "Class 1" 
+    - "Class 2"
+    - "Class 3"
+
+# 实验备注
+description: |
+  ResNet34干涉条纹图像四分类实验
+  - 使用预训练ResNet34模型
+  - 采用判别性学习率策略
+  - 输入图像尺寸从645x645缩放至224x224
+  - 单通道转三通道处理
+  - 禁用几何变换数据增强以保持物理模式完整性
+  
+# 版本信息
+version: "1.0"
+created_date: "2025-01-XX"
+author: "Your Name"

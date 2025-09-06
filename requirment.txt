@@ -1,0 +1,44 @@
+# 深度学习框架
+torch>=1.8.0
+torchvision>=0.9.0
+
+# 数据处理
+numpy>=1.19.0
+pandas>=1.2.0
+scikit-learn>=0.24.0
+
+# 可视化
+matplotlib>=3.3.0
+seaborn>=0.11.0
+
+# 配置文件处理
+PyYAML>=5.4.0
+
+# 进度条
+tqdm>=4.60.0
+
+# TensorBoard支持
+tensorboard>=2.4.0
+
+# 图像处理（如果需要）
+Pillow>=8.0.0
+
+# 路径处理增强
+pathlib2>=2.3.0  # Python < 3.6兼容
+
+# 可选：更好的配置文件支持
+# hydra-core>=1.1.0
+
+# 可选：模型部署相关
+# onnx>=1.9.0
+# onnxruntime>=1.8.0
+
+# 开发和调试工具
+# jupyter>=1.0.0
+# ipython>=7.0.0
+
+# 注意：根据您的PyTorch版本调整相应依赖
+# 对于CUDA支持，请根据您的CUDA版本安装对应的PyTorch版本
+# 例如：
+# torch==1.8.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html
+# torchvision==0.9.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html
