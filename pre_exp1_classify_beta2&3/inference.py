@@ -1,4 +1,29 @@
-import torch
+class InferenceDataset(Dataset):
+    """推理专用数据集类"""
+    def __init__(self, data_path, transform=None, has_labels=True, num_classes=4):
+        self.data_path = Path(data_path)
+        self.transform = transform
+        self.has_labels = has_labels
+        self.num_classes = num_classes
+        
+        # 获取所有.npy文件
+        self.file_paths = list(self.data_path.glob('**/*.npy'))
+        self.file_paths.sort()  # 确保顺序一致
+        
+        if self.has_labels:
+            # 如果有标签，从文件名提取
+            self.labels = []
+            self.valid_files = []
+            
+            for file_path in self.file_paths:
+                try:
+                    label = self._extract_class_from_filename(file_path.stem)
+                    if label is not None and 0 <= label < self.num_classes:
+                        self.labels.append(label)
+                        self.valid_files.append(file_path)
+                    elif label is not None:
+                        # 类别超出范围，设置为-1
+                import torch
 import numpy as np
 import yaml
 from pathlib import Path
@@ -288,7 +313,8 @@ def main():
                 
                 eval_results = evaluate_model(
                     model, labeled_loader, device,
-                    class_names=['Class 0', 'Class 1', 'Class 2', 'Class 3']
+                    num_classes=config['num_classes'],
+                    class_names=[f'Class {i}' for i in range(config['num_classes'])]
                 )
 
 

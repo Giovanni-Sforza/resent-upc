@@ -21,7 +21,7 @@ data_path: "data/interference_images"    # 数据集根目录路径
 
 # 模型配置
 model_name: "resnet34"                   # 使用的模型架构
-num_classes: 4                          # 分类数量
+num_classes: 2                          # 分类数量
 
 # 训练超参数
 batch_size: 32                          # 批次大小
@@ -91,11 +91,13 @@ evaluation:
     - "precision"                       # 精确率
     - "recall"                          # 召回率
     - "f1"                             # F1分数
-  class_names:                          # 类别名称
-    - "Class 0"
-    - "Class 1" 
-    - "Class 2"
-    - "Class 3"
+  # 类别名称会根据num_classes自动生成: Class 0, Class 1, ...
+  # 如需自定义类别名称，可以手动指定:
+  # class_names:
+  #   - "Background"      # 对应Class 0
+  #   - "Pattern A"       # 对应Class 1
+  #   - "Pattern B"       # 对应Class 2
+  #   - "Pattern C"       # 对应Class 3
 
 # 实验备注
 description: |
@@ -108,5 +110,5 @@ description: |
   
 # 版本信息
 version: "1.0"
-created_date: "2025-01-XX"
-author: "Your Name"
+created_date: "2025-09-6"
+author: "Jingzong Zhang"

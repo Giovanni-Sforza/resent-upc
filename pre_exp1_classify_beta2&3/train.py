@@ -186,9 +186,9 @@ def train_epoch(model, train_loader, criterion, optimizer, device, epoch):
     correct = 0
     total = 0
     
-    pbar = tqdm(train_loader, desc=f'Epoch {epoch} - Training')
+    pbar = tqdm(enumerate(train_loader), total=len(train_loader), desc=f'Epoch {epoch} - Training')
     
-    for inputs, labels in pbar:
+    for i, (inputs, labels) in pbar:
         # 将数据移到指定设备
         inputs = inputs.to(device)
         labels = labels.to(device)
@@ -210,7 +210,7 @@ def train_epoch(model, train_loader, criterion, optimizer, device, epoch):
         
         # 更新进度条
         pbar.set_postfix({
-            'Loss': f'{running_loss/len(pbar.container):.4f}',
+            'Loss': f'{running_loss / (i + 1):.4f}',
             'Acc': f'{100.*correct/total:.2f}%'
         })
     
@@ -230,9 +230,9 @@ def validate_epoch(model, val_loader, criterion, device, epoch):
     all_labels = []
     
     with torch.no_grad():
-        pbar = tqdm(val_loader, desc=f'Epoch {epoch} - Validation')
+        pbar = tqdm(enumerate(val_loader),total=len(val_loader), desc=f'Epoch {epoch} - Validation')
         
-        for inputs, labels in pbar:
+        for i, (inputs, labels) in pbar:
             # 将数据移到指定设备
             inputs = inputs.to(device)
             labels = labels.to(device)
@@ -253,7 +253,7 @@ def validate_epoch(model, val_loader, criterion, device, epoch):
             
             # 更新进度条
             pbar.set_postfix({
-                'Loss': f'{running_loss/len(pbar.container):.4f}',
+                'Loss': f'{running_loss / (i + 1):.4f}',
                 'Acc': f'{100.*correct/total:.2f}%'
             })
     
@@ -439,9 +439,10 @@ def main():
             }, best_model_path)
             
             # 保存混淆矩阵图像
+            class_names = [f'Class {i}' for i in range(config['num_classes'])]
             plot_confusion_matrix(
                 cm, 
-                ['Class 0', 'Class 1', 'Class 2', 'Class 3'],
+                class_names,
                 checkpoints_dir / f'confusion_matrix_epoch_{epoch}.png'
             )
             

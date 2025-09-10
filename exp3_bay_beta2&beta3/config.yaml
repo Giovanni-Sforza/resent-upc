@@ -1,0 +1,71 @@
+# 实验配置
+experiment_name: "resnet_variational_gp_beta_regression"
+seed: 42
+device: "auto"  # 可选: "auto", "cuda", "cpu"
+
+# 数据路径
+data_path: "path/to/your/data"  # 包含train和val文件夹的根目录
+
+# 推理模式配置
+inference_mode: "gp"  # 选择 "classifier" 或 "gp"
+
+# 变分GP特定配置
+gp_config:
+  feature_dim: 512        # ResNet特征提取器的输出维度
+  output_dim: 2           # 输出维度 (beta2, beta3)
+  num_inducing: 200       # 诱导点数量，影响模型复杂度和训练速度
+
+# 训练参数
+epochs: 100
+batch_size: 32
+num_workers: 4
+
+# 学习率配置
+learning_rates:
+  base: 0.001             # 基础学习率
+  layer_decay: 0.9        # 层级学习率衰减因子
+
+# 是否使用分层学习率
+use_discriminative_lr: true
+
+# 优化器参数
+weight_decay: 0.0001
+
+# 输出配置
+output_dir: "outputs"     # 输出根目录
+
+# 保存选项
+save_options:
+  save_best_only: true    # 只保存最佳模型
+  save_interval: 10       # 每隔多少epoch保存一次（如果save_best_only为false）
+
+# 数据预处理
+preprocessing:
+  resize_dim: 224         # 图像调整大小
+  normalize: true         # 是否标准化
+
+# 早停配置（可选）
+early_stopping:
+  enabled: false
+  patience: 15
+  min_delta: 0.0001
+
+# 模型特定配置
+model_config:
+  resnet_pretrained: true  # 是否使用预训练ResNet
+  dropout_rate: 0.1       # Dropout率（如果需要）
+
+# 验证配置
+validation:
+  plot_predictions: true   # 是否绘制预测结果图
+  plot_interval: 5        # 每隔多少epoch绘制一次
+
+# 日志配置
+logging:
+  level: "INFO"
+  tensorboard: true
+  
+# GPU内存优化（如果使用GPU）
+gpu_optimization:
+  mixed_precision: false  # 是否使用混合精度训练
+  gradient_accumulation_steps: 1  # 梯度累积步数

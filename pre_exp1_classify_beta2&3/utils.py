@@ -378,7 +378,7 @@ if __name__ == '__main__':
     print("工具脚本加载完成!")
     
     # 分析数据集
-    # analyze_dataset('data/interference_images')
+    # analyze_dataset('data/interference_images', num_classes=4)
     
     # 检查数据完整性
-    # check_data_integrity('data/interference_images')
+    # check_data_integrity('data/interference_images', num_classes=4)
