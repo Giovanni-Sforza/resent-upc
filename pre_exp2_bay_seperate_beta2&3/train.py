@@ -121,9 +121,63 @@ def create_model(num_classes):
     model.fc = nn.Linear(model.fc.in_features, num_classes)
     return model
 
-# setup_discriminative_lr, train_epoch, validate_epoch, 等函数保持不变
-# ... (此处省略与您提供代码中完全相同的部分以节约篇幅) ...
-# train_epoch, validate_epoch, plot_confusion_matrix, etc. are identical to your provided script.
+def load_checkpoint(model, optimizer, checkpoint_path, device):
+    """
+    NEW: 加载模型权重的函数
+    返回: (loaded_epoch, best_val_acc, sorted_betas, loaded_config)
+    """
+    if not os.path.exists(checkpoint_path):
+        raise FileNotFoundError(f"权重文件不存在: {checkpoint_path}")
+    
+    print(f"正在加载权重文件: {checkpoint_path}")
+    checkpoint = torch.load(checkpoint_path, map_location=device)
+    
+    # 加载模型权重
+    model.load_state_dict(checkpoint['model_state_dict'])
+    
+    # 如果优化器存在，也加载优化器状态
+    if optimizer is not None and 'optimizer_state_dict' in checkpoint:
+        optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+    
+    # 提取其他信息
+    loaded_epoch = checkpoint.get('epoch', 0)
+    best_val_acc = checkpoint.get('best_val_acc', 0.0)
+    sorted_betas = checkpoint.get('sorted_betas', None)
+    loaded_config = checkpoint.get('config', None)
+    
+    print(f"权重加载完成!")
+    print(f"  - 来源epoch: {loaded_epoch}")
+    print(f"  - 最佳验证准确率: {best_val_acc:.2f}%")
+    if sorted_betas:
+        print(f"  - Beta值: {sorted_betas}")
+    
+    return loaded_epoch, best_val_acc, sorted_betas, loaded_config
+
+def validate_checkpoint_compatibility(checkpoint_betas, dataset_betas):
+    """
+    NEW: 验证加载的权重与当前数据集的兼容性
+    """
+    if checkpoint_betas is None:
+        print("警告: 权重文件中没有找到beta值信息，无法验证兼容性")
+        return False
+    
+    if len(checkpoint_betas) != len(dataset_betas):
+        print(f"错误: 权重文件的类别数量 ({len(checkpoint_betas)}) 与数据集不匹配 ({len(dataset_betas)})")
+        return False
+    
+    # 检查beta值是否匹配
+    checkpoint_betas_sorted = sorted(checkpoint_betas)
+    dataset_betas_sorted = sorted(dataset_betas)
+    
+    if checkpoint_betas_sorted != dataset_betas_sorted:
+        print(f"错误: 权重文件的beta值与数据集不匹配")
+        print(f"  权重文件: {checkpoint_betas_sorted}")
+        print(f"  数据集: {dataset_betas_sorted}")
+        return False
+    
+    print("✓ 权重文件与数据集兼容")
+    return True
+
 def train_epoch(model, train_loader, criterion, optimizer, device, epoch):
     model.train()
     running_loss = 0.0
@@ -240,15 +294,49 @@ def main():
         optimizer = optim.Adam(param_groups, weight_decay=config['weight_decay'])
     else:
         optimizer = optim.Adam(model.parameters(), lr=config['learning_rates']['base'], weight_decay=config['weight_decay'])
-        
+    
+    # NEW: 检查是否需要加载预训练权重
+    start_epoch = 1
+    best_val_acc = 0.0
+    
+    if 'resume_from_checkpoint' in config and config['resume_from_checkpoint']:
+        checkpoint_path = config['resume_from_checkpoint']
+        try:
+            loaded_epoch, loaded_best_acc, checkpoint_betas, loaded_config = load_checkpoint(
+                model, optimizer, checkpoint_path, device
+            )
+            
+            # 验证兼容性
+            if validate_checkpoint_compatibility(checkpoint_betas, sorted_betas):
+                start_epoch = loaded_epoch + 1
+                best_val_acc = loaded_best_acc
+                logging.info(f"成功加载权重，将从epoch {start_epoch}开始训练")
+                
+                # 可选：比较配置文件差异
+                if loaded_config and loaded_config != config:
+                    logging.warning("注意: 当前配置与权重文件中的配置不完全相同")
+            else:
+                logging.error("权重文件与当前数据集不兼容，将从头开始训练")
+                # 重新初始化模型和优化器
+                model = create_model(num_classes=num_classes).to(device)
+                if config.get('use_discriminative_lr', False):
+                    param_groups = setup_discriminative_lr(model, base_lr=config['learning_rates']['classifier'],
+                                                           layer_lr_decay=config['learning_rates']['layer_decay'])
+                    optimizer = optim.Adam(param_groups, weight_decay=config['weight_decay'])
+                else:
+                    optimizer = optim.Adam(model.parameters(), lr=config['learning_rates']['base'], weight_decay=config['weight_decay'])
+                
+        except Exception as e:
+            logging.error(f"加载权重失败: {e}")
+            logging.info("将从头开始训练")
+    
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=5, verbose=True)
     
-    best_val_acc = 0.0
     best_model_path = checkpoints_dir / 'best_model.pth'
     
     logging.info("开始训练...")
-    # ... (与您代码相同的训练循环) ...
-    for epoch in range(1, config['epochs'] + 1):
+    
+    for epoch in range(start_epoch, config['epochs'] + 1):
         logging.info(f"\n{'='*50}\nEpoch {epoch}/{config['epochs']}\n{'='*50}")
         
         train_loss, train_acc = train_epoch(model, train_loader, criterion, optimizer, device, epoch)

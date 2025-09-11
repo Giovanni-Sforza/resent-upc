@@ -72,7 +72,20 @@ class InterferenceDataset(Dataset):
 
         elif self.mode == 'gp':
             # GP模式: 标签就是 (beta2, beta3) 的浮点数对
-            self.labels = [torch.tensor([p[0], p[1]], dtype=torch.float32) for p in beta_pairs]
+            raw_labels = [torch.tensor([p[0], p[1]], dtype=torch.float32) for p in beta_pairs]
+            
+            # 检查数据范围并打印统计信息
+            all_beta2 = [p[0] for p in beta_pairs]
+            all_beta3 = [p[1] for p in beta_pairs]
+            print(f"'{self.split}' 集 Beta2 范围: [{min(all_beta2):.4f}, {max(all_beta2):.4f}]")
+            print(f"'{self.split}' 集 Beta3 范围: [{min(all_beta3):.4f}, {max(all_beta3):.4f}]")
+            
+            # 数据标准化：确保beta值在合理范围内
+            # 如果beta值过大或过小，可能导致数值不稳定
+            if max(all_beta2) > 10 or max(all_beta3) > 10 or min(all_beta2) < -10 or min(all_beta3) < -10:
+                print(f"警告: Beta值范围过大，建议进行标准化")
+                
+            self.labels = raw_labels
             self.num_classes = None # GP模式没有类别概念
             print(f"'{self.split}' 集 (GP Mode): 加载了 {len(self.labels)} 个 (beta2, beta3) 坐标。")
         else:
@@ -97,15 +110,21 @@ class InterferenceDataset(Dataset):
 # 2. 模型定义
 # ===================================================================
 
-# ResNet特征提取器
+# ResNet特征提取器 - 增加正则化
 class ResNetFeatureExtractor(nn.Module):
     def __init__(self, feature_dim):
         super().__init__()
         resnet = models.resnet34(pretrained=True)
         # 移除原始的fc层
         self.features = nn.Sequential(*list(resnet.children())[:-1])
-        # 添加一个新的线性层将512维特征映射到我们期望的维度
-        self.feature_proj = nn.Linear(resnet.fc.in_features, feature_dim)
+        
+        # 添加dropout和batch normalization来稳定训练
+        self.feature_proj = nn.Sequential(
+            nn.Linear(resnet.fc.in_features, feature_dim),
+            nn.BatchNorm1d(feature_dim),
+            nn.ReLU(),
+            nn.Dropout(0.1)
+        )
     
     def forward(self, x):
         x = self.features(x)
@@ -113,56 +132,72 @@ class ResNetFeatureExtractor(nn.Module):
         x = self.feature_proj(x)
         return x
 
-# 变分高斯过程模型
-class VariationalGPModel(gpytorch.models.ApproximateGP):
-    def __init__(self, inducing_points, feature_dim, output_dim):
-        # 变分分布
+# 改进的变分高斯过程模型
+class SimpleVariationalGPModel(gpytorch.models.ApproximateGP):
+    def __init__(self, inducing_points, feature_dim):
+        # 使用更稳定的变分分布
         variational_distribution = gpytorch.variational.CholeskyVariationalDistribution(
-            inducing_points.size(0))
+            num_inducing_points=inducing_points.size(0)
+        )
         
-        # 多任务变分策略
-        variational_strategy = gpytorch.variational.MultitaskVariationalStrategy(
-            gpytorch.variational.VariationalStrategy(
-                self, inducing_points, variational_distribution, 
-                learn_inducing_locations=True),  # 让诱导点可学习
-            num_tasks=output_dim)
+        variational_strategy = gpytorch.variational.VariationalStrategy(
+            self, inducing_points, variational_distribution, learn_inducing_locations=True
+        )
         
         super().__init__(variational_strategy)
         
-        # 均值函数
-        self.mean_module = gpytorch.means.MultitaskMean(
-            gpytorch.means.ConstantMean(), num_tasks=output_dim)
+        # 使用常数均值和RBF核
+        self.mean_module = gpytorch.means.ConstantMean()
         
-        # 协方差函数
-        self.covar_module = gpytorch.kernels.MultitaskKernel(
-            gpytorch.kernels.ScaleKernel(
-                gpytorch.kernels.RBFKernel(ard_num_dims=feature_dim)),
-            num_tasks=output_dim, rank=1)
+        # 改进核函数配置，增加数值稳定性
+        self.covar_module = gpytorch.kernels.ScaleKernel(
+            gpytorch.kernels.RBFKernel(ard_num_dims=feature_dim),
+            outputscale_constraint=gpytorch.constraints.Positive()
+        )
 
     def forward(self, x):
         mean_x = self.mean_module(x)
         covar_x = self.covar_module(x)
-        return gpytorch.distributions.MultitaskMultivariateNormal(mean_x, covar_x)
+        return gpytorch.distributions.MultivariateNormal(mean_x, covar_x)
 
-# ResNet + 变分GP联合模型
+# ResNet + 变分GP联合模型 - 改进版本
 class ResNetVariationalGP(nn.Module):
-    def __init__(self, feature_dim, output_dim, num_inducing=100):
+    def __init__(self, feature_dim, output_dim, num_inducing=100, device='cpu'):
         super().__init__()
         self.feature_extractor = ResNetFeatureExtractor(feature_dim)
-        self.likelihood = gpytorch.likelihoods.MultitaskGaussianLikelihood(num_tasks=output_dim)
         
-        # 随机初始化诱导点
-        inducing_points = torch.randn(num_inducing, feature_dim)
-        self.gp_model = VariationalGPModel(inducing_points, feature_dim, output_dim)
+        # 更好的诱导点初始化
+        inducing_points = torch.randn(num_inducing, feature_dim, device=device) * 0.1
         
-        # 存储配置信息
+        # 创建两个独立的GP模型，分别预测beta2和beta3
+        self.gp_model_beta2 = SimpleVariationalGPModel(inducing_points.clone(), feature_dim)
+        self.gp_model_beta3 = SimpleVariationalGPModel(inducing_points.clone(), feature_dim)
+        
+        # 创建高斯似然函数，设置合理的噪声先验
+        self.likelihood_beta2 = gpytorch.likelihoods.GaussianLikelihood(
+            noise_constraint=gpytorch.constraints.GreaterThan(1e-6)
+        )
+        self.likelihood_beta3 = gpytorch.likelihoods.GaussianLikelihood(
+            noise_constraint=gpytorch.constraints.GreaterThan(1e-6)
+        )
+        
+        # 初始化似然噪声
+        self.likelihood_beta2.noise = 0.01
+        self.likelihood_beta3.noise = 0.01
+        
         self.feature_dim = feature_dim
         self.output_dim = output_dim
         self.num_inducing = num_inducing
     
     def forward(self, x):
         features = self.feature_extractor(x)
-        return self.gp_model(features)
+        # 对特征进行L2归一化，提高稳定性
+        features = torch.nn.functional.normalize(features, p=2, dim=1)
+        
+        # 返回两个独立的分布
+        dist_beta2 = self.gp_model_beta2(features)
+        dist_beta3 = self.gp_model_beta3(features)
+        return dist_beta2, dist_beta3
 
 # 模型创建工厂函数
 def create_model(config, num_classes=None, train_dataset=None, device='cpu'):
@@ -179,7 +214,8 @@ def create_model(config, num_classes=None, train_dataset=None, device='cpu'):
         model = ResNetVariationalGP(
             feature_dim=gp_conf['feature_dim'], 
             output_dim=gp_conf['output_dim'],
-            num_inducing=gp_conf.get('num_inducing', 100)
+            num_inducing=gp_conf.get('num_inducing', 100),
+            device=device
         )
         
         print(f"创建变分GP模型: 特征维度={gp_conf['feature_dim']}, "
@@ -195,7 +231,8 @@ def create_model(config, num_classes=None, train_dataset=None, device='cpu'):
 def train_epoch(model, train_loader, criterion, optimizer, device, epoch, mode):
     model.train()
     if mode == 'gp':
-        model.likelihood.train()
+        model.likelihood_beta2.train()
+        model.likelihood_beta3.train()
 
     running_loss = 0.0
     pbar = tqdm(enumerate(train_loader), total=len(train_loader), desc=f'Epoch {epoch} - Training')
@@ -217,24 +254,53 @@ def train_epoch(model, train_loader, criterion, optimizer, device, epoch, mode):
             pbar.set_postfix({'Loss': f'{loss.item():.4f}', 'Acc': f'{100.*correct/total:.2f}%'})
 
         elif mode == 'gp':
-            # 变分GP的前向传播
-            outputs = model(inputs)
-            
-            # 变分GP使用ELBO损失 (Evidence Lower BOund)
-            loss = -criterion(outputs, labels.transpose(0, 1))
-            
-            loss.backward()
-            optimizer.step()
-            pbar.set_postfix({'Loss (ELBO)': f'{loss.item():.4f}'})
+            try:
+                # 变分GP的前向传播
+                dist_beta2, dist_beta3 = model(inputs)
+                
+                # 分别计算每个输出的ELBO损失
+                labels_beta2 = labels[:, 0]
+                labels_beta3 = labels[:, 1]
+                
+                # 计算ELBO损失 (注意：ELBO本身是对数似然，我们要最大化它)
+                # 所以损失应该是 -ELBO
+                elbo_beta2 = criterion[0](dist_beta2, labels_beta2)
+                elbo_beta3 = criterion[1](dist_beta3, labels_beta3)
+                
+                # 总损失是负ELBO的和
+                loss = -elbo_beta2 - elbo_beta3
+                
+                # 梯度裁剪防止梯度爆炸
+                loss.backward()
+                torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+                optimizer.step()
+                
+                # 检查损失是否为NaN或无穷大
+                if torch.isnan(loss) or torch.isinf(loss):
+                    print(f"警告: 在批次 {i} 检测到异常损失值: {loss.item()}")
+                    continue
+                
+                pbar.set_postfix({
+                    'Loss': f'{loss.item():.4f}', 
+                    'ELBO_β2': f'{elbo_beta2.item():.4f}', 
+                    'ELBO_β3': f'{elbo_beta3.item():.4f}',
+                    'Noise_β2': f'{model.likelihood_beta2.noise.item():.4f}',
+                    'Noise_β3': f'{model.likelihood_beta3.noise.item():.4f}'
+                })
+                
+            except Exception as e:
+                print(f"训练批次 {i} 出现错误: {e}")
+                continue
 
-        running_loss += loss.item()
+        running_loss += loss.item() if not (torch.isnan(loss) or torch.isinf(loss)) else 0.0
 
     return running_loss / len(train_loader)
 
 def validate_epoch(model, val_loader, criterion, device, epoch, mode):
     model.eval()
     if mode == 'gp':
-        model.likelihood.eval()
+        model.likelihood_beta2.eval()
+        model.likelihood_beta3.eval()
 
     running_loss = 0.0
     all_preds, all_labels = [], []
@@ -252,20 +318,44 @@ def validate_epoch(model, val_loader, criterion, device, epoch, mode):
                 all_labels.extend(labels.cpu().numpy())
             
             elif mode == 'gp':
-                # 在评估模式下，使用 gpytorch.settings.fast_pred_var() 加速
-                with gpytorch.settings.fast_pred_var():
-                    # 变分GP的预测
-                    dist = model(inputs)
-                    # 似然的输出也是一个分布
-                    output_dist = model.likelihood(dist)
-                    loss = -criterion(dist, labels.transpose(0, 1))
+                try:
+                    # 在评估模式下，使用快速预测
+                    with gpytorch.settings.fast_pred_var():
+                        # 变分GP的预测
+                        dist_beta2, dist_beta3 = model(inputs)
+                        
+                        # 获取似然预测
+                        output_dist_beta2 = model.likelihood_beta2(dist_beta2)
+                        output_dist_beta3 = model.likelihood_beta3(dist_beta3)
+                        
+                        # 计算ELBO损失
+                        labels_beta2 = labels[:, 0]
+                        labels_beta3 = labels[:, 1]
+                        
+                        elbo_beta2 = criterion[0](dist_beta2, labels_beta2)
+                        elbo_beta3 = criterion[1](dist_beta3, labels_beta3)
+                        loss = -elbo_beta2 - elbo_beta3
+                    
+                    # 预测的均值
+                    pred_beta2 = output_dist_beta2.mean.cpu().numpy()
+                    pred_beta3 = output_dist_beta3.mean.cpu().numpy()
+                    
+                    # 检查预测值是否合理
+                    if np.any(np.isnan(pred_beta2)) or np.any(np.isnan(pred_beta3)):
+                        print(f"警告: 批次 {i} 产生了NaN预测")
+                        continue
+                    
+                    # 组合预测结果
+                    batch_preds = np.column_stack([pred_beta2, pred_beta3])
+                    all_preds.extend(batch_preds)
+                    all_labels.extend(labels.cpu().numpy())
+                    
+                except Exception as e:
+                    print(f"验证批次 {i} 出现错误: {e}")
+                    continue
                 
-                # 我们关心的是预测的均值
-                mean_preds = output_dist.mean.transpose(0, 1).cpu().numpy()
-                all_preds.extend(mean_preds)
-                all_labels.extend(labels.cpu().numpy())
-                
-            running_loss += loss.item()
+            if not (torch.isnan(loss) or torch.isinf(loss)):
+                running_loss += loss.item()
             
     # 计算并返回评估结果
     if mode == 'classifier':
@@ -275,8 +365,17 @@ def validate_epoch(model, val_loader, criterion, device, epoch, mode):
         return running_loss / len(val_loader), {'accuracy': val_acc, 'confusion_matrix': cm}
 
     elif mode == 'gp':
+        if not all_preds:
+            print("警告: 没有有效的预测结果")
+            return float('inf'), {'mse': float('inf'), 'mae': float('inf')}
+            
         all_preds = np.array(all_preds)
         all_labels = np.array(all_labels)
+        
+        # 数据质量检查
+        print(f"预测值范围: Beta2=[{all_preds[:, 0].min():.4f}, {all_preds[:, 0].max():.4f}], "
+              f"Beta3=[{all_preds[:, 1].min():.4f}, {all_preds[:, 1].max():.4f}]")
+        
         mse = mean_squared_error(all_labels, all_preds)
         mae = mean_absolute_error(all_labels, all_preds)
         
@@ -304,7 +403,7 @@ def validate_epoch(model, val_loader, criterion, device, epoch, mode):
 class PreprocessTransform:
     def __init__(self, resize_dim=224):
         self.normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-        self.resize = transforms.Resize((resize_dim, resize_dim), antialias=True)
+        self.resize = transforms.Resize((resize_dim, resize_dim))
     
     def __call__(self, image):
         image = self.resize(image)
@@ -403,16 +502,18 @@ def setup_discriminative_lr(model, config):
             list(feature_extractor[7].parameters()),  # layer4
         ]
         
-        # GP和投影层的参数
+        # GP和投影层的参数 - 使用较小的学习率
         gp_params = list(model.feature_extractor.feature_proj.parameters()) + \
-                   list(model.gp_model.parameters()) + \
-                   list(model.likelihood.parameters())
+                   list(model.gp_model_beta2.parameters()) + \
+                   list(model.gp_model_beta3.parameters()) + \
+                   list(model.likelihood_beta2.parameters()) + \
+                   list(model.likelihood_beta3.parameters())
         
         return [
             {'params': layer_groups[0], 'lr': base_lr * (decay ** 3)},
             {'params': layer_groups[1], 'lr': base_lr * (decay ** 2)},
             {'params': layer_groups[2], 'lr': base_lr * decay},
-            {'params': gp_params, 'lr': base_lr}
+            {'params': gp_params, 'lr': base_lr * 0.1}  # GP参数使用更小的学习率
         ]
     else:  # ResNet for classification
         feature_extractor = nn.Sequential(*list(model.children())[:-1])
@@ -470,9 +571,11 @@ def main():
         metric_mode = 'max'
     elif mode == 'gp':
         model = create_model(config, train_dataset=train_dataset, device=device)
-        # 变分GP使用ELBO损失，需要数据集大小信息
-        criterion = gpytorch.mlls.VariationalELBO(model.likelihood, model.gp_model, 
-                                                  num_data=len(train_dataset))
+        # 为两个独立的GP创建两个独立的ELBO损失函数
+        criterion = [
+            gpytorch.mlls.VariationalELBO(model.likelihood_beta2, model.gp_model_beta2, num_data=len(train_dataset)),
+            gpytorch.mlls.VariationalELBO(model.likelihood_beta3, model.gp_model_beta3, num_data=len(train_dataset))
+        ]
         best_metric = float('inf')  # MSE
         metric_mode = 'min'
     else:
@@ -480,13 +583,17 @@ def main():
 
     model.to(device)
     
-    # 设置优化器
+    # 设置优化器 - 使用更保守的学习率
     if config.get('use_discriminative_lr', False):
         param_groups = setup_discriminative_lr(model, config)
         optimizer = optim.Adam(param_groups, weight_decay=config['weight_decay'])
     else:
-        optimizer = optim.Adam(model.parameters(), lr=config['learning_rates']['base'], 
-                              weight_decay=config['weight_decay'])
+        # 为GP模式使用更小的学习率
+        if mode == 'gp':
+            lr = config['learning_rates']['base'] * 0.1  # GP使用更小的学习率
+        else:
+            lr = config['learning_rates']['base']
+        optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=config['weight_decay'])
         
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode=metric_mode, factor=0.5, 
                                                     patience=5, verbose=True)
@@ -539,6 +646,10 @@ def main():
             writer.add_scalar('MSE_Beta3/Validation', val_metrics['mse_beta3'], epoch)
             writer.add_scalar('MAE_Beta2/Validation', val_metrics['mae_beta2'], epoch)
             writer.add_scalar('MAE_Beta3/Validation', val_metrics['mae_beta3'], epoch)
+            
+            # 记录噪声参数到TensorBoard
+            writer.add_scalar('GP/Noise_Beta2', model.likelihood_beta2.noise.item(), epoch)
+            writer.add_scalar('GP/Noise_Beta3', model.likelihood_beta3.noise.item(), epoch)
             
             # 每5个epoch保存一次预测图
             if epoch % 5 == 0:
