@@ -1,0 +1,136 @@
+# ===================================================================
+# 实验配置文件 - 重构版本
+# ===================================================================
+
+# 实验基本信息
+experiment_name: "resnet_mlp_beta_regression_50_cut_224"
+seed: 42
+device: "auto"  # 可选: "auto", "cuda", "cpu"
+
+# 数据路径
+data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_wo_50"
+
+# ===================================================================
+# 推理模式配置
+# ===================================================================
+inference_mode: "mlp"  # 可选: "classifier", "gp", "mlp"
+
+# MLP回归配置
+mlp_config:
+  feature_dim: 256
+  hidden_dims: [128, 64]  # MLP隐藏层维度
+  dropout: 0.1
+  loss_type: "huber"      # 可选: "mse", "mae", "huber"
+
+# 变分GP配置
+gp_config:
+  feature_dim: 256
+  output_dim: 2
+  num_inducing: 64
+
+# ===================================================================
+# 数据预处理配置 (新增统一配置)
+# ===================================================================
+preprocessing:
+  # 中心裁剪配置
+  center_crop:
+    enabled: true
+    size: 224 #320  # 裁剪尺寸 (int or [height, width])
+  
+  # 对数归一化配置
+  log_normalization:
+    enabled: true
+    epsilon: 0.000000001  # 防止log(0)的小值
+  
+  # 图像调整大小配置
+  resize:
+    enabled: true
+    size: 224  # 调整到的尺寸
+  
+  # 标准化配置
+  normalize:
+    enabled: true
+    mean: [0.485, 0.456, 0.406]  # ImageNet标准
+    std: [0.229, 0.224, 0.225]   # ImageNet标准
+  
+  # 数据增强配置 (可扩展)
+  augmentation:
+    enabled: false
+    # 可以添加更多增强选项
+    random_rotation: false
+    random_flip: false
+
+# ===================================================================
+# 训练参数
+# ===================================================================
+epochs: 300
+batch_size: 32
+num_workers: 4
+
+# 学习率配置
+learning_rates:
+  base: 0.001
+  layer_decay: 0.1  # 分层学习率衰减因子
+
+# 是否使用分层学习率
+use_discriminative_lr: true
+
+# 优化器参数
+weight_decay: 0.0001
+
+# ===================================================================
+# 模型配置
+# ===================================================================
+model_config:
+  resnet_pretrained: true  # 是否使用预训练ResNet
+  dropout_rate: 0.1       # 全局dropout率
+
+# ===================================================================
+# 输出和保存配置
+# ===================================================================
+output_dir: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments"
+
+# 保存选项
+save_options:
+  save_best_only: true
+  save_interval: 10
+
+# ===================================================================
+# 验证和可视化配置
+# ===================================================================
+validation:
+  plot_predictions: true
+  plot_interval: 5  # 每隔多少epoch绘制预测图
+
+# ===================================================================
+# 日志配置
+# ===================================================================
+logging:
+  level: "INFO"
+  tensorboard: true
+
+# ===================================================================
+# 高级配置选项
+# ===================================================================
+
+# 早停配置
+early_stopping:
+  enabled: false
+  patience: 15
+  min_delta: 0.0001
+
+# GPU内存优化
+gpu_optimization:
+  mixed_precision: false
+  gradient_accumulation_steps: 1
+
+# 数据加载优化
+data_loading:
+  pin_memory: true      # 是否使用pin_memory
+  persistent_workers: false  # 是否使用持久化workers
+
+# 调试选项
+debug:
+  enabled: false
+  plot_sample_data: false     # 是否绘制样本数据
+  validate_data_loading: false  # 是否验证数据加载

@@ -27,34 +27,145 @@ except ImportError:
     GP_AVAILABLE = False
 
 # ===================================================================
-# 1. 数据集类
+# 1. 数据预处理模块
 # ===================================================================
+
+class CenterCropTensor:
+    """对 PyTorch 张量进行中心裁剪"""
+    def __init__(self, size):
+        if isinstance(size, int):
+            self.size = (int(size), int(size))
+        else:
+            self.size = size
+
+    def __call__(self, tensor):
+        h, w = tensor.shape[-2:]
+        th, tw = self.size
+
+        if h < th or w < tw:
+            raise ValueError(f"输入张量尺寸 ({h}x{w}) 小于目标裁剪尺寸 ({th}x{tw})。")
+
+        start_h = (h - th) // 2
+        start_w = (w - tw) // 2
+        
+        return tensor[..., start_h:start_h + th, start_w:start_w + tw]
+
+    def __repr__(self):
+        return self.__class__.__name__ + f'(size={self.size})'
+
+
+class LogNormalization:
+    """对数归一化变换"""
+    def __init__(self, epsilon=1e-12, enabled=True):
+        self.epsilon = epsilon
+        self.enabled = enabled
+
+    def __call__(self, tensor):
+        if not self.enabled:
+            return tensor
+            
+        # 对数变换
+        tensor = torch.log1p(tensor + self.epsilon)
+        
+        # 归一化到 [0, 1]
+        min_val, max_val = torch.min(tensor), torch.max(tensor)
+        if max_val > min_val:
+            tensor = (tensor - min_val) / (max_val - min_val)
+        
+        return tensor
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}(epsilon={self.epsilon}, enabled={self.enabled})"
+
+
+class DataPreprocessor:
+    """统一的数据预处理管道"""
+    def __init__(self, config):
+        self.config = config['preprocessing']
+        self.transforms = self._build_transforms()
+
+    def _build_transforms(self):
+        transforms_list = []
+        
+        # 1. 中心裁剪 (如果启用)
+        if self.config.get('center_crop', {}).get('enabled', False):
+            crop_size = self.config['center_crop']['size']
+            transforms_list.append(CenterCropTensor(crop_size))
+            print(f"启用中心裁剪: {crop_size}")
+
+        # 2. 对数归一化 (如果启用)
+        if self.config.get('log_normalization', {}).get('enabled', False):
+            epsilon = self.config['log_normalization'].get('epsilon', 1e-12)
+            transforms_list.append(LogNormalization(epsilon=epsilon, enabled=True))
+            print(f"启用对数归一化: epsilon={epsilon}")
+
+        # 3. 调整大小
+        if self.config.get('resize', {}).get('enabled', True):
+            resize_dim = self.config['resize'].get('size', 224)
+            transforms_list.append(transforms.Resize((resize_dim, resize_dim)))
+            print(f"启用图像调整大小: {resize_dim}x{resize_dim}")
+
+        # 4. 通道重复 (1通道 -> 3通道)
+        transforms_list.append(self._repeat_channels)
+
+        # 5. 标准化 (如果启用)
+        if self.config.get('normalize', {}).get('enabled', True):
+            mean = self.config['normalize'].get('mean', [0.485, 0.456, 0.406])
+            std = self.config['normalize'].get('std', [0.229, 0.224, 0.225])
+            transforms_list.append(transforms.Normalize(mean=mean, std=std))
+            print(f"启用标准化: mean={mean}, std={std}")
+
+        return transforms.Compose(transforms_list)
+
+    def _repeat_channels(self, tensor):
+        """将单通道图像重复为三通道"""
+        if tensor.shape[0] == 1:
+            return tensor.repeat(3, 1, 1)
+        return tensor
+
+    def __call__(self, image):
+        return self.transforms(image)
+
+
+# ===================================================================
+# 2. 数据集类
+# ===================================================================
+
 class InterferenceDataset(Dataset):
     """
-    自定义数据集，用于加载耦合beta值的.npy文件
-    - ... (之前的描述不变) ...
-    - [更新] 数据预处理（如裁剪）通过 `transform` 管道实现
+    改进的干涉数据集类
+    - 统一的数据预处理流程
+    - 更清晰的标签解析逻辑
+    - 可配置的预处理选项
     """
-    def __init__(self, data_path, config, transform=None, split='train', apply_log_normalization=True):
-        """
-        ... (init 方法的其他部分保持不变) ...
-        """
+    def __init__(self, data_path, config, split='train'):
         self.data_path = Path(data_path)
         self.config = config
-        self.transform = transform
         self.split = split
-        self.mode = self.config['inference_mode']
-        # 控制是否应用对数归一化的标志
-        self.apply_log_normalization = apply_log_normalization
-        if self.apply_log_normalization:
-            print(f"'{self.split}' 集: 已启用逐张图像对数归一化。")
-
-        self.file_paths = sorted(list(self.data_path.glob('**/*.npy')))
-        self.labels = []
+        self.mode = config['inference_mode']
         
-        # ... (标签解析逻辑完全不变) ...
+        # 初始化预处理器
+        self.preprocessor = DataPreprocessor(config)
+        
+        # 加载数据文件
+        self.file_paths = sorted(list(self.data_path.glob('**/*.npy')))
+        if not self.file_paths:
+            raise ValueError(f"在路径 {self.data_path} 中没有找到任何.npy文件!")
+            
+        # 解析标签
+        self.labels = self._parse_labels()
+        
+        print(f"'{self.split}' 数据集初始化完成:")
+        print(f"  - 文件数量: {len(self.file_paths)}")
+        print(f"  - 推理模式: {self.mode}")
+        if self.mode == 'classifier':
+            print(f"  - 类别数量: {self.num_classes}")
+
+    def _parse_labels(self):
+        """解析beta值标签"""
         beta_pattern = re.compile(r"beta2_([\d.]+)_beta3_([\d.]+)")
         beta_pairs = []
+        
         for file_path in self.file_paths:
             match = beta_pattern.search(file_path.stem)
             if match:
@@ -67,109 +178,67 @@ class InterferenceDataset(Dataset):
         if not beta_pairs:
             raise ValueError(f"在路径 {self.data_path} 中没有找到任何有效的数据文件!")
 
+        # 根据推理模式生成不同格式的标签
         if self.mode == 'classifier':
-            unique_pairs = sorted(list(set(beta_pairs)))
-            self.class_to_pair = {i: pair for i, pair in enumerate(unique_pairs)}
-            self.pair_to_class = {pair: i for i, pair in self.class_to_pair.items()}
-            self.num_classes = len(unique_pairs)
-            self.labels = [self.pair_to_class[pair] for pair in beta_pairs]
-            print(f"'{self.split}' 集 (Classifier Mode): 动态发现 {self.num_classes} 个唯一的 (beta2, beta3) 类别。")
+            return self._create_classification_labels(beta_pairs)
         elif self.mode in ['gp', 'mlp']:
-            self.labels = [torch.tensor([p[0], p[1]], dtype=torch.float32) for p in beta_pairs]
-            print(f"'{self.split}' 集 ({self.mode.upper()} Mode): 加载了 {len(self.labels)} 个 (beta2, beta3) 坐标。")
+            return self._create_regression_labels(beta_pairs)
         else:
             raise ValueError(f"未知的 inference_mode: {self.mode}")
+
+    def _create_classification_labels(self, beta_pairs):
+        """创建分类任务的标签"""
+        unique_pairs = sorted(list(set(beta_pairs)))
+        self.class_to_pair = {i: pair for i, pair in enumerate(unique_pairs)}
+        self.pair_to_class = {pair: i for i, pair in self.class_to_pair.items()}
+        self.num_classes = len(unique_pairs)
+        
+        labels = [self.pair_to_class[pair] for pair in beta_pairs]
+        print(f"分类模式: 发现 {self.num_classes} 个唯一的 (beta2, beta3) 类别")
+        return labels
+
+    def _create_regression_labels(self, beta_pairs):
+        """创建回归任务的标签"""
+        labels = [torch.tensor([p[0], p[1]], dtype=torch.float32) for p in beta_pairs]
+        print(f"回归模式: 加载 {len(labels)} 个 (beta2, beta3) 坐标")
+        return labels
 
     def __len__(self):
         return len(self.labels)
 
     def __getitem__(self, idx):
-        """
-        获取单个数据样本
-        """
+        # 加载原始数据
         file_path = self.file_paths[idx]
         image_data = np.load(file_path)
-
-        # 应用对数归一化 (如果启用)
-        if self.apply_log_normalization:
-            epsilon = 1e-12
-            image_data = np.log1p(image_data + epsilon)
-            min_val, max_val = np.min(image_data), np.max(image_data)
-            if max_val > min_val:
-                image_data = (image_data - min_val) / (max_val - min_val)
-
-        # 转换为 PyTorch 张量并增加通道维度
-        image_tensor = torch.from_numpy(image_data.astype(np.float32)).unsqueeze(0) 
-
-        # ===================================================================
-        # 应用所有预定义的转换 (包括我们自定义的裁剪)
-        # ===================================================================
-        if self.transform:
-            image_tensor = self.transform(image_tensor)
-        # ===================================================================
-
-        # 获取对应的标签
+        
+        # 转换为PyTorch张量并增加通道维度
+        image_tensor = torch.from_numpy(image_data.astype(np.float32)).unsqueeze(0)
+        
+        # 应用预处理流程
+        image_tensor = self.preprocessor(image_tensor)
+        
+        # 获取标签
         label = self.labels[idx]
-
+        
         return image_tensor, label
 
 
-class CenterCropTensor:
-    """
-    对 PyTorch 张量进行中心裁剪。
-    假设张量的形状是 (..., H, W)，其中 H 和 W 是最后两个维度。
-    """
-    def __init__(self, size):
-        """
-        Args:
-            size (int or tuple): 期望的输出尺寸。如果是 int，则裁剪为 (size, size) 的正方形。
-        """
-        if isinstance(size, int):
-            self.size = (int(size), int(size))
-        else:
-            self.size = size
-
-    def __call__(self, tensor):
-        """
-        Args:
-            tensor (Tensor): 需要被裁剪的张量。
-
-        Returns:
-            Tensor: 裁剪后的张量。
-        """
-        # 获取张量最后两个维度作为高和宽
-        h, w = tensor.shape[-2:]
-        th, tw = self.size
-
-        if h < th or w < tw:
-            raise ValueError(f"输入张量尺寸 ({h}x{w}) 小于目标裁剪尺寸 ({th}x{tw})。")
-
-        start_h = (h - th) // 2
-        start_w = (w - tw) // 2
-        
-        # 使用切片操作进行裁剪，'...'确保其他维度不变
-        return tensor[..., start_h:start_h + th, start_w:start_w + tw]
-
-    def __repr__(self):
-        return self.__class__.__name__ + f'(size={self.size})'
 # ===================================================================
-# 2. 模型定义
+# 3. 模型定义
 # ===================================================================
 
-# ResNet特征提取器 - 增加正则化
 class ResNetFeatureExtractor(nn.Module):
-    def __init__(self, feature_dim):
+    """ResNet特征提取器"""
+    def __init__(self, feature_dim, dropout_rate=0.1):
         super().__init__()
         resnet = models.resnet34(pretrained=True)
-        # 移除原始的fc层
         self.features = nn.Sequential(*list(resnet.children())[:-1])
         
-        # 添加dropout和batch normalization来稳定训练
         self.feature_proj = nn.Sequential(
             nn.Linear(resnet.fc.in_features, feature_dim),
             nn.BatchNorm1d(feature_dim),
             nn.ReLU(),
-            nn.Dropout(0.1)
+            nn.Dropout(dropout_rate)
         )
     
     def forward(self, x):
@@ -178,34 +247,46 @@ class ResNetFeatureExtractor(nn.Module):
         x = self.feature_proj(x)
         return x
 
-# 新增：ResNet + MLP回归模型
+
 class ResNetMLP(nn.Module):
-    def __init__(self, feature_dim, mlp_config):
+    """ResNet + MLP回归模型"""
+    def __init__(self, config):
         super().__init__()
-        self.feature_extractor = ResNetFeatureExtractor(feature_dim)
+        mlp_config = config['mlp_config']
+        model_config = config.get('model_config', {})
         
-        # 构建MLP层
-        mlp_layers = []
-        input_dim = feature_dim
+        # 特征提取器
+        feature_dim = mlp_config['feature_dim']
+        dropout_rate = model_config.get('dropout_rate', 0.1)
+        self.feature_extractor = ResNetFeatureExtractor(feature_dim, dropout_rate)
         
-        for hidden_dim in mlp_config['hidden_dims']:
-            mlp_layers.extend([
-                nn.Linear(input_dim, hidden_dim),
-                nn.BatchNorm1d(hidden_dim),
-                nn.ReLU(),
-                nn.Dropout(mlp_config.get('dropout', 0.1))
-            ])
-            input_dim = hidden_dim
-        
-        # 输出层 (beta2, beta3)
-        mlp_layers.append(nn.Linear(input_dim, 2))
-        
-        self.mlp = nn.Sequential(*mlp_layers)
+        # MLP层
+        self.mlp = self._build_mlp(mlp_config, feature_dim)
         
         # 初始化权重
         self._initialize_weights()
     
+    def _build_mlp(self, mlp_config, input_dim):
+        """构建MLP层"""
+        layers = []
+        current_dim = input_dim
+        
+        for hidden_dim in mlp_config['hidden_dims']:
+            layers.extend([
+                nn.Linear(current_dim, hidden_dim),
+                nn.BatchNorm1d(hidden_dim),
+                nn.ReLU(),
+                nn.Dropout(mlp_config.get('dropout', 0.1))
+            ])
+            current_dim = hidden_dim
+        
+        # 输出层
+        layers.append(nn.Linear(current_dim, 2))  # beta2, beta3
+        
+        return nn.Sequential(*layers)
+    
     def _initialize_weights(self):
+        """初始化权重"""
         for m in self.mlp:
             if isinstance(m, nn.Linear):
                 nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
@@ -215,13 +296,14 @@ class ResNetMLP(nn.Module):
     def forward(self, x):
         features = self.feature_extractor(x)
         output = self.mlp(features)
-        output = F.softplus(output) + 0.000001
+        # 确保输出为正值
+        output = F.softplus(output) + 1e-6
         return output
 
-# 改进的变分高斯过程模型
+
 class SimpleVariationalGPModel(gpytorch.models.ApproximateGP):
+    """简单的变分高斯过程模型"""
     def __init__(self, inducing_points, feature_dim):
-        # 使用更稳定的变分分布
         variational_distribution = gpytorch.variational.CholeskyVariationalDistribution(
             num_inducing_points=inducing_points.size(0)
         )
@@ -232,10 +314,7 @@ class SimpleVariationalGPModel(gpytorch.models.ApproximateGP):
         
         super().__init__(variational_strategy)
         
-        # 使用常数均值和RBF核
         self.mean_module = gpytorch.means.ConstantMean()
-        
-        # 改进核函数配置，增加数值稳定性
         self.covar_module = gpytorch.kernels.ScaleKernel(
             gpytorch.kernels.RBFKernel(ard_num_dims=feature_dim),
             outputscale_constraint=gpytorch.constraints.Positive()
@@ -246,20 +325,27 @@ class SimpleVariationalGPModel(gpytorch.models.ApproximateGP):
         covar_x = self.covar_module(x)
         return gpytorch.distributions.MultivariateNormal(mean_x, covar_x)
 
-# ResNet + 变分GP联合模型 - 改进版本
+
 class ResNetVariationalGP(nn.Module):
-    def __init__(self, feature_dim, output_dim, num_inducing=100, device='cpu'):
+    """ResNet + 变分GP联合模型"""
+    def __init__(self, config, device='cpu'):
         super().__init__()
-        self.feature_extractor = ResNetFeatureExtractor(feature_dim)
+        gp_config = config['gp_config']
+        model_config = config.get('model_config', {})
         
-        # 更好的诱导点初始化
+        # 特征提取器
+        feature_dim = gp_config['feature_dim']
+        dropout_rate = model_config.get('dropout_rate', 0.1)
+        self.feature_extractor = ResNetFeatureExtractor(feature_dim, dropout_rate)
+        
+        # GP模型
+        num_inducing = gp_config.get('num_inducing', 100)
         inducing_points = torch.randn(num_inducing, feature_dim, device=device) * 0.1
         
-        # 创建两个独立的GP模型，分别预测beta2和beta3
         self.gp_model_beta2 = SimpleVariationalGPModel(inducing_points.clone(), feature_dim)
         self.gp_model_beta3 = SimpleVariationalGPModel(inducing_points.clone(), feature_dim)
         
-        # 创建高斯似然函数，设置合理的噪声先验
+        # 似然函数
         self.likelihood_beta2 = gpytorch.likelihoods.GaussianLikelihood(
             noise_constraint=gpytorch.constraints.GreaterThan(1e-6)
         )
@@ -267,64 +353,46 @@ class ResNetVariationalGP(nn.Module):
             noise_constraint=gpytorch.constraints.GreaterThan(1e-6)
         )
         
-        # 初始化似然噪声
+        # 初始化噪声
         self.likelihood_beta2.noise = 0.01
         self.likelihood_beta3.noise = 0.01
         
         self.feature_dim = feature_dim
-        self.output_dim = output_dim
         self.num_inducing = num_inducing
     
     def forward(self, x):
         features = self.feature_extractor(x)
-        # 对特征进行L2归一化，提高稳定性
         features = torch.nn.functional.normalize(features, p=2, dim=1)
         
-        # 返回两个独立的分布
         dist_beta2 = self.gp_model_beta2(features)
         dist_beta3 = self.gp_model_beta3(features)
         return dist_beta2, dist_beta3
 
-# 模型创建工厂函数
-def create_model(config, num_classes=None, train_dataset=None, device='cpu'):
+
+def create_model(config, num_classes=None, device='cpu'):
+    """模型创建工厂函数"""
     mode = config['inference_mode']
+    
     if mode == 'classifier':
-        model = models.resnet34(pretrained=True)
+        model = models.resnet34(pretrained=config['model_config']['resnet_pretrained'])
         model.fc = nn.Linear(model.fc.in_features, num_classes)
         return model
     elif mode == 'mlp':
-        # 新的MLP回归模式
-        mlp_conf = config['mlp_config']
-        model = ResNetMLP(
-            feature_dim=mlp_conf['feature_dim'],
-            mlp_config=mlp_conf
-        )
-        print(f"创建ResNet+MLP回归模型: 特征维度={mlp_conf['feature_dim']}, "
-              f"MLP隐藏层={mlp_conf['hidden_dims']}, dropout={mlp_conf.get('dropout', 0.1)}")
-        return model
+        return ResNetMLP(config)
     elif mode == 'gp':
         if not GP_AVAILABLE:
             raise ImportError("gpytorch 未安装，无法使用'gp'模式。请运行 'pip install gpytorch'")
-        
-        gp_conf = config['gp_config']
-        model = ResNetVariationalGP(
-            feature_dim=gp_conf['feature_dim'], 
-            output_dim=gp_conf['output_dim'],
-            num_inducing=gp_conf.get('num_inducing', 100),
-            device=device
-        )
-        
-        print(f"创建变分GP模型: 特征维度={gp_conf['feature_dim']}, "
-              f"输出维度={gp_conf['output_dim']}, 诱导点数量={gp_conf.get('num_inducing', 100)}")
-        return model
+        return ResNetVariationalGP(config, device)
     else:
         raise ValueError(f"未知的 inference_mode: {mode}")
 
+
 # ===================================================================
-# 3. 训练与验证循环
+# 4. 训练与验证函数
 # ===================================================================
 
 def train_epoch(model, train_loader, criterion, optimizer, device, epoch, mode):
+    """训练一个epoch"""
     model.train()
     if mode == 'gp':
         model.likelihood_beta2.train()
@@ -350,16 +418,13 @@ def train_epoch(model, train_loader, criterion, optimizer, device, epoch, mode):
             pbar.set_postfix({'Loss': f'{loss.item():.4f}', 'Acc': f'{100.*correct/total:.2f}%'})
 
         elif mode == 'mlp':
-            # MLP回归模式
             outputs = model(inputs)
             loss = criterion(outputs, labels)
             
-            # 梯度裁剪防止梯度爆炸
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.step()
             
-            # 计算MSE和MAE用于显示
             with torch.no_grad():
                 mse = torch.mean((outputs - labels) ** 2).item()
                 mae = torch.mean(torch.abs(outputs - labels)).item()
@@ -372,27 +437,20 @@ def train_epoch(model, train_loader, criterion, optimizer, device, epoch, mode):
 
         elif mode == 'gp':
             try:
-                # 变分GP的前向传播
                 dist_beta2, dist_beta3 = model(inputs)
                 
-                # 分别计算每个输出的ELBO损失
                 labels_beta2 = labels[:, 0]
                 labels_beta3 = labels[:, 1]
                 
-                # 计算ELBO损失 (注意：ELBO本身是对数似然，我们要最大化它)
-                # 所以损失应该是 -ELBO
                 elbo_beta2 = criterion[0](dist_beta2, labels_beta2)
                 elbo_beta3 = criterion[1](dist_beta3, labels_beta3)
                 
-                # 总损失是负ELBO的和
                 loss = -elbo_beta2 - elbo_beta3
                 
-                # 梯度裁剪防止梯度爆炸
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
                 optimizer.step()
                 
-                # 检查损失是否为NaN或无穷大
                 if torch.isnan(loss) or torch.isinf(loss):
                     print(f"警告: 在批次 {i} 检测到异常损失值: {loss.item()}")
                     continue
@@ -413,7 +471,9 @@ def train_epoch(model, train_loader, criterion, optimizer, device, epoch, mode):
 
     return running_loss / len(train_loader)
 
+
 def validate_epoch(model, val_loader, criterion, device, epoch, mode):
+    """验证一个epoch"""
     model.eval()
     if mode == 'gp':
         model.likelihood_beta2.eval()
@@ -435,26 +495,20 @@ def validate_epoch(model, val_loader, criterion, device, epoch, mode):
                 all_labels.extend(labels.cpu().numpy())
             
             elif mode == 'mlp':
-                # MLP回归模式
                 outputs = model(inputs)
                 loss = criterion(outputs, labels)
                 
-                # 收集预测结果
                 all_preds.extend(outputs.cpu().numpy())
                 all_labels.extend(labels.cpu().numpy())
             
             elif mode == 'gp':
                 try:
-                    # 在评估模式下，使用快速预测
                     with gpytorch.settings.fast_pred_var():
-                        # 变分GP的预测
                         dist_beta2, dist_beta3 = model(inputs)
                         
-                        # 获取似然预测
                         output_dist_beta2 = model.likelihood_beta2(dist_beta2)
                         output_dist_beta3 = model.likelihood_beta3(dist_beta3)
                         
-                        # 计算ELBO损失
                         labels_beta2 = labels[:, 0]
                         labels_beta3 = labels[:, 1]
                         
@@ -462,16 +516,13 @@ def validate_epoch(model, val_loader, criterion, device, epoch, mode):
                         elbo_beta3 = criterion[1](dist_beta3, labels_beta3)
                         loss = -elbo_beta2 - elbo_beta3
                     
-                    # 预测的均值
                     pred_beta2 = output_dist_beta2.mean.cpu().numpy()
                     pred_beta3 = output_dist_beta3.mean.cpu().numpy()
                     
-                    # 检查预测值是否合理
                     if np.any(np.isnan(pred_beta2)) or np.any(np.isnan(pred_beta3)):
                         print(f"警告: 批次 {i} 产生了NaN预测")
                         continue
                     
-                    # 组合预测结果
                     batch_preds = np.column_stack([pred_beta2, pred_beta3])
                     all_preds.extend(batch_preds)
                     all_labels.extend(labels.cpu().numpy())
@@ -483,7 +534,7 @@ def validate_epoch(model, val_loader, criterion, device, epoch, mode):
             if not (torch.isnan(loss) or torch.isinf(loss)):
                 running_loss += loss.item()
             
-    # 计算并返回评估结果
+    # 计算评估指标
     if mode == 'classifier':
         val_acc = 100. * np.sum(np.array(all_preds) == np.array(all_labels)) / len(all_labels)
         cm = confusion_matrix(all_labels, all_preds)
@@ -498,14 +549,12 @@ def validate_epoch(model, val_loader, criterion, device, epoch, mode):
         all_preds = np.array(all_preds)
         all_labels = np.array(all_labels)
         
-        # 数据质量检查
         print(f"预测值范围: Beta2=[{all_preds[:, 0].min():.4f}, {all_preds[:, 0].max():.4f}], "
               f"Beta3=[{all_preds[:, 1].min():.4f}, {all_preds[:, 1].max():.4f}]")
         
         mse = mean_squared_error(all_labels, all_preds)
         mae = mean_absolute_error(all_labels, all_preds)
         
-        # 分别计算beta2和beta3的误差
         mse_beta2 = mean_squared_error(all_labels[:, 0], all_preds[:, 0])
         mse_beta3 = mean_squared_error(all_labels[:, 1], all_preds[:, 1])
         mae_beta2 = mean_absolute_error(all_labels[:, 0], all_preds[:, 0])
@@ -522,25 +571,13 @@ def validate_epoch(model, val_loader, criterion, device, epoch, mode):
             'predictions': all_preds, 'labels': all_labels
         }
 
-# ===================================================================
-# 4. 辅助函数
-# ===================================================================
 
-class PreprocessTransform:
-    def __init__(self, resize_dim=224):
-        self.CenterCropTensor = CenterCropTensor(320)
-        self.normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-        self.resize = transforms.Resize((resize_dim, resize_dim))
-    
-    def __call__(self, image):
-        image = self.CenterCropTensor(image)
-        image = self.resize(image)
-        if image.shape[0] == 1:
-            image = image.repeat(3, 1, 1)
-        image = self.normalize(image)
-        return image
+# ===================================================================
+# 5. 辅助函数
+# ===================================================================
 
 def set_seed(seed):
+    """设置随机种子"""
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -550,7 +587,9 @@ def set_seed(seed):
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
 
+
 def get_device(config_device):
+    """获取计算设备"""
     if config_device == 'auto':
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     else:
@@ -560,7 +599,101 @@ def get_device(config_device):
         device = torch.device('cpu')
     return device
 
+
+def create_optimizer_and_criterion(model, config, train_dataset_size):
+    """创建优化器和损失函数"""
+    mode = config['inference_mode']
+    
+    # 创建损失函数
+    if mode == 'classifier':
+        criterion = nn.CrossEntropyLoss()
+    elif mode == 'mlp':
+        loss_type = config['mlp_config'].get('loss_type', 'mse')
+        if loss_type == 'mse':
+            criterion = nn.MSELoss()
+        elif loss_type == 'mae':
+            criterion = nn.L1Loss()
+        elif loss_type == 'huber':
+            criterion = nn.SmoothL1Loss()
+        else:
+            criterion = nn.MSELoss()
+    elif mode == 'gp':
+        criterion = [
+            gpytorch.mlls.VariationalELBO(model.likelihood_beta2, model.gp_model_beta2, num_data=train_dataset_size),
+            gpytorch.mlls.VariationalELBO(model.likelihood_beta3, model.gp_model_beta3, num_data=train_dataset_size)
+        ]
+    
+    # 创建优化器
+    if config.get('use_discriminative_lr', False):
+        param_groups = setup_discriminative_lr(model, config)
+        optimizer = optim.Adam(param_groups, weight_decay=config['weight_decay'])
+    else:
+        lr = config['learning_rates']['base']
+        if mode == 'gp':
+            lr *= 0.1  # GP使用更小的学习率
+        elif mode == 'mlp':
+            lr *= 0.5  # MLP使用中等学习率
+        optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=config['weight_decay'])
+    
+    return optimizer, criterion
+
+
+def setup_discriminative_lr(model, config):
+    """设置分层学习率"""
+    lr_conf = config['learning_rates']
+    base_lr = lr_conf['base']
+    decay = lr_conf.get('layer_decay', 0.9)
+    
+    if isinstance(model, ResNetVariationalGP):
+        feature_extractor = model.feature_extractor.features
+        layer_groups = [
+            list(feature_extractor[0].parameters()) + list(feature_extractor[1].parameters()) + 
+            list(feature_extractor[4].parameters()) + list(feature_extractor[5].parameters()),
+            list(feature_extractor[6].parameters()),
+            list(feature_extractor[7].parameters()),
+        ]
+        
+        gp_params = list(model.feature_extractor.feature_proj.parameters()) + \
+                   list(model.gp_model_beta2.parameters()) + \
+                   list(model.gp_model_beta3.parameters()) + \
+                   list(model.likelihood_beta2.parameters()) + \
+                   list(model.likelihood_beta3.parameters())
+        
+        return [
+            {'params': layer_groups[0], 'lr': base_lr * (decay ** 3)},
+            {'params': layer_groups[1], 'lr': base_lr * (decay ** 2)},
+            {'params': layer_groups[2], 'lr': base_lr * decay},
+            {'params': mlp_params, 'lr': base_lr}
+        ]
+    else:  # Handles ResNetMLP and standard ResNet for classification
+        # 正确地访问 ResNetMLP 内部的 ResNet 骨干网络
+        resnet_backbone = model.feature_extractor.features
+        
+        # 模型的 "头部" (head) 包含特征映射层和最终的 MLP 回归层
+        head_layers = list(model.feature_extractor.feature_proj.parameters()) + \
+                      list(model.mlp.parameters())
+        
+        # 将 ResNet 骨干网络分层 (此分组适用于 ResNet18/34)
+        layer_groups = [
+            # 早期层
+            list(resnet_backbone[0].parameters()) + list(resnet_backbone[1].parameters()) + 
+            list(resnet_backbone[4].parameters()) + list(resnet_backbone[5].parameters()),
+            # 中期层
+            list(resnet_backbone[6].parameters()),
+            # 后期层
+            list(resnet_backbone[7].parameters()),
+        ]
+        
+        return [
+            {'params': layer_groups[0], 'lr': base_lr * (decay ** 3)},
+            {'params': layer_groups[1], 'lr': base_lr * (decay ** 2)},
+            {'params': layer_groups[2], 'lr': base_lr * decay},
+            {'params': head_layers, 'lr': base_lr} # 头部使用基础学习率
+        ]
+
+
 def plot_confusion_matrix(cm, class_names, output_path):
+    """绘制混淆矩阵"""
     plt.figure(figsize=(12, 10))
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=class_names, yticklabels=class_names)
     plt.title('Confusion Matrix')
@@ -570,7 +703,9 @@ def plot_confusion_matrix(cm, class_names, output_path):
     plt.savefig(output_path)
     plt.close()
 
+
 def save_confusion_matrix_to_tensorboard(writer, cm, class_names, epoch):
+    """保存混淆矩阵到TensorBoard"""
     fig = plt.figure(figsize=(12, 10))
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=class_names, yticklabels=class_names)
     plt.title('Confusion Matrix')
@@ -578,6 +713,7 @@ def save_confusion_matrix_to_tensorboard(writer, cm, class_names, epoch):
     plt.ylabel('Actual')
     writer.add_figure('Validation/Confusion_Matrix', fig, epoch)
     plt.close()
+
 
 def plot_regression_predictions(predictions, labels, output_path, epoch, mode_name):
     """绘制回归预测结果的散点图"""
@@ -614,232 +750,161 @@ def plot_regression_predictions(predictions, labels, output_path, epoch, mode_na
     plt.savefig(output_path / f'{mode_name.lower()}_predictions_epoch_{epoch}.png', dpi=150)
     plt.close()
 
-def plot_gp_predictions(predictions, labels, output_path, epoch):
-    """绘制GP预测结果的散点图"""
-    plot_regression_predictions(predictions, labels, output_path, epoch, 'GP')
-
-def plot_mlp_predictions(predictions, labels, output_path, epoch):
-    """绘制MLP预测结果的散点图"""
-    plot_regression_predictions(predictions, labels, output_path, epoch, 'MLP')
-
-def setup_discriminative_lr(model, config):
-    lr_conf = config['learning_rates']
-    base_lr = lr_conf['base']
-    decay = lr_conf.get('layer_decay', 0.9)
-    
-    # 根据模型类型分配参数
-    if isinstance(model, ResNetVariationalGP):
-        # ResNet特征提取器的层
-        feature_extractor = model.feature_extractor.features
-        layer_groups = [
-            list(feature_extractor[0].parameters()) + list(feature_extractor[1].parameters()) + 
-            list(feature_extractor[4].parameters()) + list(feature_extractor[5].parameters()),  # conv1, bn1, layer1, layer2
-            list(feature_extractor[6].parameters()),  # layer3
-            list(feature_extractor[7].parameters()),  # layer4
-        ]
-        
-        # GP和投影层的参数 - 使用较小的学习率
-        gp_params = list(model.feature_extractor.feature_proj.parameters()) + \
-                   list(model.gp_model_beta2.parameters()) + \
-                   list(model.gp_model_beta3.parameters()) + \
-                   list(model.likelihood_beta2.parameters()) + \
-                   list(model.likelihood_beta3.parameters())
-        
-        return [
-            {'params': layer_groups[0], 'lr': base_lr * (decay ** 3)},
-            {'params': layer_groups[1], 'lr': base_lr * (decay ** 2)},
-            {'params': layer_groups[2], 'lr': base_lr * decay},
-            {'params': gp_params, 'lr': base_lr * 0.1}  # GP参数使用更小的学习率
-        ]
-    elif isinstance(model, ResNetMLP):
-        # ResNet+MLP模型的分层学习率
-        feature_extractor = model.feature_extractor.features
-        layer_groups = [
-            list(feature_extractor[0].parameters()) + list(feature_extractor[1].parameters()) + 
-            list(feature_extractor[4].parameters()) + list(feature_extractor[5].parameters()),  # conv1, bn1, layer1, layer2
-            list(feature_extractor[6].parameters()),  # layer3
-            list(feature_extractor[7].parameters()),  # layer4
-        ]
-        
-        # MLP和特征投影层的参数
-        mlp_params = list(model.feature_extractor.feature_proj.parameters()) + \
-                    list(model.mlp.parameters())
-        
-        return [
-            {'params': layer_groups[0], 'lr': base_lr * (decay ** 3)},
-            {'params': layer_groups[1], 'lr': base_lr * (decay ** 2)},
-            {'params': layer_groups[2], 'lr': base_lr * decay},
-            {'params': mlp_params, 'lr': base_lr}  # MLP参数使用基础学习率
-        ]
-    else:  # ResNet for classification
-        feature_extractor = nn.Sequential(*list(model.children())[:-1])
-        classifier_layers = list(model.fc.parameters())
-        
-        layer_groups = [
-            list(feature_extractor[0].parameters()) + list(feature_extractor[1].parameters()) + 
-            list(feature_extractor[4].parameters()) + list(feature_extractor[5].parameters()),
-            list(feature_extractor[6].parameters()),
-            list(feature_extractor[7].parameters()),
-        ]
-        
-        return [
-            {'params': layer_groups[0], 'lr': base_lr * (decay ** 3)},
-            {'params': layer_groups[1], 'lr': base_lr * (decay ** 2)},
-            {'params': layer_groups[2], 'lr': base_lr * decay},
-            {'params': classifier_layers, 'lr': base_lr}
-        ]
 
 # ===================================================================
-# 5. 主函数
+# 6. 主函数
 # ===================================================================
 
 def main():
-    with open('config.yaml', 'r', encoding='utf-8') as f:
+    """主训练函数"""
+    # 加载配置
+    with open('config2.yaml', 'r', encoding='utf-8') as f:
         config = yaml.safe_load(f)
     
+    # 设置基本参数
     set_seed(config['seed'])
     device = get_device(config['device'])
     print(f"使用设备: {device}")
     
+    # 创建输出目录
     output_dir = Path(config['output_dir']) / config['experiment_name']
     output_dir.mkdir(parents=True, exist_ok=True)
     logs_dir = output_dir / 'logs'; logs_dir.mkdir(exist_ok=True)
     checkpoints_dir = output_dir / 'checkpoints'; checkpoints_dir.mkdir(exist_ok=True)
     plots_dir = output_dir / 'plots'; plots_dir.mkdir(exist_ok=True)
     
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s',
-                        handlers=[logging.FileHandler(output_dir / 'training.log'), logging.StreamHandler()])
+    # 设置日志
+    logging.basicConfig(
+        level=getattr(logging, config['logging']['level']),
+        format='%(asctime)s - %(message)s',
+        handlers=[
+            logging.FileHandler(output_dir / 'training.log'),
+            logging.StreamHandler()
+        ]
+    )
     
-    writer = SummaryWriter(str(logs_dir))
+    # TensorBoard写入器
+    if config['logging']['tensorboard']:
+        writer = SummaryWriter(str(logs_dir))
+    else:
+        writer = None
     
-    transform = PreprocessTransform()
+    # 创建数据集
+    train_dataset = InterferenceDataset(
+        Path(config['data_path']) / 'train', 
+        config=config, 
+        split='train'
+    )
+    val_dataset = InterferenceDataset(
+        Path(config['data_path']) / 'val', 
+        config=config, 
+        split='val'
+    )
     
-    train_dataset = InterferenceDataset(Path(config['data_path']) / 'train', config=config, transform=transform, split='train')
-    val_dataset = InterferenceDataset(Path(config['data_path']) / 'val', config=config, transform=transform, split='val')
-    
+    # 创建模型
     mode = config['inference_mode']
-    
     if mode == 'classifier':
-        model = create_model(config, num_classes=train_dataset.num_classes)
-        criterion = nn.CrossEntropyLoss()
+        model = create_model(config, num_classes=train_dataset.num_classes, device=device)
         class_names = [f"({p[0]:.4f}, {p[1]:.4f})" for p in train_dataset.class_to_pair.values()]
         best_metric = 0.0  # Accuracy
         metric_mode = 'max'
-    elif mode == 'mlp':
-        model = create_model(config, train_dataset=train_dataset, device=device)
-        # 对于MLP回归，可以选择MSE或MAE损失
-        loss_type = config['mlp_config'].get('loss_type', 'mse')
-        if loss_type == 'mse':
-            criterion = nn.MSELoss()
-        elif loss_type == 'mae':
-            criterion = nn.L1Loss()
-        elif loss_type == 'huber':
-            criterion = nn.SmoothL1Loss()
-        else:
-            criterion = nn.MSELoss()
-        best_metric = float('inf')  # MSE
-        metric_mode = 'min'
-    elif mode == 'gp':
-        model = create_model(config, train_dataset=train_dataset, device=device)
-        # 为两个独立的GP创建两个独立的ELBO损失函数
-        criterion = [
-            gpytorch.mlls.VariationalELBO(model.likelihood_beta2, model.gp_model_beta2, num_data=len(train_dataset)),
-            gpytorch.mlls.VariationalELBO(model.likelihood_beta3, model.gp_model_beta3, num_data=len(train_dataset))
-        ]
-        best_metric = float('inf')  # MSE
-        metric_mode = 'min'
     else:
-        raise ValueError("Invalid mode")
-
+        model = create_model(config, device=device)
+        best_metric = float('inf')  # MSE
+        metric_mode = 'min'
+    
     model.to(device)
     
-    # 设置优化器 - 使用更保守的学习率
-    if config.get('use_discriminative_lr', False):
-        param_groups = setup_discriminative_lr(model, config)
-        optimizer = optim.Adam(param_groups, weight_decay=config['weight_decay'])
-    else:
-        # 根据不同模式使用不同的学习率
-        if mode == 'gp':
-            lr = config['learning_rates']['base'] * 0.1  # GP使用更小的学习率
-        elif mode == 'mlp':
-            lr = config['learning_rates']['base'] * 0.5  # MLP使用中等学习率
-        else:
-            lr = config['learning_rates']['base']
-        optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=config['weight_decay'])
-        
-    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode=metric_mode, factor=0.5, 
-                                                    patience=5, verbose=True)
+    # 创建优化器和损失函数
+    optimizer, criterion = create_optimizer_and_criterion(model, config, len(train_dataset))
     
+    # 学习率调度器
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer, mode=metric_mode, factor=0.5, patience=5, verbose=True
+    )
+    
+    # 最佳模型路径
     best_model_path = checkpoints_dir / 'best_model.pth'
     
+    # 开始训练
     logging.info(f"开始训练... 模式: {mode.upper()}")
     if mode == 'gp':
-        logging.info(f"变分GP配置: 特征维度={model.feature_dim}, 输出维度={model.output_dim}, 诱导点数量={model.num_inducing}")
+        logging.info(f"变分GP配置: 特征维度={model.feature_dim}, 诱导点数量={model.num_inducing}")
     elif mode == 'mlp':
         mlp_conf = config['mlp_config']
-        logging.info(f"MLP回归配置: 特征维度={mlp_conf['feature_dim']}, 隐藏层={mlp_conf['hidden_dims']}, 损失函数={mlp_conf.get('loss_type', 'mse')}")
-
+        logging.info(f"MLP回归配置: 特征维度={mlp_conf['feature_dim']}, 隐藏层={mlp_conf['hidden_dims']}")
+    
     for epoch in range(1, config['epochs'] + 1):
         logging.info(f"\n{'='*50}\nEpoch {epoch}/{config['epochs']}\n{'='*50}")
         
-        # 训练
-        train_loader = DataLoader(train_dataset, batch_size=config['batch_size'], shuffle=True, 
-                                 num_workers=config['num_workers'])
-        val_loader = DataLoader(val_dataset, batch_size=config['batch_size'], shuffle=False, 
-                               num_workers=config['num_workers'])
+        # 创建数据加载器
+        train_loader = DataLoader(
+            train_dataset, 
+            batch_size=config['batch_size'], 
+            shuffle=True, 
+            num_workers=config['num_workers']
+        )
+        val_loader = DataLoader(
+            val_dataset, 
+            batch_size=config['batch_size'], 
+            shuffle=False, 
+            num_workers=config['num_workers']
+        )
         
+        # 训练和验证
         train_loss = train_epoch(model, train_loader, criterion, optimizer, device, epoch, mode)
         val_loss, val_metrics = validate_epoch(model, val_loader, criterion, device, epoch, mode)
         
         # 学习率调度
         if mode == 'classifier':
             scheduler_metric = val_metrics['accuracy']
-        else:  # GP and MLP modes
+        else:
             scheduler_metric = val_metrics['mse']
         scheduler.step(scheduler_metric)
         
         # 记录到TensorBoard
-        writer.add_scalar('Loss/Train', train_loss, epoch)
-        writer.add_scalar('Loss/Validation', val_loss, epoch)
-        writer.add_scalar('Learning_Rate', optimizer.param_groups[-1]['lr'], epoch)
+        if writer:
+            writer.add_scalar('Loss/Train', train_loss, epoch)
+            writer.add_scalar('Loss/Validation', val_loss, epoch)
+            writer.add_scalar('Learning_Rate', optimizer.param_groups[-1]['lr'], epoch)
+            
+            if mode == 'classifier':
+                writer.add_scalar('Accuracy/Validation', val_metrics['accuracy'], epoch)
+                save_confusion_matrix_to_tensorboard(writer, val_metrics['confusion_matrix'], class_names, epoch)
+            else:
+                writer.add_scalar('MSE/Validation', val_metrics['mse'], epoch)
+                writer.add_scalar('MAE/Validation', val_metrics['mae'], epoch)
+                writer.add_scalar('MSE_Beta2/Validation', val_metrics['mse_beta2'], epoch)
+                writer.add_scalar('MSE_Beta3/Validation', val_metrics['mse_beta3'], epoch)
+                
+                if mode == 'gp':
+                    writer.add_scalar('GP/Noise_Beta2', model.likelihood_beta2.noise.item(), epoch)
+                    writer.add_scalar('GP/Noise_Beta3', model.likelihood_beta3.noise.item(), epoch)
         
+        # 绘制预测结果
+        if mode in ['gp', 'mlp'] and config['validation']['plot_predictions']:
+            if epoch % config['validation']['plot_interval'] == 0:
+                plot_regression_predictions(
+                    val_metrics['predictions'], 
+                    val_metrics['labels'], 
+                    plots_dir, 
+                    epoch, 
+                    mode.upper()
+                )
+        
+        # 保存最佳模型
         is_best = False
         if mode == 'classifier':
-            val_acc = val_metrics['accuracy']
-            writer.add_scalar('Accuracy/Validation', val_acc, epoch)
-            save_confusion_matrix_to_tensorboard(writer, val_metrics['confusion_matrix'], class_names, epoch)
-            if val_acc > best_metric:
-                best_metric = val_acc
+            if val_metrics['accuracy'] > best_metric:
+                best_metric = val_metrics['accuracy']
                 is_best = True
                 logging.info(f"新的最佳模型! 验证准确率: {best_metric:.2f}%")
-        
-        elif mode in ['gp', 'mlp']:
-            val_mse = val_metrics['mse']
-            writer.add_scalar('MSE/Validation', val_mse, epoch)
-            writer.add_scalar('MAE/Validation', val_metrics['mae'], epoch)
-            writer.add_scalar('MSE_Beta2/Validation', val_metrics['mse_beta2'], epoch)
-            writer.add_scalar('MSE_Beta3/Validation', val_metrics['mse_beta3'], epoch)
-            writer.add_scalar('MAE_Beta2/Validation', val_metrics['mae_beta2'], epoch)
-            writer.add_scalar('MAE_Beta3/Validation', val_metrics['mae_beta3'], epoch)
-            
-            if mode == 'gp':
-                # 记录噪声参数到TensorBoard
-                writer.add_scalar('GP/Noise_Beta2', model.likelihood_beta2.noise.item(), epoch)
-                writer.add_scalar('GP/Noise_Beta3', model.likelihood_beta3.noise.item(), epoch)
-            
-            # 每5个epoch保存一次预测图
-            if epoch % 5 == 0:
-                if mode == 'gp':
-                    plot_gp_predictions(val_metrics['predictions'], val_metrics['labels'], plots_dir, epoch)
-                elif mode == 'mlp':
-                    plot_mlp_predictions(val_metrics['predictions'], val_metrics['labels'], plots_dir, epoch)
-            
-            if val_mse < best_metric:
-                best_metric = val_mse
+        else:
+            if val_metrics['mse'] < best_metric:
+                best_metric = val_metrics['mse']
                 is_best = True
                 logging.info(f"新的最佳模型! 验证MSE: {best_metric:.6f}")
-
-        # 保存最佳模型
+        
         if is_best and config['save_options']['save_best_only']:
             save_payload = {
                 'epoch': epoch,
@@ -852,16 +917,19 @@ def main():
                 save_payload['class_to_pair'] = train_dataset.class_to_pair
             torch.save(save_payload, best_model_path)
         
-        # 日志输出
+        # 输出训练日志
         if mode == 'classifier':
-            logging.info(f"Epoch {epoch} Results -> Train Loss: {train_loss:.4f} | "
+            logging.info(f"Epoch {epoch} -> Train Loss: {train_loss:.4f} | "
                         f"Val Loss: {val_loss:.4f}, Acc: {val_metrics['accuracy']:.2f}%")
         else:
-            logging.info(f"Epoch {epoch} Results -> Train Loss: {train_loss:.4f} | "
-                        f"Val Loss: {val_loss:.4f}, MSE: {val_metrics['mse']:.6f}, MAE: {val_metrics['mae']:.6f}")
-
-    writer.close()
+            logging.info(f"Epoch {epoch} -> Train Loss: {train_loss:.4f} | "
+                        f"Val Loss: {val_loss:.4f}, MSE: {val_metrics['mse']:.6f}, "
+                        f"MAE: {val_metrics['mae']:.6f}")
+    
+    if writer:
+        writer.close()
     logging.info(f"训练完成! 最佳验证指标: {best_metric}")
 
+
 if __name__ == '__main__':
-    main()
+    main() 

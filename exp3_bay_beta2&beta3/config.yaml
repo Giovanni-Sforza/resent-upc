@@ -1,5 +1,5 @@
 # 实验配置
-experiment_name: "resnet_mlp_beta_regression_sum_large_50"
+experiment_name: "resnet_mlp_beta_regression_sum_large_50_cut"
 seed: 42
 device: "auto"  # 可选: "auto", "cuda", "cpu"
 
