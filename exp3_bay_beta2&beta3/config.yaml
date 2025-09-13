@@ -1,13 +1,21 @@
 # 实验配置
-experiment_name: "resnet_classifier_beta_regression"
+experiment_name: "resnet_mlp_beta_regression_sum_large_50"
 seed: 42
 device: "auto"  # 可选: "auto", "cuda", "cpu"
 
 # 数据路径
-data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/wo"  # 包含train和val文件夹的根目录
+data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_wo_50"  # 包含train和val文件夹的根目录
 
 # 推理模式配置
-inference_mode: "classifier"  # 选择 "classifier" 或 "gp"
+
+inference_mode: "mlp"    # 选择 "classifier" 或 "gp" "mlp"
+mlp_config:
+  feature_dim: 256
+  hidden_dims: [128, 64]  # 可以尝试不同的架构如 [256, 128] 或 [512, 256, 128]
+  dropout: 0.1
+  loss_type: "huber"        # 也可以尝试 "mae" 或 "huber"
+
+
 
 # 变分GP特定配置
 gp_config:
@@ -16,13 +24,13 @@ gp_config:
   num_inducing: 64       # 诱导点数量，影响模型复杂度和训练速度
 
 # 训练参数
-epochs: 200
+epochs: 300
 batch_size: 32
 num_workers: 4
 
 # 学习率配置
 learning_rates:
-  base: 0.001             # 基础学习率
+  base: 0.001 #0.001            # 基础学习率
   layer_decay: 0.1        # 层级学习率衰减因子
 
 # 是否使用分层学习率
