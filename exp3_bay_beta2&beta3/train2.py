@@ -8,6 +8,8 @@ from tqdm import tqdm
 import logging
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.metrics import r2_score
+import sys
 
 import torch
 import torch.nn as nn
@@ -25,6 +27,40 @@ try:
     GP_AVAILABLE = True
 except ImportError:
     GP_AVAILABLE = False
+
+# ===================================================================
+# 定义一个自定义的Logger类，同时输出到文件和控制台
+# ===================================================================
+
+class CustomLogger:
+    """自定义日志记录器，同时输出到文件和控制台"""
+    def __init__(self, log_file):
+        self.log_file = log_file
+        self.terminal = sys.stdout
+        
+        # 确保log文件所在目录存在
+        log_file.parent.mkdir(parents=True, exist_ok=True)
+        
+        # 打开日志文件
+        self.log = open(log_file, 'w', encoding='utf-8')
+
+    def write(self, message):
+        # 写入到终端
+        self.terminal.write(message)
+        # 写入到文件
+        self.log.write(message)
+        # 立即刷新文件缓冲区
+        self.log.flush()
+
+    def flush(self):
+        # 刷新终端和文件
+        self.terminal.flush()
+        self.log.flush()
+
+    def close(self):
+        # 关闭日志文件
+        if hasattr(self, 'log'):
+            self.log.close()
 
 # ===================================================================
 # 1. 数据预处理模块
@@ -388,7 +424,7 @@ def create_model(config, num_classes=None, device='cpu'):
 
 
 # ===================================================================
-# 4. 训练与验证函数
+# 4. 训练与验证函数（去除了tqdm的日志输出）
 # ===================================================================
 
 def train_epoch(model, train_loader, criterion, optimizer, device, epoch, mode):
@@ -399,9 +435,10 @@ def train_epoch(model, train_loader, criterion, optimizer, device, epoch, mode):
         model.likelihood_beta3.train()
 
     running_loss = 0.0
-    pbar = tqdm(enumerate(train_loader), total=len(train_loader), desc=f'Epoch {epoch} - Training')
+    total_samples = 0
+    correct_predictions = 0
     
-    for i, (inputs, labels) in pbar:
+    for i, (inputs, labels) in enumerate(train_loader):
         inputs, labels = inputs.to(device), labels.to(device)
         
         optimizer.zero_grad()
@@ -414,8 +451,8 @@ def train_epoch(model, train_loader, criterion, optimizer, device, epoch, mode):
             
             _, predicted = outputs.max(1)
             correct = predicted.eq(labels).sum().item()
-            total = labels.size(0)
-            pbar.set_postfix({'Loss': f'{loss.item():.4f}', 'Acc': f'{100.*correct/total:.2f}%'})
+            correct_predictions += correct
+            total_samples += labels.size(0)
 
         elif mode == 'mlp':
             outputs = model(inputs)
@@ -424,16 +461,6 @@ def train_epoch(model, train_loader, criterion, optimizer, device, epoch, mode):
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.step()
-            
-            with torch.no_grad():
-                mse = torch.mean((outputs - labels) ** 2).item()
-                mae = torch.mean(torch.abs(outputs - labels)).item()
-            
-            pbar.set_postfix({
-                'Loss': f'{loss.item():.4f}',
-                'MSE': f'{mse:.4f}',
-                'MAE': f'{mae:.4f}'
-            })
 
         elif mode == 'gp':
             try:
@@ -455,21 +482,21 @@ def train_epoch(model, train_loader, criterion, optimizer, device, epoch, mode):
                     print(f"警告: 在批次 {i} 检测到异常损失值: {loss.item()}")
                     continue
                 
-                pbar.set_postfix({
-                    'Loss': f'{loss.item():.4f}', 
-                    'ELBO_β2': f'{elbo_beta2.item():.4f}', 
-                    'ELBO_β3': f'{elbo_beta3.item():.4f}',
-                    'Noise_β2': f'{model.likelihood_beta2.noise.item():.4f}',
-                    'Noise_β3': f'{model.likelihood_beta3.noise.item():.4f}'
-                })
-                
             except Exception as e:
                 print(f"训练批次 {i} 出现错误: {e}")
                 continue
 
         running_loss += loss.item() if not (torch.isnan(loss) or torch.isinf(loss)) else 0.0
 
-    return running_loss / len(train_loader)
+    avg_loss = running_loss / len(train_loader)
+    
+    if mode == 'classifier':
+        train_acc = 100. * correct_predictions / total_samples if total_samples > 0 else 0.0
+        print(f"Epoch {epoch} - 训练完成: 平均损失={avg_loss:.4f}, 准确率={train_acc:.2f}%")
+    else:
+        print(f"Epoch {epoch} - 训练完成: 平均损失={avg_loss:.4f}")
+    
+    return avg_loss
 
 
 def validate_epoch(model, val_loader, criterion, device, epoch, mode):
@@ -483,8 +510,7 @@ def validate_epoch(model, val_loader, criterion, device, epoch, mode):
     all_preds, all_labels = [], []
     
     with torch.no_grad():
-        pbar = tqdm(enumerate(val_loader), total=len(val_loader), desc=f'Epoch {epoch} - Validation')
-        for i, (inputs, labels) in pbar:
+        for i, (inputs, labels) in enumerate(val_loader):
             inputs, labels = inputs.to(device), labels.to(device)
             
             if mode == 'classifier':
@@ -538,7 +564,7 @@ def validate_epoch(model, val_loader, criterion, device, epoch, mode):
     if mode == 'classifier':
         val_acc = 100. * np.sum(np.array(all_preds) == np.array(all_labels)) / len(all_labels)
         cm = confusion_matrix(all_labels, all_preds)
-        print(f"Validation Acc: {val_acc:.2f}%")
+        print(f"验证完成: 损失={running_loss / len(val_loader):.4f}, 准确率={val_acc:.2f}%")
         return running_loss / len(val_loader), {'accuracy': val_acc, 'confusion_matrix': cm}
 
     elif mode in ['gp', 'mlp']:
@@ -560,14 +586,19 @@ def validate_epoch(model, val_loader, criterion, device, epoch, mode):
         mae_beta2 = mean_absolute_error(all_labels[:, 0], all_preds[:, 0])
         mae_beta3 = mean_absolute_error(all_labels[:, 1], all_preds[:, 1])
         
-        print(f"Validation MSE: {mse:.6f}, MAE: {mae:.6f}")
-        print(f"Beta2 - MSE: {mse_beta2:.6f}, MAE: {mae_beta2:.6f}")
-        print(f"Beta3 - MSE: {mse_beta3:.6f}, MAE: {mae_beta3:.6f}")
+        # 计算R²
+        r2_beta2 = r2_score(all_labels[:, 0], all_preds[:, 0])
+        r2_beta3 = r2_score(all_labels[:, 1], all_preds[:, 1])
+        
+        print(f"验证完成: 损失={running_loss / len(val_loader):.4f}, MSE={mse:.6f}, MAE={mae:.6f}")
+        print(f"Beta2 - MSE: {mse_beta2:.6f}, MAE: {mae_beta2:.6f}, R²: {r2_beta2:.6f}")
+        print(f"Beta3 - MSE: {mse_beta3:.6f}, MAE: {mae_beta3:.6f}, R²: {r2_beta3:.6f}")
         
         return running_loss / len(val_loader), {
             'mse': mse, 'mae': mae,
             'mse_beta2': mse_beta2, 'mse_beta3': mse_beta3,
             'mae_beta2': mae_beta2, 'mae_beta3': mae_beta3,
+            'r2_beta2': r2_beta2, 'r2_beta3': r2_beta3,
             'predictions': all_preds, 'labels': all_labels
         }
 
@@ -663,7 +694,7 @@ def setup_discriminative_lr(model, config):
             {'params': layer_groups[0], 'lr': base_lr * (decay ** 3)},
             {'params': layer_groups[1], 'lr': base_lr * (decay ** 2)},
             {'params': layer_groups[2], 'lr': base_lr * decay},
-            {'params': mlp_params, 'lr': base_lr}
+            {'params': gp_params, 'lr': base_lr}
         ]
     else:  # Handles ResNetMLP and standard ResNet for classification
         # 正确地访问 ResNetMLP 内部的 ResNet 骨干网络
@@ -715,8 +746,8 @@ def save_confusion_matrix_to_tensorboard(writer, cm, class_names, epoch):
     plt.close()
 
 
-def plot_regression_predictions(predictions, labels, output_path, epoch, mode_name):
-    """绘制回归预测结果的散点图"""
+def plot_regression_predictions(predictions, labels, output_path, epoch, mode_name, mse_beta2, mse_beta3, r2_beta2, r2_beta3):
+    """绘制回归预测结果的散点图，带有MSE和R²标注"""
     fig, axes = plt.subplots(1, 3, figsize=(18, 6))
     
     # Beta2 预测 vs 真实值
@@ -728,6 +759,11 @@ def plot_regression_predictions(predictions, labels, output_path, epoch, mode_na
     axes[0].set_title(f'{mode_name} Beta2 Predictions vs True Values')
     axes[0].grid(True, alpha=0.3)
     
+    # 在左上角添加MSE和R²标注
+    axes[0].text(0.05, 0.95, f'MSE: {mse_beta2:.6f}\nR²: {r2_beta2:.6f}', 
+                transform=axes[0].transAxes, verticalalignment='top',
+                bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
+    
     # Beta3 预测 vs 真实值
     axes[1].scatter(labels[:, 1], predictions[:, 1], alpha=0.6)
     axes[1].plot([labels[:, 1].min(), labels[:, 1].max()], 
@@ -736,6 +772,11 @@ def plot_regression_predictions(predictions, labels, output_path, epoch, mode_na
     axes[1].set_ylabel('Predicted Beta3')
     axes[1].set_title(f'{mode_name} Beta3 Predictions vs True Values')
     axes[1].grid(True, alpha=0.3)
+    
+    # 在左上角添加MSE和R²标注
+    axes[1].text(0.05, 0.95, f'MSE: {mse_beta3:.6f}\nR²: {r2_beta3:.6f}', 
+                transform=axes[1].transAxes, verticalalignment='top',
+                bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
     
     # 2D散点图：(beta2, beta3)空间中的预测
     axes[2].scatter(labels[:, 0], labels[:, 1], alpha=0.6, label='True', s=30)
@@ -747,8 +788,45 @@ def plot_regression_predictions(predictions, labels, output_path, epoch, mode_na
     axes[2].grid(True, alpha=0.3)
     
     plt.tight_layout()
-    plt.savefig(output_path / f'{mode_name.lower()}_predictions_epoch_{epoch}.png', dpi=150)
+    plt.savefig(output_path, dpi=150)
     plt.close()
+
+
+def save_best_model_outputs(predictions, labels, output_dir, mode_name, val_metrics):
+    """保存最佳模型的输出数据和图片"""
+    # 保存图片
+    plot_path = output_dir / 'best_model_output.png'
+    plot_regression_predictions(
+        predictions, 
+        labels, 
+        plot_path, 
+        epoch=None,  # 不需要epoch信息 
+        mode_name=mode_name.upper(),
+        mse_beta2=val_metrics['mse_beta2'],
+        mse_beta3=val_metrics['mse_beta3'],
+        r2_beta2=val_metrics['r2_beta2'],
+        r2_beta3=val_metrics['r2_beta3']
+    )
+    
+    # 保存数据到npz文件
+    npz_path = output_dir / 'best_model_output.npz'
+    np.savez(
+        npz_path,
+        predictions=predictions,
+        labels=labels,
+        mse_beta2=val_metrics['mse_beta2'],
+        mse_beta3=val_metrics['mse_beta3'],
+        mae_beta2=val_metrics['mae_beta2'],
+        mae_beta3=val_metrics['mae_beta3'],
+        r2_beta2=val_metrics['r2_beta2'],
+        r2_beta3=val_metrics['r2_beta3'],
+        overall_mse=val_metrics['mse'],
+        overall_mae=val_metrics['mae']
+    )
+    
+    print(f"最佳模型输出已保存:")
+    print(f"  - 图片: {plot_path}")
+    print(f"  - 数据: {npz_path}")
 
 
 # ===================================================================
@@ -773,163 +851,190 @@ def main():
     checkpoints_dir = output_dir / 'checkpoints'; checkpoints_dir.mkdir(exist_ok=True)
     plots_dir = output_dir / 'plots'; plots_dir.mkdir(exist_ok=True)
     
-    # 设置日志
-    logging.basicConfig(
-        level=getattr(logging, config['logging']['level']),
-        format='%(asctime)s - %(message)s',
-        handlers=[
-            logging.FileHandler(output_dir / 'training.log'),
-            logging.StreamHandler()
-        ]
-    )
+    # 设置自定义日志记录器
+    log_file = output_dir / 'training.log'
+    custom_logger = CustomLogger(log_file)
+    sys.stdout = custom_logger
     
-    # TensorBoard写入器
-    if config['logging']['tensorboard']:
-        writer = SummaryWriter(str(logs_dir))
-    else:
-        writer = None
-    
-    # 创建数据集
-    train_dataset = InterferenceDataset(
-        Path(config['data_path']) / 'train', 
-        config=config, 
-        split='train'
-    )
-    val_dataset = InterferenceDataset(
-        Path(config['data_path']) / 'val', 
-        config=config, 
-        split='val'
-    )
-    
-    # 创建模型
-    mode = config['inference_mode']
-    if mode == 'classifier':
-        model = create_model(config, num_classes=train_dataset.num_classes, device=device)
-        class_names = [f"({p[0]:.4f}, {p[1]:.4f})" for p in train_dataset.class_to_pair.values()]
-        best_metric = 0.0  # Accuracy
-        metric_mode = 'max'
-    else:
-        model = create_model(config, device=device)
-        best_metric = float('inf')  # MSE
-        metric_mode = 'min'
-    
-    model.to(device)
-    
-    # 创建优化器和损失函数
-    optimizer, criterion = create_optimizer_and_criterion(model, config, len(train_dataset))
-    
-    # 学习率调度器
-    scheduler = optim.lr_scheduler.ReduceLROnPlateau(
-        optimizer, mode=metric_mode, factor=0.5, patience=5, verbose=True
-    )
-    
-    # 最佳模型路径
-    best_model_path = checkpoints_dir / 'best_model.pth'
-    
-    # 开始训练
-    logging.info(f"开始训练... 模式: {mode.upper()}")
-    if mode == 'gp':
-        logging.info(f"变分GP配置: 特征维度={model.feature_dim}, 诱导点数量={model.num_inducing}")
-    elif mode == 'mlp':
-        mlp_conf = config['mlp_config']
-        logging.info(f"MLP回归配置: 特征维度={mlp_conf['feature_dim']}, 隐藏层={mlp_conf['hidden_dims']}")
-    
-    for epoch in range(1, config['epochs'] + 1):
-        logging.info(f"\n{'='*50}\nEpoch {epoch}/{config['epochs']}\n{'='*50}")
-        
-        # 创建数据加载器
-        train_loader = DataLoader(
-            train_dataset, 
-            batch_size=config['batch_size'], 
-            shuffle=True, 
-            num_workers=config['num_workers']
-        )
-        val_loader = DataLoader(
-            val_dataset, 
-            batch_size=config['batch_size'], 
-            shuffle=False, 
-            num_workers=config['num_workers']
+    try:
+        # 设置Python日志系统
+        logging.basicConfig(
+            level=getattr(logging, config['logging']['level']),
+            format='%(asctime)s - %(message)s',
+            handlers=[
+                logging.StreamHandler()  # 这会输出到我们重定向的stdout
+            ]
         )
         
-        # 训练和验证
-        train_loss = train_epoch(model, train_loader, criterion, optimizer, device, epoch, mode)
-        val_loss, val_metrics = validate_epoch(model, val_loader, criterion, device, epoch, mode)
-        
-        # 学习率调度
-        if mode == 'classifier':
-            scheduler_metric = val_metrics['accuracy']
+        # TensorBoard写入器
+        if config['logging']['tensorboard']:
+            writer = SummaryWriter(str(logs_dir))
         else:
-            scheduler_metric = val_metrics['mse']
-        scheduler.step(scheduler_metric)
+            writer = None
         
-        # 记录到TensorBoard
-        if writer:
-            writer.add_scalar('Loss/Train', train_loss, epoch)
-            writer.add_scalar('Loss/Validation', val_loss, epoch)
-            writer.add_scalar('Learning_Rate', optimizer.param_groups[-1]['lr'], epoch)
+        # 创建数据集
+        train_dataset = InterferenceDataset(
+            Path(config['data_path']) / 'train', 
+            config=config, 
+            split='train'
+        )
+        val_dataset = InterferenceDataset(
+            Path(config['data_path']) / 'val', 
+            config=config, 
+            split='val'
+        )
+        
+        # 创建模型
+        mode = config['inference_mode']
+        if mode == 'classifier':
+            model = create_model(config, num_classes=train_dataset.num_classes, device=device)
+            class_names = [f"({p[0]:.4f}, {p[1]:.4f})" for p in train_dataset.class_to_pair.values()]
+            best_metric = 0.0  # Accuracy
+            metric_mode = 'max'
+        else:
+            model = create_model(config, device=device)
+            best_metric = float('inf')  # MSE
+            metric_mode = 'min'
+        
+        model.to(device)
+        
+        # 创建优化器和损失函数
+        optimizer, criterion = create_optimizer_and_criterion(model, config, len(train_dataset))
+        
+        # 学习率调度器
+        scheduler = optim.lr_scheduler.ReduceLROnPlateau(
+            optimizer, mode=metric_mode, factor=0.5, patience=5, verbose=True
+        )
+        
+        # 最佳模型路径
+        best_model_path = checkpoints_dir / 'best_model.pth'
+        
+        # 开始训练
+        logging.info(f"开始训练... 模式: {mode.upper()}")
+        if mode == 'gp':
+            logging.info(f"变分GP配置: 特征维度={model.feature_dim}, 诱导点数量={model.num_inducing}")
+        elif mode == 'mlp':
+            mlp_conf = config['mlp_config']
+            logging.info(f"MLP回归配置: 特征维度={mlp_conf['feature_dim']}, 隐藏层={mlp_conf['hidden_dims']}")
+        
+        for epoch in range(1, config['epochs'] + 1):
+            logging.info(f"\n{'='*50}\nEpoch {epoch}/{config['epochs']}\n{'='*50}")
             
+            # 创建数据加载器
+            train_loader = DataLoader(
+                train_dataset, 
+                batch_size=config['batch_size'], 
+                shuffle=True, 
+                num_workers=config['num_workers']
+            )
+            val_loader = DataLoader(
+                val_dataset, 
+                batch_size=config['batch_size'], 
+                shuffle=False, 
+                num_workers=config['num_workers']
+            )
+            
+            # 训练和验证
+            train_loss = train_epoch(model, train_loader, criterion, optimizer, device, epoch, mode)
+            val_loss, val_metrics = validate_epoch(model, val_loader, criterion, device, epoch, mode)
+            
+            # 学习率调度
             if mode == 'classifier':
-                writer.add_scalar('Accuracy/Validation', val_metrics['accuracy'], epoch)
-                save_confusion_matrix_to_tensorboard(writer, val_metrics['confusion_matrix'], class_names, epoch)
+                scheduler_metric = val_metrics['accuracy']
             else:
-                writer.add_scalar('MSE/Validation', val_metrics['mse'], epoch)
-                writer.add_scalar('MAE/Validation', val_metrics['mae'], epoch)
-                writer.add_scalar('MSE_Beta2/Validation', val_metrics['mse_beta2'], epoch)
-                writer.add_scalar('MSE_Beta3/Validation', val_metrics['mse_beta3'], epoch)
+                scheduler_metric = val_metrics['mse']
+            scheduler.step(scheduler_metric)
+            
+            # 记录到TensorBoard
+            if writer:
+                writer.add_scalar('Loss/Train', train_loss, epoch)
+                writer.add_scalar('Loss/Validation', val_loss, epoch)
+                writer.add_scalar('Learning_Rate', optimizer.param_groups[-1]['lr'], epoch)
                 
-                if mode == 'gp':
-                    writer.add_scalar('GP/Noise_Beta2', model.likelihood_beta2.noise.item(), epoch)
-                    writer.add_scalar('GP/Noise_Beta3', model.likelihood_beta3.noise.item(), epoch)
-        
-        # 绘制预测结果
-        if mode in ['gp', 'mlp'] and config['validation']['plot_predictions']:
-            if epoch % config['validation']['plot_interval'] == 0:
-                plot_regression_predictions(
-                    val_metrics['predictions'], 
-                    val_metrics['labels'], 
-                    plots_dir, 
-                    epoch, 
-                    mode.upper()
-                )
-        
-        # 保存最佳模型
-        is_best = False
-        if mode == 'classifier':
-            if val_metrics['accuracy'] > best_metric:
-                best_metric = val_metrics['accuracy']
-                is_best = True
-                logging.info(f"新的最佳模型! 验证准确率: {best_metric:.2f}%")
-        else:
-            if val_metrics['mse'] < best_metric:
-                best_metric = val_metrics['mse']
-                is_best = True
-                logging.info(f"新的最佳模型! 验证MSE: {best_metric:.6f}")
-        
-        if is_best and config['save_options']['save_best_only']:
-            save_payload = {
-                'epoch': epoch,
-                'model_state_dict': model.state_dict(),
-                'optimizer_state_dict': optimizer.state_dict(),
-                'best_metric': best_metric,
-                'config': config
-            }
+                if mode == 'classifier':
+                    writer.add_scalar('Accuracy/Validation', val_metrics['accuracy'], epoch)
+                    save_confusion_matrix_to_tensorboard(writer, val_metrics['confusion_matrix'], class_names, epoch)
+                else:
+                    writer.add_scalar('MSE/Validation', val_metrics['mse'], epoch)
+                    writer.add_scalar('MAE/Validation', val_metrics['mae'], epoch)
+                    writer.add_scalar('MSE_Beta2/Validation', val_metrics['mse_beta2'], epoch)
+                    writer.add_scalar('MSE_Beta3/Validation', val_metrics['mse_beta3'], epoch)
+                    writer.add_scalar('R2_Beta2/Validation', val_metrics['r2_beta2'], epoch)
+                    writer.add_scalar('R2_Beta3/Validation', val_metrics['r2_beta3'], epoch)
+                    
+                    if mode == 'gp':
+                        writer.add_scalar('GP/Noise_Beta2', model.likelihood_beta2.noise.item(), epoch)
+                        writer.add_scalar('GP/Noise_Beta3', model.likelihood_beta3.noise.item(), epoch)
+            
+            # 绘制预测结果（定期）
+            if mode in ['gp', 'mlp'] and config['validation']['plot_predictions']:
+                if epoch % config['validation']['plot_interval'] == 0:
+                    plot_path = plots_dir / f'{mode.lower()}_predictions_epoch_{epoch}.png'
+                    plot_regression_predictions(
+                        val_metrics['predictions'], 
+                        val_metrics['labels'], 
+                        plot_path, 
+                        epoch, 
+                        mode.upper(),
+                        val_metrics['mse_beta2'],
+                        val_metrics['mse_beta3'],
+                        val_metrics['r2_beta2'],
+                        val_metrics['r2_beta3']
+                    )
+            
+            # 保存最佳模型
+            is_best = False
             if mode == 'classifier':
-                save_payload['class_to_pair'] = train_dataset.class_to_pair
-            torch.save(save_payload, best_model_path)
+                if val_metrics['accuracy'] > best_metric:
+                    best_metric = val_metrics['accuracy']
+                    is_best = True
+                    logging.info(f"新的最佳模型! 验证准确率: {best_metric:.2f}%")
+            else:
+                if val_metrics['mse'] < best_metric:
+                    best_metric = val_metrics['mse']
+                    is_best = True
+                    logging.info(f"新的最佳模型! 验证MSE: {best_metric:.6f}")
+            
+            if is_best and config['save_options']['save_best_only']:
+                save_payload = {
+                    'epoch': epoch,
+                    'model_state_dict': model.state_dict(),
+                    'optimizer_state_dict': optimizer.state_dict(),
+                    'best_metric': best_metric,
+                    'config': config
+                }
+                if mode == 'classifier':
+                    save_payload['class_to_pair'] = train_dataset.class_to_pair
+                torch.save(save_payload, best_model_path)
+                
+                # 保存最佳模型的输出（对于回归任务）
+                if mode in ['gp', 'mlp']:
+                    save_best_model_outputs(
+                        val_metrics['predictions'], 
+                        val_metrics['labels'], 
+                        output_dir, 
+                        mode, 
+                        val_metrics
+                    )
+            
+            # 输出训练日志
+            if mode == 'classifier':
+                logging.info(f"Epoch {epoch} -> Train Loss: {train_loss:.4f} | "
+                            f"Val Loss: {val_loss:.4f}, Acc: {val_metrics['accuracy']:.2f}%")
+            else:
+                logging.info(f"Epoch {epoch} -> Train Loss: {train_loss:.4f} | "
+                            f"Val Loss: {val_loss:.4f}, MSE: {val_metrics['mse']:.6f}, "
+                            f"MAE: {val_metrics['mae']:.6f}")
         
-        # 输出训练日志
-        if mode == 'classifier':
-            logging.info(f"Epoch {epoch} -> Train Loss: {train_loss:.4f} | "
-                        f"Val Loss: {val_loss:.4f}, Acc: {val_metrics['accuracy']:.2f}%")
-        else:
-            logging.info(f"Epoch {epoch} -> Train Loss: {train_loss:.4f} | "
-                        f"Val Loss: {val_loss:.4f}, MSE: {val_metrics['mse']:.6f}, "
-                        f"MAE: {val_metrics['mae']:.6f}")
-    
-    if writer:
-        writer.close()
-    logging.info(f"训练完成! 最佳验证指标: {best_metric}")
+        if writer:
+            writer.close()
+        logging.info(f"训练完成! 最佳验证指标: {best_metric}")
+        
+    finally:
+        # 确保恢复标准输出并关闭日志文件
+        sys.stdout = custom_logger.terminal
+        custom_logger.close()
 
 
 if __name__ == '__main__':
-    main() 
+    main()

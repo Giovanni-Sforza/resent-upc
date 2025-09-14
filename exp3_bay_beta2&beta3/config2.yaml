@@ -3,7 +3,7 @@
 # ===================================================================
 
 # 实验基本信息
-experiment_name: "resnet_mlp_beta_regression_50_cut_224"
+experiment_name: "resnet_mlp_beta_regression_50" #"resnet_mlp_beta_regression_1_cut_224"
 seed: 42
 device: "auto"  # 可选: "auto", "cuda", "cpu"
 
@@ -34,7 +34,7 @@ gp_config:
 preprocessing:
   # 中心裁剪配置
   center_crop:
-    enabled: true
+    enabled: false #true
     size: 224 #320  # 裁剪尺寸 (int or [height, width])
   
   # 对数归一化配置
