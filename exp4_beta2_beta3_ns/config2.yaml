@@ -1,0 +1,256 @@
+# ===================================================================
+# 多任务实验配置文件 - 回归 + 分类 (GradNorm版本)
+# ===================================================================
+
+# 实验基本信息
+experiment_name: "resnet50_exp4_beta_regression_classification_50_cut_R2_2"
+seed: 42
+device: "auto"  # 可选: "auto", "cuda", "cpu"
+
+# 数据路径
+data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_50"
+
+# ===================================================================
+# 推理模式配置
+# ===================================================================
+inference_mode: "multitask_mlp"  # 多任务模式
+
+# 多任务MLP配置
+multitask_mlp_config:
+  feature_dim: 256
+  
+  # 共享特征层 (可选, 为空则直接分到任务特定层)
+  shared_dims: [] #[128]  # 共享的隐藏层维度，可以设置为 [] 如果不需要共享层
+  
+  # 回归任务特定层
+  regression_dims: [128, 32]  # 回归头的隐藏层维度
+  regression_loss_type: "huber"  # 可选: "mse", "mae", "huber"
+  
+  # 分类任务特定层  
+  classification_dims: [64]  # 分类头的隐藏层维度
+  
+  # 任务权重 (初始权重，GradNorm会动态调整)
+  # 注意：当使用GradNorm时，这些权重仅作为参考，实际权重会自动学习
+  task_weights:
+    regression: 3.0      # 回归任务初始权重
+    classification: 0.1  # 分类任务初始权重
+  
+  # 通用参数
+  dropout: 0.4
+
+# ===================================================================
+# GradNorm配置 (新增)
+# ===================================================================
+gradnorm:
+  enabled: true           # 是否启用GradNorm
+  alpha: 1.5             # GradNorm超参数，控制任务平衡强度
+                         # - alpha=0: 任务权重保持不变
+                         # - alpha=1.5: 推荐值，适度平衡
+                         # - alpha越大，任务平衡越激进
+  
+  lr: 0.025              # GradNorm权重的学习率
+                         # - 通常比主模型学习率大一个数量级
+                         # - 过大可能导致权重震荡
+                         # - 过小可能导致权重更新缓慢
+  
+  weight: 0.1            # GradNorm损失的权重
+                         # - 控制GradNorm正则化项在总损失中的比重
+                         # - 建议范围: 0.01 - 1.0
+  
+  # 高级选项
+  update_frequency: 1    # 每多少个batch更新一次权重 (1表示每个batch都更新)
+  warmup_epochs: 5       # 前几个epoch不使用GradNorm，让模型先稳定训练
+  
+  # 权重约束选项
+  weight_constraints:
+    min_weight: 0.01     # 最小权重值，防止权重变为0
+    max_weight: 10.0     # 最大权重值，防止权重过大
+    renormalize: true    # 是否在每次更新后重新规范化权重
+
+# ===================================================================
+# 数据预处理配置
+# ===================================================================
+preprocessing:
+  # 中心裁剪配置
+  center_crop:
+    enabled: true
+    size: 224
+  
+  # 对数归一化配置
+  log_normalization:
+    enabled: true
+    epsilon: 0.000000001  # 防止log(0)的小值
+  
+  # 图像调整大小配置
+  resize:
+    enabled: true
+    size: 224  # 调整到的尺寸
+  
+  # 标准化配置
+  normalize:
+    enabled: true
+    mean: [0.485, 0.456, 0.406]  # ImageNet标准
+    std: [0.229, 0.224, 0.225]   # ImageNet标准
+  
+  # 数据增强配置 (可扩展)
+  augmentation:
+    enabled: false
+    random_rotation: false
+    random_flip: false
+
+# ===================================================================
+# 训练参数
+# ===================================================================
+epochs: 300
+batch_size: 32
+num_workers: 4
+
+# 学习率配置
+learning_rates:
+  base: 0.001
+  layer_decay: 0.1  # 分层学习率衰减因子
+
+# 是否使用分层学习率
+use_discriminative_lr: true  # GradNorm版本中启用
+
+# 优化器参数
+weight_decay: 0.0001
+
+# ===================================================================
+# 模型配置
+# ===================================================================
+model_config:
+  resnet_pretrained: true  # 是否使用预训练ResNet
+  dropout_rate: 0.1       # 全局dropout率
+
+# ===================================================================
+# 输出和保存配置
+# ===================================================================
+output_dir: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments"
+
+# 保存选项
+save_options:
+  save_best_only: true
+  save_interval: 10
+  save_gradnorm_weights: true  # 是否保存GradNorm权重
+
+# ===================================================================
+# 验证和可视化配置
+# ===================================================================
+validation:
+  plot_predictions: true
+  plot_interval: 5  # 每隔多少epoch绘制预测图
+  plot_weight_evolution: true  # 是否绘制权重变化曲线
+
+# ===================================================================
+# 日志配置
+# ===================================================================
+logging:
+  level: "INFO"
+  tensorboard: true
+  log_gradnorm_weights: true    # 是否记录GradNorm权重到TensorBoard
+  log_task_gradients: false    # 是否记录各任务的梯度范数 (可能影响性能)
+
+# ===================================================================
+# 高级配置选项
+# ===================================================================
+
+# 早停配置 (基于总损失)
+early_stopping:
+  enabled: false
+  patience: 15
+  min_delta: 0.0001
+
+# GPU内存优化
+gpu_optimization:
+  mixed_precision: false
+  gradient_accumulation_steps: 1
+
+# 数据加载优化
+data_loading:
+  pin_memory: true
+  persistent_workers: false
+
+# 调试选项
+debug:
+  enabled: false
+  plot_sample_data: false
+  validate_data_loading: false
+  log_gradient_flow: false      # 是否记录梯度流信息
+
+# ===================================================================
+# 多任务特定配置
+# ===================================================================
+multitask_specific:
+  # 是否在TensorBoard中分别记录各任务的指标
+  separate_task_logging: true
+  
+  # 是否保存任务特定的最佳模型 (基于单任务指标)
+  save_task_specific_best: false
+  
+  # 任务重要性监控
+  task_importance_tracking:
+    enabled: true
+    save_interval: 10         # 每多少个epoch保存一次权重历史
+  
+  # 任务收敛监控
+  convergence_monitoring:
+    enabled: true
+    patience: 20              # 如果某任务连续多少epoch没有改善则报警
+    improvement_threshold: 0.001  # 改善阈值
+
+# ===================================================================
+# GradNorm特定的实验设置 (新增)
+# ===================================================================
+gradnorm_experiments:
+  # 权重初始化策略
+  weight_initialization: "equal"  # "equal", "loss_based", "custom"
+  
+  # 如果选择custom，则指定初始权重
+  custom_initial_weights:
+    regression: 1.0
+    classification: 1.0
+  
+  # 损失平滑策略
+  loss_smoothing:
+    enabled: true
+    decay: 0.1               # 指数移动平均衰减率
+  
+  # 梯度范数计算选项
+  gradient_norm_options:
+    norm_type: 2             # L2范数
+    shared_layer_selection: "last"  # "last", "all", "custom"
+    
+  # 性能评估
+  performance_metrics:
+    track_weight_stability: true     # 跟踪权重稳定性
+    track_gradient_alignment: false  # 跟踪梯度对齐度 (计算开销大)
+    
+# ===================================================================
+# 超参数搜索配置 (可选)
+# ===================================================================
+hyperparameter_search:
+  enabled: false
+  method: "grid"  # "grid", "random", "bayesian"
+  
+  # GradNorm超参数搜索空间
+  gradnorm_search_space:
+    alpha: [0.5, 1.0, 1.5, 2.0]
+    lr: [0.01, 0.025, 0.05]
+    weight: [0.01, 0.1, 0.5]
+
+# ===================================================================
+# 模型解释性分析 (可选)
+# ===================================================================
+interpretability:
+  enabled: false
+  
+  # 特征重要性分析
+  feature_importance:
+    method: "gradcam"        # "gradcam", "attention", "integrated_gradients"
+    save_visualizations: true
+    
+  # 任务特异性分析
+  task_specificity:
+    analyze_shared_features: true
+    analyze_task_conflicts: true

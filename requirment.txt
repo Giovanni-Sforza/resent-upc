@@ -32,6 +32,7 @@ pathlib2>=2.3.0  # Python < 3.6兼容
 # 高斯过程
 gpytorch=1.4.0
 
+opencv-python
 # 注意：根据您的PyTorch版本调整相应依赖
 # 对于CUDA支持，请根据您的CUDA版本安装对应的PyTorch版本
 # 例如：

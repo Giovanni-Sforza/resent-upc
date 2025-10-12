@@ -164,15 +164,13 @@ class DataPreprocessor:
 
 
 # ===================================================================
-# 2. 数据集类
+# 2. 数据集类（修改为单任务）
 # ===================================================================
 
 class InterferenceDataset(Dataset):
     """
-    改进的干涉数据集类
-    - 统一的数据预处理流程
-    - 更清晰的标签解析逻辑
-    - 可配置的预处理选项
+    单任务干涉数据集类
+    - 从文件名提取单个R2值
     """
     def __init__(self, data_path, config, split='train'):
         self.data_path = Path(data_path)
@@ -198,45 +196,44 @@ class InterferenceDataset(Dataset):
             print(f"  - 类别数量: {self.num_classes}")
 
     def _parse_labels(self):
-        """解析beta值标签"""
-        beta_pattern = re.compile(r"beta2_([\d.]+)_beta3_([\d.]+)")
-        beta_pairs = []
+        """解析R2值标签"""
+        r2_pattern = re.compile(r'R2_([0-9.]+)')
+        r2_values = []
         
         for file_path in self.file_paths:
-            match = beta_pattern.search(file_path.stem)
+            match = r2_pattern.search(file_path.stem)
             if match:
-                beta2 = float(match.group(1))
-                beta3 = float(match.group(2))
-                beta_pairs.append((beta2, beta3))
+                r2 = float(match.group(1))
+                r2_values.append(r2)
             else:
-                print(f"警告: 文件 {file_path.name} 无法匹配beta值, 已跳过。")
+                print(f"警告: 文件 {file_path.name} 无法匹配R2值, 已跳过。")
 
-        if not beta_pairs:
+        if not r2_values:
             raise ValueError(f"在路径 {self.data_path} 中没有找到任何有效的数据文件!")
 
         # 根据推理模式生成不同格式的标签
         if self.mode == 'classifier':
-            return self._create_classification_labels(beta_pairs)
+            return self._create_classification_labels(r2_values)
         elif self.mode in ['gp', 'mlp']:
-            return self._create_regression_labels(beta_pairs)
+            return self._create_regression_labels(r2_values)
         else:
             raise ValueError(f"未知的 inference_mode: {self.mode}")
 
-    def _create_classification_labels(self, beta_pairs):
+    def _create_classification_labels(self, r2_values):
         """创建分类任务的标签"""
-        unique_pairs = sorted(list(set(beta_pairs)))
-        self.class_to_pair = {i: pair for i, pair in enumerate(unique_pairs)}
-        self.pair_to_class = {pair: i for i, pair in self.class_to_pair.items()}
-        self.num_classes = len(unique_pairs)
+        unique_values = sorted(list(set(r2_values)))
+        self.class_to_value = {i: val for i, val in enumerate(unique_values)}
+        self.value_to_class = {val: i for i, val in self.class_to_value.items()}
+        self.num_classes = len(unique_values)
         
-        labels = [self.pair_to_class[pair] for pair in beta_pairs]
-        print(f"分类模式: 发现 {self.num_classes} 个唯一的 (beta2, beta3) 类别")
+        labels = [self.value_to_class[val] for val in r2_values]
+        print(f"分类模式: 发现 {self.num_classes} 个唯一的 R2 类别")
         return labels
 
-    def _create_regression_labels(self, beta_pairs):
+    def _create_regression_labels(self, r2_values):
         """创建回归任务的标签"""
-        labels = [torch.tensor([p[0], p[1]], dtype=torch.float32) for p in beta_pairs]
-        print(f"回归模式: 加载 {len(labels)} 个 (beta2, beta3) 坐标")
+        labels = [torch.tensor([val], dtype=torch.float32) for val in r2_values]
+        print(f"回归模式: 加载 {len(labels)} 个 R2 值")
         return labels
 
     def __len__(self):
@@ -260,14 +257,14 @@ class InterferenceDataset(Dataset):
 
 
 # ===================================================================
-# 3. 模型定义
+# 3. 模型定义（修改为单输出）
 # ===================================================================
 
 class ResNetFeatureExtractor(nn.Module):
     """ResNet特征提取器"""
     def __init__(self, feature_dim, dropout_rate=0.1):
         super().__init__()
-        resnet =  models.resnet50(pretrained=True)#models.resnet34(pretrained=True)
+        resnet = models.resnet50(pretrained=True)
         self.features = nn.Sequential(*list(resnet.children())[:-1])
         
         self.feature_proj = nn.Sequential(
@@ -285,7 +282,7 @@ class ResNetFeatureExtractor(nn.Module):
 
 
 class ResNetMLP(nn.Module):
-    """ResNet + MLP回归模型"""
+    """ResNet + MLP回归模型（单输出）"""
     def __init__(self, config):
         super().__init__()
         mlp_config = config['mlp_config']
@@ -316,8 +313,8 @@ class ResNetMLP(nn.Module):
             ])
             current_dim = hidden_dim
         
-        # 输出层
-        layers.append(nn.Linear(current_dim, 2))  # beta2, beta3
+        # 输出层（单个值）
+        layers.append(nn.Linear(current_dim, 1))
         
         return nn.Sequential(*layers)
     
@@ -363,7 +360,7 @@ class SimpleVariationalGPModel(gpytorch.models.ApproximateGP):
 
 
 class ResNetVariationalGP(nn.Module):
-    """ResNet + 变分GP联合模型"""
+    """ResNet + 变分GP联合模型（单输出）"""
     def __init__(self, config, device='cpu'):
         super().__init__()
         gp_config = config['gp_config']
@@ -374,24 +371,19 @@ class ResNetVariationalGP(nn.Module):
         dropout_rate = model_config.get('dropout_rate', 0.1)
         self.feature_extractor = ResNetFeatureExtractor(feature_dim, dropout_rate)
         
-        # GP模型
+        # GP模型（只需要一个）
         num_inducing = gp_config.get('num_inducing', 100)
         inducing_points = torch.randn(num_inducing, feature_dim, device=device) * 0.1
         
-        self.gp_model_beta2 = SimpleVariationalGPModel(inducing_points.clone(), feature_dim)
-        self.gp_model_beta3 = SimpleVariationalGPModel(inducing_points.clone(), feature_dim)
+        self.gp_model = SimpleVariationalGPModel(inducing_points, feature_dim)
         
         # 似然函数
-        self.likelihood_beta2 = gpytorch.likelihoods.GaussianLikelihood(
-            noise_constraint=gpytorch.constraints.GreaterThan(1e-6)
-        )
-        self.likelihood_beta3 = gpytorch.likelihoods.GaussianLikelihood(
+        self.likelihood = gpytorch.likelihoods.GaussianLikelihood(
             noise_constraint=gpytorch.constraints.GreaterThan(1e-6)
         )
         
         # 初始化噪声
-        self.likelihood_beta2.noise = 0.01
-        self.likelihood_beta3.noise = 0.01
+        self.likelihood.noise = 0.01
         
         self.feature_dim = feature_dim
         self.num_inducing = num_inducing
@@ -400,9 +392,8 @@ class ResNetVariationalGP(nn.Module):
         features = self.feature_extractor(x)
         features = torch.nn.functional.normalize(features, p=2, dim=1)
         
-        dist_beta2 = self.gp_model_beta2(features)
-        dist_beta3 = self.gp_model_beta3(features)
-        return dist_beta2, dist_beta3
+        dist = self.gp_model(features)
+        return dist
 
 
 def create_model(config, num_classes=None, device='cpu'):
@@ -424,15 +415,14 @@ def create_model(config, num_classes=None, device='cpu'):
 
 
 # ===================================================================
-# 4. 训练与验证函数（去除了tqdm的日志输出）
+# 4. 训练与验证函数（修改为单任务）
 # ===================================================================
 
 def train_epoch(model, train_loader, criterion, optimizer, device, epoch, mode):
     """训练一个epoch"""
     model.train()
     if mode == 'gp':
-        model.likelihood_beta2.train()
-        model.likelihood_beta3.train()
+        model.likelihood.train()
 
     running_loss = 0.0
     total_samples = 0
@@ -464,15 +454,13 @@ def train_epoch(model, train_loader, criterion, optimizer, device, epoch, mode):
 
         elif mode == 'gp':
             try:
-                dist_beta2, dist_beta3 = model(inputs)
+                dist = model(inputs)
                 
-                labels_beta2 = labels[:, 0]
-                labels_beta3 = labels[:, 1]
+                labels_r2 = labels.squeeze()
                 
-                elbo_beta2 = criterion[0](dist_beta2, labels_beta2)
-                elbo_beta3 = criterion[1](dist_beta3, labels_beta3)
+                elbo = criterion(dist, labels_r2)
                 
-                loss = -elbo_beta2 - elbo_beta3
+                loss = -elbo
                 
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
@@ -503,8 +491,7 @@ def validate_epoch(model, val_loader, criterion, device, epoch, mode):
     """验证一个epoch"""
     model.eval()
     if mode == 'gp':
-        model.likelihood_beta2.eval()
-        model.likelihood_beta3.eval()
+        model.likelihood.eval()
 
     running_loss = 0.0
     all_preds, all_labels = [], []
@@ -530,27 +517,22 @@ def validate_epoch(model, val_loader, criterion, device, epoch, mode):
             elif mode == 'gp':
                 try:
                     with gpytorch.settings.fast_pred_var():
-                        dist_beta2, dist_beta3 = model(inputs)
+                        dist = model(inputs)
                         
-                        output_dist_beta2 = model.likelihood_beta2(dist_beta2)
-                        output_dist_beta3 = model.likelihood_beta3(dist_beta3)
+                        output_dist = model.likelihood(dist)
                         
-                        labels_beta2 = labels[:, 0]
-                        labels_beta3 = labels[:, 1]
+                        labels_r2 = labels.squeeze()
                         
-                        elbo_beta2 = criterion[0](dist_beta2, labels_beta2)
-                        elbo_beta3 = criterion[1](dist_beta3, labels_beta3)
-                        loss = -elbo_beta2 - elbo_beta3
+                        elbo = criterion(dist, labels_r2)
+                        loss = -elbo
                     
-                    pred_beta2 = output_dist_beta2.mean.cpu().numpy()
-                    pred_beta3 = output_dist_beta3.mean.cpu().numpy()
+                    pred_r2 = output_dist.mean.cpu().numpy()
                     
-                    if np.any(np.isnan(pred_beta2)) or np.any(np.isnan(pred_beta3)):
+                    if np.any(np.isnan(pred_r2)):
                         print(f"警告: 批次 {i} 产生了NaN预测")
                         continue
                     
-                    batch_preds = np.column_stack([pred_beta2, pred_beta3])
-                    all_preds.extend(batch_preds)
+                    all_preds.extend(pred_r2)
                     all_labels.extend(labels.cpu().numpy())
                     
                 except Exception as e:
@@ -572,39 +554,25 @@ def validate_epoch(model, val_loader, criterion, device, epoch, mode):
             print("警告: 没有有效的预测结果")
             return float('inf'), {'mse': float('inf'), 'mae': float('inf')}
             
-        all_preds = np.array(all_preds)
-        all_labels = np.array(all_labels)
+        all_preds = np.array(all_preds).flatten()
+        all_labels = np.array(all_labels).flatten()
         
-        print(f"预测值范围: Beta2=[{all_preds[:, 0].min():.4f}, {all_preds[:, 0].max():.4f}], "
-              f"Beta3=[{all_preds[:, 1].min():.4f}, {all_preds[:, 1].max():.4f}]")
+        print(f"预测值范围: R2=[{all_preds.min():.4f}, {all_preds.max():.4f}]")
         
         mse = mean_squared_error(all_labels, all_preds)
         mae = mean_absolute_error(all_labels, all_preds)
+        r2 = r2_score(all_labels, all_preds)
         
-        mse_beta2 = mean_squared_error(all_labels[:, 0], all_preds[:, 0])
-        mse_beta3 = mean_squared_error(all_labels[:, 1], all_preds[:, 1])
-        mae_beta2 = mean_absolute_error(all_labels[:, 0], all_preds[:, 0])
-        mae_beta3 = mean_absolute_error(all_labels[:, 1], all_preds[:, 1])
-        
-        # 计算R²
-        r2_beta2 = r2_score(all_labels[:, 0], all_preds[:, 0])
-        r2_beta3 = r2_score(all_labels[:, 1], all_preds[:, 1])
-        
-        print(f"验证完成: 损失={running_loss / len(val_loader):.4f}, MSE={mse:.6f}, MAE={mae:.6f}")
-        print(f"Beta2 - MSE: {mse_beta2:.6f}, MAE: {mae_beta2:.6f}, R²: {r2_beta2:.6f}")
-        print(f"Beta3 - MSE: {mse_beta3:.6f}, MAE: {mae_beta3:.6f}, R²: {r2_beta3:.6f}")
+        print(f"验证完成: 损失={running_loss / len(val_loader):.4f}, MSE={mse:.6f}, MAE={mae:.6f}, R²={r2:.6f}")
         
         return running_loss / len(val_loader), {
-            'mse': mse, 'mae': mae,
-            'mse_beta2': mse_beta2, 'mse_beta3': mse_beta3,
-            'mae_beta2': mae_beta2, 'mae_beta3': mae_beta3,
-            'r2_beta2': r2_beta2, 'r2_beta3': r2_beta3,
+            'mse': mse, 'mae': mae, 'r2': r2,
             'predictions': all_preds, 'labels': all_labels
         }
 
 
 # ===================================================================
-# 5. 辅助函数
+# 5. 辅助函数（修改可视化部分）
 # ===================================================================
 
 def set_seed(seed):
@@ -649,10 +617,9 @@ def create_optimizer_and_criterion(model, config, train_dataset_size):
         else:
             criterion = nn.MSELoss()
     elif mode == 'gp':
-        criterion = [
-            gpytorch.mlls.VariationalELBO(model.likelihood_beta2, model.gp_model_beta2, num_data=train_dataset_size),
-            gpytorch.mlls.VariationalELBO(model.likelihood_beta3, model.gp_model_beta3, num_data=train_dataset_size)
-        ]
+        criterion = gpytorch.mlls.VariationalELBO(
+            model.likelihood, model.gp_model, num_data=train_dataset_size
+        )
     
     # 创建优化器
     if config.get('use_discriminative_lr', False):
@@ -685,10 +652,8 @@ def setup_discriminative_lr(model, config):
         ]
         
         gp_params = list(model.feature_extractor.feature_proj.parameters()) + \
-                   list(model.gp_model_beta2.parameters()) + \
-                   list(model.gp_model_beta3.parameters()) + \
-                   list(model.likelihood_beta2.parameters()) + \
-                   list(model.likelihood_beta3.parameters())
+                   list(model.gp_model.parameters()) + \
+                   list(model.likelihood.parameters())
         
         return [
             {'params': layer_groups[0], 'lr': base_lr * (decay ** 3)},
@@ -697,21 +662,15 @@ def setup_discriminative_lr(model, config):
             {'params': gp_params, 'lr': base_lr}
         ]
     else:  # Handles ResNetMLP and standard ResNet for classification
-        # 正确地访问 ResNetMLP 内部的 ResNet 骨干网络
         resnet_backbone = model.feature_extractor.features
         
-        # 模型的 "头部" (head) 包含特征映射层和最终的 MLP 回归层
         head_layers = list(model.feature_extractor.feature_proj.parameters()) + \
                       list(model.mlp.parameters())
         
-        # 将 ResNet 骨干网络分层 (此分组适用于 ResNet18/34)
         layer_groups = [
-            # 早期层
             list(resnet_backbone[0].parameters()) + list(resnet_backbone[1].parameters()) + 
             list(resnet_backbone[4].parameters()) + list(resnet_backbone[5].parameters()),
-            # 中期层
             list(resnet_backbone[6].parameters()),
-            # 后期层
             list(resnet_backbone[7].parameters()),
         ]
         
@@ -719,7 +678,7 @@ def setup_discriminative_lr(model, config):
             {'params': layer_groups[0], 'lr': base_lr * (decay ** 3)},
             {'params': layer_groups[1], 'lr': base_lr * (decay ** 2)},
             {'params': layer_groups[2], 'lr': base_lr * decay},
-            {'params': head_layers, 'lr': base_lr} # 头部使用基础学习率
+            {'params': head_layers, 'lr': base_lr}
         ]
 
 
@@ -746,46 +705,32 @@ def save_confusion_matrix_to_tensorboard(writer, cm, class_names, epoch):
     plt.close()
 
 
-def plot_regression_predictions(predictions, labels, output_path, epoch, mode_name, mse_beta2, mse_beta3, r2_beta2, r2_beta3):
-    """绘制回归预测结果的散点图，带有MSE和R²标注"""
-    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+def plot_regression_predictions(predictions, labels, output_path, epoch, mode_name, mse, r2):
+    """绘制回归预测结果的散点图（单变量）"""
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
     
-    # Beta2 预测 vs 真实值
-    axes[0].scatter(labels[:, 0], predictions[:, 0], alpha=0.6)
-    axes[0].plot([labels[:, 0].min(), labels[:, 0].max()], 
-                 [labels[:, 0].min(), labels[:, 0].max()], 'r--', lw=2)
-    axes[0].set_xlabel('True Beta2')
-    axes[0].set_ylabel('Predicted Beta2')
-    axes[0].set_title(f'{mode_name} Beta2 Predictions vs True Values')
+    # R2 预测 vs 真实值
+    axes[0].scatter(labels, predictions, alpha=0.6)
+    axes[0].plot([labels.min(), labels.max()], 
+                 [labels.min(), labels.max()], 'r--', lw=2)
+    axes[0].set_xlabel('True R2')
+    axes[0].set_ylabel('Predicted R2')
+    axes[0].set_title(f'{mode_name} R2 Predictions vs True Values')
     axes[0].grid(True, alpha=0.3)
     
     # 在左上角添加MSE和R²标注
-    axes[0].text(0.05, 0.95, f'MSE: {mse_beta2:.6f}\nR²: {r2_beta2:.6f}', 
+    axes[0].text(0.05, 0.95, f'MSE: {mse:.6f}\nR²: {r2:.6f}', 
                 transform=axes[0].transAxes, verticalalignment='top',
                 bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
     
-    # Beta3 预测 vs 真实值
-    axes[1].scatter(labels[:, 1], predictions[:, 1], alpha=0.6)
-    axes[1].plot([labels[:, 1].min(), labels[:, 1].max()], 
-                 [labels[:, 1].min(), labels[:, 1].max()], 'r--', lw=2)
-    axes[1].set_xlabel('True Beta3')
-    axes[1].set_ylabel('Predicted Beta3')
-    axes[1].set_title(f'{mode_name} Beta3 Predictions vs True Values')
+    # 残差图
+    residuals = predictions - labels
+    axes[1].scatter(labels, residuals, alpha=0.6)
+    axes[1].axhline(y=0, color='r', linestyle='--', lw=2)
+    axes[1].set_xlabel('True R2')
+    axes[1].set_ylabel('Residuals (Predicted - True)')
+    axes[1].set_title(f'{mode_name} Residual Plot')
     axes[1].grid(True, alpha=0.3)
-    
-    # 在左上角添加MSE和R²标注
-    axes[1].text(0.05, 0.95, f'MSE: {mse_beta3:.6f}\nR²: {r2_beta3:.6f}', 
-                transform=axes[1].transAxes, verticalalignment='top',
-                bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
-    
-    # 2D散点图：(beta2, beta3)空间中的预测
-    axes[2].scatter(labels[:, 0], labels[:, 1], alpha=0.6, label='True', s=30)
-    axes[2].scatter(predictions[:, 0], predictions[:, 1], alpha=0.6, label='Predicted', s=30)
-    axes[2].set_xlabel('Beta2')
-    axes[2].set_ylabel('Beta3')
-    axes[2].set_title(f'{mode_name} Predictions in (Beta2, Beta3) Space')
-    axes[2].legend()
-    axes[2].grid(True, alpha=0.3)
     
     plt.tight_layout()
     plt.savefig(output_path, dpi=150)
@@ -800,12 +745,10 @@ def save_best_model_outputs(predictions, labels, output_dir, mode_name, val_metr
         predictions, 
         labels, 
         plot_path, 
-        epoch=None,  # 不需要epoch信息 
+        epoch=None,
         mode_name=mode_name.upper(),
-        mse_beta2=val_metrics['mse_beta2'],
-        mse_beta3=val_metrics['mse_beta3'],
-        r2_beta2=val_metrics['r2_beta2'],
-        r2_beta3=val_metrics['r2_beta3']
+        mse=val_metrics['mse'],
+        r2=val_metrics['r2']
     )
     
     # 保存数据到npz文件
@@ -814,14 +757,9 @@ def save_best_model_outputs(predictions, labels, output_dir, mode_name, val_metr
         npz_path,
         predictions=predictions,
         labels=labels,
-        mse_beta2=val_metrics['mse_beta2'],
-        mse_beta3=val_metrics['mse_beta3'],
-        mae_beta2=val_metrics['mae_beta2'],
-        mae_beta3=val_metrics['mae_beta3'],
-        r2_beta2=val_metrics['r2_beta2'],
-        r2_beta3=val_metrics['r2_beta3'],
-        overall_mse=val_metrics['mse'],
-        overall_mae=val_metrics['mae']
+        mse=val_metrics['mse'],
+        mae=val_metrics['mae'],
+        r2=val_metrics['r2']
     )
     
     print(f"最佳模型输出已保存:")
@@ -836,7 +774,7 @@ def save_best_model_outputs(predictions, labels, output_dir, mode_name, val_metr
 def main():
     """主训练函数"""
     # 加载配置
-    with open('config2.yaml', 'r', encoding='utf-8') as f:
+    with open('config.yaml', 'r', encoding='utf-8') as f:
         config = yaml.safe_load(f)
     
     # 设置基本参数
@@ -862,7 +800,7 @@ def main():
             level=getattr(logging, config['logging']['level']),
             format='%(asctime)s - %(message)s',
             handlers=[
-                logging.StreamHandler()  # 这会输出到我们重定向的stdout
+                logging.StreamHandler()
             ]
         )
         
@@ -888,7 +826,7 @@ def main():
         mode = config['inference_mode']
         if mode == 'classifier':
             model = create_model(config, num_classes=train_dataset.num_classes, device=device)
-            class_names = [f"({p[0]:.4f}, {p[1]:.4f})" for p in train_dataset.class_to_pair.values()]
+            class_names = [f"{val:.4f}" for val in train_dataset.class_to_value.values()]
             best_metric = 0.0  # Accuracy
             metric_mode = 'max'
         else:
@@ -957,14 +895,10 @@ def main():
                 else:
                     writer.add_scalar('MSE/Validation', val_metrics['mse'], epoch)
                     writer.add_scalar('MAE/Validation', val_metrics['mae'], epoch)
-                    writer.add_scalar('MSE_Beta2/Validation', val_metrics['mse_beta2'], epoch)
-                    writer.add_scalar('MSE_Beta3/Validation', val_metrics['mse_beta3'], epoch)
-                    writer.add_scalar('R2_Beta2/Validation', val_metrics['r2_beta2'], epoch)
-                    writer.add_scalar('R2_Beta3/Validation', val_metrics['r2_beta3'], epoch)
+                    writer.add_scalar('R2/Validation', val_metrics['r2'], epoch)
                     
                     if mode == 'gp':
-                        writer.add_scalar('GP/Noise_Beta2', model.likelihood_beta2.noise.item(), epoch)
-                        writer.add_scalar('GP/Noise_Beta3', model.likelihood_beta3.noise.item(), epoch)
+                        writer.add_scalar('GP/Noise', model.likelihood.noise.item(), epoch)
             
             # 绘制预测结果（定期）
             if mode in ['gp', 'mlp'] and config['validation']['plot_predictions']:
@@ -976,10 +910,8 @@ def main():
                         plot_path, 
                         epoch, 
                         mode.upper(),
-                        val_metrics['mse_beta2'],
-                        val_metrics['mse_beta3'],
-                        val_metrics['r2_beta2'],
-                        val_metrics['r2_beta3']
+                        val_metrics['mse'],
+                        val_metrics['r2']
                     )
             
             # 保存最佳模型
@@ -1004,7 +936,7 @@ def main():
                     'config': config
                 }
                 if mode == 'classifier':
-                    save_payload['class_to_pair'] = train_dataset.class_to_pair
+                    save_payload['class_to_value'] = train_dataset.class_to_value
                 torch.save(save_payload, best_model_path)
                 
                 # 保存最佳模型的输出（对于回归任务）
@@ -1024,7 +956,7 @@ def main():
             else:
                 logging.info(f"Epoch {epoch} -> Train Loss: {train_loss:.4f} | "
                             f"Val Loss: {val_loss:.4f}, MSE: {val_metrics['mse']:.6f}, "
-                            f"MAE: {val_metrics['mae']:.6f}")
+                            f"MAE: {val_metrics['mae']:.6f}, R²: {val_metrics['r2']:.6f}")
         
         if writer:
             writer.close()

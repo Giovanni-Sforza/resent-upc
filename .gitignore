@@ -2,5 +2,8 @@ data
 experiments
 data_exp2
 data_exp3
+data_O16
 */outputs
 */__pycache__
+*upload
+*upload_tar

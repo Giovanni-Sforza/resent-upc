@@ -1,15 +1,13 @@
-# ===================================================================
-# 实验配置文件 - 重构版本
-# ===================================================================
+# 干涉条纹图像四分类任务配置文件
+# ==========================================
 
-# 实验基本信息
-experiment_name: "resnet50_mlp_beta_regression_20_cut" #"resnet_mlp_beta_regression_1_cut_224"
-seed: 42
-device: "auto"  # 可选: "auto", "cuda", "cpu"
+# 实验基本配置
+experiment_name: "resnet34_pre_expO16_R2_sum_flip_largelr"        # 实验唯一标识符
+seed: 42             # 实验结果根目录
+device: "auto"                          # 训练设备: 'cuda', 'cpu', 或 'auto' (自动检测)
 
-# 数据路径
-data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_wo_20"
-
+# 数据配置
+data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_O16/processed_flip_R2"    # 数据集根目录路径
 # ===================================================================
 # 推理模式配置
 # ===================================================================
@@ -19,7 +17,7 @@ inference_mode: "mlp"  # 可选: "classifier", "gp", "mlp"
 mlp_config:
   feature_dim: 256
   hidden_dims: [128, 64]  # MLP隐藏层维度
-  dropout: 0.1
+  dropout: 0.4
   loss_type: "huber"      # 可选: "mse", "mae", "huber"
 
 # 变分GP配置
@@ -35,7 +33,7 @@ preprocessing:
   # 中心裁剪配置
   center_crop:
     enabled: true #false #true
-    size: 224 #320  # 裁剪尺寸 (int or [height, width])
+    size: 52 #224 #320  # 裁剪尺寸 (int or [height, width])
   
   # 对数归一化配置
   log_normalization:
@@ -69,7 +67,7 @@ num_workers: 4
 
 # 学习率配置
 learning_rates:
-  base: 0.001
+  base: 0.1 #0.01
   layer_decay: 0.1  # 分层学习率衰减因子
 
 # 是否使用分层学习率

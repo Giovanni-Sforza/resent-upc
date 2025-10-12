@@ -1,0 +1,1828 @@
+2025-09-21 13:21:56,512 - INFO - 开始验证配置
+2025-09-21 13:23:16,405 - INFO - 开始验证配置
+2025-09-21 13:23:16,406 - INFO - 数据集目录验证通过: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload
+2025-09-21 13:23:16,417 - INFO - 发现 4 个任务目录，共 28 个人员目录
+2025-09-21 13:23:16,417 - INFO - 执行命令: git lfs version
+2025-09-21 13:23:16,417 - INFO - 工作目录: None
+2025-09-21 13:23:16,465 - INFO - 命令执行成功: git lfs version
+2025-09-21 13:23:16,466 - INFO - Git LFS 已安装
+2025-09-21 13:23:19,536 - INFO - 克隆仓库到 /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 13:23:19,537 - INFO - 执行命令: git clone git@hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 13:23:19,539 - INFO - 工作目录: None
+2025-09-21 13:23:19,554 - INFO - 命令输出: Cloning into '/storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar'...
+2025-09-21 13:23:23,742 - INFO - 命令执行成功: git clone git@hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 13:23:23,743 - INFO - 执行命令: git remote get-url origin
+2025-09-21 13:23:23,744 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 13:23:23,763 - INFO - 命令执行成功: git remote get-url origin
+2025-09-21 13:23:23,763 - INFO - 远程仓库: git@hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload
+2025-09-21 13:24:51,350 - INFO - 开始验证配置
+2025-09-21 13:24:51,350 - INFO - 数据集目录验证通过: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload
+2025-09-21 13:24:51,362 - INFO - 发现 4 个任务目录，共 28 个人员目录
+2025-09-21 13:24:51,362 - INFO - 执行命令: git lfs version
+2025-09-21 13:24:51,362 - INFO - 工作目录: None
+2025-09-21 13:24:51,407 - INFO - 命令执行成功: git lfs version
+2025-09-21 13:24:51,407 - INFO - Git LFS 已安装
+2025-09-21 13:24:54,538 - INFO - 更新本地仓库
+2025-09-21 13:24:54,539 - INFO - 执行命令: git pull
+2025-09-21 13:24:54,540 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 13:24:58,069 - INFO - 命令输出: Already up to date.
+2025-09-21 13:24:58,070 - INFO - 命令执行成功: git pull
+2025-09-21 13:24:58,071 - INFO - 执行命令: git remote get-url origin
+2025-09-21 13:24:58,072 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 13:24:58,089 - INFO - 命令执行成功: git remote get-url origin
+2025-09-21 13:24:58,089 - INFO - 远程仓库: git@hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload
+2025-09-21 13:31:02,315 - INFO - 开始验证配置
+2025-09-21 13:31:02,315 - INFO - 数据集目录验证通过: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload
+2025-09-21 13:31:02,324 - INFO - 发现 3 个任务目录，共 21 个人员目录
+2025-09-21 13:31:02,324 - INFO - 执行命令: git lfs version
+2025-09-21 13:31:02,324 - INFO - 工作目录: None
+2025-09-21 13:31:02,373 - INFO - 命令执行成功: git lfs version
+2025-09-21 13:31:02,373 - INFO - Git LFS 已安装
+2025-09-21 13:31:05,372 - INFO - 克隆仓库到 /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 13:31:05,373 - INFO - 执行命令: git clone git@hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 13:31:05,374 - INFO - 工作目录: None
+2025-09-21 13:31:05,390 - INFO - 命令输出: Cloning into '/storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar'...
+2025-09-21 13:31:09,442 - INFO - 命令执行成功: git clone git@hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 13:31:09,442 - INFO - 执行命令: git remote get-url origin
+2025-09-21 13:31:09,443 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 13:31:09,462 - INFO - 命令执行成功: git remote get-url origin
+2025-09-21 13:31:09,462 - INFO - 远程仓库: git@hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload
+2025-09-21 13:34:49,430 - INFO - 开始上传文件: data_interference_images.tar.gz, 大小: 3768.0MB
+2025-09-21 13:34:49,431 - INFO - 第 1/3 次上传尝试: data_interference_images.tar.gz
+2025-09-21 13:34:49,431 - INFO - 执行 git add: data_interference_images.tar.gz
+2025-09-21 13:34:49,432 - INFO - 执行命令: git add "data_interference_images.tar.gz"
+2025-09-21 13:34:49,432 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 13:37:07,614 - INFO - 命令执行成功: git add "data_interference_images.tar.gz"
+2025-09-21 13:37:07,615 - INFO - 执行 git commit: Add data_interference_images.tar.gz (3768.0MB)
+2025-09-21 13:37:07,616 - INFO - 执行命令: git commit -m "Add data_interference_images.tar.gz (3768.0MB)"
+2025-09-21 13:37:07,617 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 13:37:07,849 - INFO - 命令输出: [main dae4c7b] Add data_interference_images.tar.gz (3768.0MB)
+2025-09-21 13:37:07,850 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-21 13:37:07,851 - INFO - 命令输出:  create mode 100644 data_interference_images.tar.gz
+2025-09-21 13:37:07,852 - INFO - 命令执行成功: git commit -m "Add data_interference_images.tar.gz (3768.0MB)"
+2025-09-21 13:37:07,852 - INFO - 开始 git push: data_interference_images.tar.gz
+2025-09-21 13:37:07,853 - INFO - 执行命令: git push origin main
+2025-09-21 13:37:07,854 - INFO - 执行命令: git push origin main
+2025-09-21 13:37:07,855 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 13:37:53,439 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-21 13:37:53,441 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-21 14:19:00,560 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-21 14:19:00,561 - INFO - 命令输出: Uploading LFS objects:   0% (0/1), 0 B | 0 B/s, done.
+2025-09-21 14:19:00,564 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-21 14:19:00,871 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 14:19:00,871 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 14:19:00,873 - ERROR - git push 失败，用时: 2513.0 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 14:19:00,874 - ERROR - 第 1 次上传失败: data_interference_images.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 14:19:00,875 - INFO - 等待 5 秒后重试
+2025-09-21 14:19:05,880 - INFO - 重置git状态
+2025-09-21 14:19:05,881 - INFO - 执行命令: git reset HEAD~1
+2025-09-21 14:19:05,882 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 14:19:05,966 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-21 14:19:05,967 - INFO - 第 2/3 次上传尝试: data_interference_images.tar.gz
+2025-09-21 14:19:05,968 - INFO - 执行 git add: data_interference_images.tar.gz
+2025-09-21 14:19:05,969 - INFO - 执行命令: git add "data_interference_images.tar.gz"
+2025-09-21 14:19:05,970 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 14:21:15,082 - INFO - 命令执行成功: git add "data_interference_images.tar.gz"
+2025-09-21 14:21:15,084 - INFO - 执行 git commit: Add data_interference_images.tar.gz (3768.0MB)
+2025-09-21 14:21:15,084 - INFO - 执行命令: git commit -m "Add data_interference_images.tar.gz (3768.0MB)"
+2025-09-21 14:21:15,085 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 14:21:15,300 - INFO - 命令输出: [main 57b7f86] Add data_interference_images.tar.gz (3768.0MB)
+2025-09-21 14:21:15,301 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-21 14:21:15,302 - INFO - 命令输出:  create mode 100644 data_interference_images.tar.gz
+2025-09-21 14:21:15,303 - INFO - 命令执行成功: git commit -m "Add data_interference_images.tar.gz (3768.0MB)"
+2025-09-21 14:21:15,304 - INFO - 开始 git push: data_interference_images.tar.gz
+2025-09-21 14:21:15,305 - INFO - 执行命令: git push origin main
+2025-09-21 14:21:15,306 - INFO - 执行命令: git push origin main
+2025-09-21 14:21:15,306 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 14:22:00,842 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-21 14:22:00,843 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-21 15:03:07,951 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-21 15:03:07,952 - INFO - 命令输出: Uploading LFS objects:   0% (0/1), 0 B | 0 B/s, done.
+2025-09-21 15:03:07,955 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-21 15:03:08,294 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 15:03:08,294 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 15:03:08,296 - ERROR - git push 失败，用时: 2513.0 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 15:03:08,296 - ERROR - 第 2 次上传失败: data_interference_images.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 15:03:08,297 - INFO - 等待 10 秒后重试
+2025-09-21 15:03:18,308 - INFO - 重置git状态
+2025-09-21 15:03:18,309 - INFO - 执行命令: git reset HEAD~1
+2025-09-21 15:03:18,310 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 15:03:18,411 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-21 15:03:18,411 - INFO - 第 3/3 次上传尝试: data_interference_images.tar.gz
+2025-09-21 15:03:18,412 - INFO - 执行 git add: data_interference_images.tar.gz
+2025-09-21 15:03:18,413 - INFO - 执行命令: git add "data_interference_images.tar.gz"
+2025-09-21 15:03:18,414 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 15:05:34,892 - INFO - 命令执行成功: git add "data_interference_images.tar.gz"
+2025-09-21 15:05:34,892 - INFO - 执行 git commit: Add data_interference_images.tar.gz (3768.0MB)
+2025-09-21 15:05:34,893 - INFO - 执行命令: git commit -m "Add data_interference_images.tar.gz (3768.0MB)"
+2025-09-21 15:05:34,894 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 15:05:35,105 - INFO - 命令输出: [main 6b6d268] Add data_interference_images.tar.gz (3768.0MB)
+2025-09-21 15:05:35,105 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-21 15:05:35,106 - INFO - 命令输出:  create mode 100644 data_interference_images.tar.gz
+2025-09-21 15:05:35,107 - INFO - 命令执行成功: git commit -m "Add data_interference_images.tar.gz (3768.0MB)"
+2025-09-21 15:05:35,108 - INFO - 开始 git push: data_interference_images.tar.gz
+2025-09-21 15:05:35,109 - INFO - 执行命令: git push origin main
+2025-09-21 15:05:35,109 - INFO - 执行命令: git push origin main
+2025-09-21 15:05:35,110 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 15:06:21,478 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-21 15:06:21,480 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-21 15:47:28,597 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-21 15:47:28,598 - INFO - 命令输出: Uploading LFS objects:   0% (0/1), 0 B | 0 B/s, done.
+2025-09-21 15:47:28,602 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-21 15:47:28,884 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 15:47:28,885 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 15:47:28,886 - ERROR - git push 失败，用时: 2513.8 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 15:47:28,887 - ERROR - 第 3 次上传失败: data_interference_images.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 15:47:28,888 - ERROR - 文件 data_interference_images.tar.gz 最终上传失败
+2025-09-21 15:50:24,659 - INFO - 开始上传文件: data_exp2_beta2.tar.gz, 大小: 2982.8MB
+2025-09-21 15:50:24,660 - INFO - 第 1/3 次上传尝试: data_exp2_beta2.tar.gz
+2025-09-21 15:50:24,660 - INFO - 执行 git add: data_exp2_beta2.tar.gz
+2025-09-21 15:50:24,661 - INFO - 执行命令: git add "data_exp2_beta2.tar.gz"
+2025-09-21 15:50:24,661 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 15:52:06,003 - INFO - 命令执行成功: git add "data_exp2_beta2.tar.gz"
+2025-09-21 15:52:06,004 - INFO - 执行 git commit: Add data_exp2_beta2.tar.gz (2982.8MB)
+2025-09-21 15:52:06,006 - INFO - 执行命令: git commit -m "Add data_exp2_beta2.tar.gz (2982.8MB)"
+2025-09-21 15:52:06,006 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 15:52:06,248 - INFO - 命令输出: [main 8c9e41a] Add data_exp2_beta2.tar.gz (2982.8MB)
+2025-09-21 15:52:06,249 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-21 15:52:06,250 - INFO - 命令输出:  create mode 100644 data_exp2_beta2.tar.gz
+2025-09-21 15:52:06,251 - INFO - 命令执行成功: git commit -m "Add data_exp2_beta2.tar.gz (2982.8MB)"
+2025-09-21 15:52:06,251 - INFO - 开始 git push: data_exp2_beta2.tar.gz
+2025-09-21 15:52:06,252 - INFO - 执行命令: git push origin main
+2025-09-21 15:52:06,253 - INFO - 执行命令: git push origin main
+2025-09-21 15:52:06,254 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 15:52:52,781 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-21 15:52:52,782 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-21 16:33:59,907 - INFO - 命令输出: Uploading LFS objects:   0% (0/2), 0 B | 0 B/s, done.
+2025-09-21 16:33:59,908 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-21 16:33:59,911 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-21 16:34:00,198 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 16:34:00,198 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 16:34:00,199 - ERROR - git push 失败，用时: 2513.9 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 16:34:00,201 - ERROR - 第 1 次上传失败: data_exp2_beta2.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 16:34:00,202 - INFO - 等待 5 秒后重试
+2025-09-21 16:34:05,208 - INFO - 重置git状态
+2025-09-21 16:34:05,208 - INFO - 执行命令: git reset HEAD~1
+2025-09-21 16:34:05,210 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 16:34:05,337 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-21 16:34:05,337 - INFO - 第 2/3 次上传尝试: data_exp2_beta2.tar.gz
+2025-09-21 16:34:05,338 - INFO - 执行 git add: data_exp2_beta2.tar.gz
+2025-09-21 16:34:05,339 - INFO - 执行命令: git add "data_exp2_beta2.tar.gz"
+2025-09-21 16:34:05,340 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 16:36:10,790 - INFO - 命令执行成功: git add "data_exp2_beta2.tar.gz"
+2025-09-21 16:36:10,791 - INFO - 执行 git commit: Add data_exp2_beta2.tar.gz (2982.8MB)
+2025-09-21 16:36:10,792 - INFO - 执行命令: git commit -m "Add data_exp2_beta2.tar.gz (2982.8MB)"
+2025-09-21 16:36:10,793 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 16:36:11,027 - INFO - 命令输出: [main 481927e] Add data_exp2_beta2.tar.gz (2982.8MB)
+2025-09-21 16:36:11,027 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-21 16:36:11,029 - INFO - 命令输出:  create mode 100644 data_exp2_beta2.tar.gz
+2025-09-21 16:36:11,030 - INFO - 命令执行成功: git commit -m "Add data_exp2_beta2.tar.gz (2982.8MB)"
+2025-09-21 16:36:11,031 - INFO - 开始 git push: data_exp2_beta2.tar.gz
+2025-09-21 16:36:11,031 - INFO - 执行命令: git push origin main
+2025-09-21 16:36:11,032 - INFO - 执行命令: git push origin main
+2025-09-21 16:36:11,033 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 16:36:56,483 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-21 16:36:56,485 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-21 17:18:03,706 - INFO - 命令输出: Uploading LFS objects:   0% (0/2), 0 B | 0 B/s, done.
+2025-09-21 17:18:03,725 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-21 17:18:03,819 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-21 17:18:04,128 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 17:18:04,129 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 17:18:04,132 - ERROR - git push 失败，用时: 2513.1 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 17:18:04,133 - ERROR - 第 2 次上传失败: data_exp2_beta2.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 17:18:04,134 - INFO - 等待 10 秒后重试
+2025-09-21 17:18:14,145 - INFO - 重置git状态
+2025-09-21 17:18:14,146 - INFO - 执行命令: git reset HEAD~1
+2025-09-21 17:18:14,147 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 17:18:14,372 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-21 17:18:14,373 - INFO - 第 3/3 次上传尝试: data_exp2_beta2.tar.gz
+2025-09-21 17:18:14,373 - INFO - 执行 git add: data_exp2_beta2.tar.gz
+2025-09-21 17:18:14,374 - INFO - 执行命令: git add "data_exp2_beta2.tar.gz"
+2025-09-21 17:18:14,375 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 17:20:06,202 - INFO - 命令执行成功: git add "data_exp2_beta2.tar.gz"
+2025-09-21 17:20:06,202 - INFO - 执行 git commit: Add data_exp2_beta2.tar.gz (2982.8MB)
+2025-09-21 17:20:06,203 - INFO - 执行命令: git commit -m "Add data_exp2_beta2.tar.gz (2982.8MB)"
+2025-09-21 17:20:06,203 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 17:20:06,495 - INFO - 命令输出: [main 96cea27] Add data_exp2_beta2.tar.gz (2982.8MB)
+2025-09-21 17:20:06,495 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-21 17:20:06,496 - INFO - 命令输出:  create mode 100644 data_exp2_beta2.tar.gz
+2025-09-21 17:20:06,497 - INFO - 命令执行成功: git commit -m "Add data_exp2_beta2.tar.gz (2982.8MB)"
+2025-09-21 17:20:06,498 - INFO - 开始 git push: data_exp2_beta2.tar.gz
+2025-09-21 17:20:06,499 - INFO - 执行命令: git push origin main
+2025-09-21 17:20:06,500 - INFO - 执行命令: git push origin main
+2025-09-21 17:20:06,500 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 17:20:52,190 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-21 17:20:52,191 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-21 18:01:59,287 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-21 18:01:59,287 - INFO - 命令输出: Uploading LFS objects:   0% (0/2), 0 B | 0 B/s, done.
+2025-09-21 18:01:59,291 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-21 18:01:59,565 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 18:01:59,565 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 18:01:59,567 - ERROR - git push 失败，用时: 2513.1 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 18:01:59,568 - ERROR - 第 3 次上传失败: data_exp2_beta2.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 18:01:59,569 - ERROR - 文件 data_exp2_beta2.tar.gz 最终上传失败
+2025-09-21 18:05:29,716 - INFO - 开始上传文件: data_exp2_beta3.tar.gz, 大小: 2994.5MB
+2025-09-21 18:05:29,717 - INFO - 第 1/3 次上传尝试: data_exp2_beta3.tar.gz
+2025-09-21 18:05:29,718 - INFO - 执行 git add: data_exp2_beta3.tar.gz
+2025-09-21 18:05:29,719 - INFO - 执行命令: git add "data_exp2_beta3.tar.gz"
+2025-09-21 18:05:29,720 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 18:07:42,507 - INFO - 命令执行成功: git add "data_exp2_beta3.tar.gz"
+2025-09-21 18:07:42,508 - INFO - 执行 git commit: Add data_exp2_beta3.tar.gz (2994.5MB)
+2025-09-21 18:07:42,510 - INFO - 执行命令: git commit -m "Add data_exp2_beta3.tar.gz (2994.5MB)"
+2025-09-21 18:07:42,511 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 18:07:42,787 - INFO - 命令输出: [main 8c2d36f] Add data_exp2_beta3.tar.gz (2994.5MB)
+2025-09-21 18:07:42,787 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-21 18:07:42,789 - INFO - 命令输出:  create mode 100644 data_exp2_beta3.tar.gz
+2025-09-21 18:07:42,790 - INFO - 命令执行成功: git commit -m "Add data_exp2_beta3.tar.gz (2994.5MB)"
+2025-09-21 18:07:42,791 - INFO - 开始 git push: data_exp2_beta3.tar.gz
+2025-09-21 18:07:42,792 - INFO - 执行命令: git push origin main
+2025-09-21 18:07:42,792 - INFO - 执行命令: git push origin main
+2025-09-21 18:07:42,793 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 18:08:28,371 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-21 18:08:28,372 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-21 18:54:05,544 - INFO - 命令输出: Uploading LFS objects:   0% (0/3), 0 B | 0 B/s, done.
+2025-09-21 18:54:05,545 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-21 18:54:05,547 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-21 18:54:05,548 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-21 18:54:05,968 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 18:54:05,969 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 18:54:05,970 - ERROR - git push 失败，用时: 2783.2 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 18:54:05,972 - ERROR - 第 1 次上传失败: data_exp2_beta3.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 18:54:05,973 - INFO - 等待 5 秒后重试
+2025-09-21 18:54:10,979 - INFO - 重置git状态
+2025-09-21 18:54:10,980 - INFO - 执行命令: git reset HEAD~1
+2025-09-21 18:54:10,980 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 18:54:11,120 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-21 18:54:11,121 - INFO - 第 2/3 次上传尝试: data_exp2_beta3.tar.gz
+2025-09-21 18:54:11,122 - INFO - 执行 git add: data_exp2_beta3.tar.gz
+2025-09-21 18:54:11,123 - INFO - 执行命令: git add "data_exp2_beta3.tar.gz"
+2025-09-21 18:54:11,124 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 18:56:48,011 - INFO - 命令执行成功: git add "data_exp2_beta3.tar.gz"
+2025-09-21 18:56:48,018 - INFO - 执行 git commit: Add data_exp2_beta3.tar.gz (2994.5MB)
+2025-09-21 18:56:48,019 - INFO - 执行命令: git commit -m "Add data_exp2_beta3.tar.gz (2994.5MB)"
+2025-09-21 18:56:48,020 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 18:56:48,510 - INFO - 命令输出: [main cfa9750] Add data_exp2_beta3.tar.gz (2994.5MB)
+2025-09-21 18:56:48,511 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-21 18:56:48,512 - INFO - 命令输出:  create mode 100644 data_exp2_beta3.tar.gz
+2025-09-21 18:56:48,513 - INFO - 命令执行成功: git commit -m "Add data_exp2_beta3.tar.gz (2994.5MB)"
+2025-09-21 18:56:48,514 - INFO - 开始 git push: data_exp2_beta3.tar.gz
+2025-09-21 18:56:48,515 - INFO - 执行命令: git push origin main
+2025-09-21 18:56:48,516 - INFO - 执行命令: git push origin main
+2025-09-21 18:56:48,517 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 18:57:34,235 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-21 18:57:34,236 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-21 20:00:43,052 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-21 20:00:43,053 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-21 20:00:43,055 - INFO - 命令输出: Uploading LFS objects:   0% (0/3), 0 B | 0 B/s, done.
+2025-09-21 20:00:43,057 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-21 20:00:43,381 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 20:00:43,382 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 20:00:43,383 - ERROR - git push 失败，用时: 3834.9 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 20:00:43,384 - ERROR - 第 2 次上传失败: data_exp2_beta3.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 20:00:43,385 - INFO - 等待 10 秒后重试
+2025-09-21 20:00:53,396 - INFO - 重置git状态
+2025-09-21 20:00:53,397 - INFO - 执行命令: git reset HEAD~1
+2025-09-21 20:00:53,397 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 20:00:53,535 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-21 20:00:53,535 - INFO - 第 3/3 次上传尝试: data_exp2_beta3.tar.gz
+2025-09-21 20:00:53,536 - INFO - 执行 git add: data_exp2_beta3.tar.gz
+2025-09-21 20:00:53,538 - INFO - 执行命令: git add "data_exp2_beta3.tar.gz"
+2025-09-21 20:00:53,538 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 20:03:08,367 - INFO - 命令执行成功: git add "data_exp2_beta3.tar.gz"
+2025-09-21 20:03:08,368 - INFO - 执行 git commit: Add data_exp2_beta3.tar.gz (2994.5MB)
+2025-09-21 20:03:08,369 - INFO - 执行命令: git commit -m "Add data_exp2_beta3.tar.gz (2994.5MB)"
+2025-09-21 20:03:08,370 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 20:03:08,607 - INFO - 命令输出: [main 172b05d] Add data_exp2_beta3.tar.gz (2994.5MB)
+2025-09-21 20:03:08,608 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-21 20:03:08,609 - INFO - 命令输出:  create mode 100644 data_exp2_beta3.tar.gz
+2025-09-21 20:03:08,610 - INFO - 命令执行成功: git commit -m "Add data_exp2_beta3.tar.gz (2994.5MB)"
+2025-09-21 20:03:08,611 - INFO - 开始 git push: data_exp2_beta3.tar.gz
+2025-09-21 20:03:08,612 - INFO - 执行命令: git push origin main
+2025-09-21 20:03:08,613 - INFO - 执行命令: git push origin main
+2025-09-21 20:03:08,614 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 20:03:54,326 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-21 20:03:54,327 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-21 20:49:31,600 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-21 20:49:31,601 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-21 20:49:31,605 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-21 20:49:31,901 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 20:49:31,901 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 20:49:31,903 - ERROR - git push 失败，用时: 2783.3 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 20:49:31,904 - ERROR - 第 3 次上传失败: data_exp2_beta3.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 20:49:31,905 - ERROR - 文件 data_exp2_beta3.tar.gz 最终上传失败
+2025-09-21 20:53:46,921 - INFO - 开始上传文件: data_exp2_processed_samples_beta2.tar.gz, 大小: 3605.0MB
+2025-09-21 20:53:46,921 - INFO - 第 1/3 次上传尝试: data_exp2_processed_samples_beta2.tar.gz
+2025-09-21 20:53:46,923 - INFO - 执行 git add: data_exp2_processed_samples_beta2.tar.gz
+2025-09-21 20:53:46,924 - INFO - 执行命令: git add "data_exp2_processed_samples_beta2.tar.gz"
+2025-09-21 20:53:46,925 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 20:56:05,758 - INFO - 命令执行成功: git add "data_exp2_processed_samples_beta2.tar.gz"
+2025-09-21 20:56:05,760 - INFO - 执行 git commit: Add data_exp2_processed_samples_beta2.tar.gz (3605.0MB)
+2025-09-21 20:56:05,761 - INFO - 执行命令: git commit -m "Add data_exp2_processed_samples_beta2.tar.gz (3605.0MB)"
+2025-09-21 20:56:05,761 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 20:56:06,047 - INFO - 命令输出: [main bf6e52d] Add data_exp2_processed_samples_beta2.tar.gz (3605.0MB)
+2025-09-21 20:56:06,047 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-21 20:56:06,048 - INFO - 命令输出:  create mode 100644 data_exp2_processed_samples_beta2.tar.gz
+2025-09-21 20:56:06,050 - INFO - 命令执行成功: git commit -m "Add data_exp2_processed_samples_beta2.tar.gz (3605.0MB)"
+2025-09-21 20:56:06,051 - INFO - 开始 git push: data_exp2_processed_samples_beta2.tar.gz
+2025-09-21 20:56:06,052 - INFO - 执行命令: git push origin main
+2025-09-21 20:56:06,052 - INFO - 执行命令: git push origin main
+2025-09-21 20:56:06,053 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 20:56:51,882 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-21 20:56:51,884 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-21 22:00:00,589 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-21 22:00:00,591 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-21 22:00:00,592 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-21 22:00:00,877 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 22:00:00,877 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 22:00:00,878 - ERROR - git push 失败，用时: 3834.8 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 22:00:00,879 - ERROR - 第 1 次上传失败: data_exp2_processed_samples_beta2.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 22:00:00,880 - INFO - 等待 5 秒后重试
+2025-09-21 22:00:05,886 - INFO - 重置git状态
+2025-09-21 22:00:05,887 - INFO - 执行命令: git reset HEAD~1
+2025-09-21 22:00:05,888 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 22:00:06,000 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-21 22:00:06,001 - INFO - 第 2/3 次上传尝试: data_exp2_processed_samples_beta2.tar.gz
+2025-09-21 22:00:06,002 - INFO - 执行 git add: data_exp2_processed_samples_beta2.tar.gz
+2025-09-21 22:00:06,003 - INFO - 执行命令: git add "data_exp2_processed_samples_beta2.tar.gz"
+2025-09-21 22:00:06,004 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 22:02:49,469 - INFO - 命令执行成功: git add "data_exp2_processed_samples_beta2.tar.gz"
+2025-09-21 22:02:49,469 - INFO - 执行 git commit: Add data_exp2_processed_samples_beta2.tar.gz (3605.0MB)
+2025-09-21 22:02:49,469 - INFO - 执行命令: git commit -m "Add data_exp2_processed_samples_beta2.tar.gz (3605.0MB)"
+2025-09-21 22:02:49,471 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 22:02:49,733 - INFO - 命令输出: [main db4a333] Add data_exp2_processed_samples_beta2.tar.gz (3605.0MB)
+2025-09-21 22:02:49,733 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-21 22:02:49,735 - INFO - 命令输出:  create mode 100644 data_exp2_processed_samples_beta2.tar.gz
+2025-09-21 22:02:49,736 - INFO - 命令执行成功: git commit -m "Add data_exp2_processed_samples_beta2.tar.gz (3605.0MB)"
+2025-09-21 22:02:49,737 - INFO - 开始 git push: data_exp2_processed_samples_beta2.tar.gz
+2025-09-21 22:02:49,738 - INFO - 执行命令: git push origin main
+2025-09-21 22:02:49,739 - INFO - 执行命令: git push origin main
+2025-09-21 22:02:49,740 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 22:03:35,437 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-21 22:03:35,438 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-21 23:06:44,289 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-21 23:06:44,290 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-21 23:06:44,291 - INFO - 命令输出: Uploading LFS objects:   0% (0/4), 0 B | 0 B/s, done.
+2025-09-21 23:06:44,294 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-21 23:06:44,621 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 23:06:44,622 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 23:06:44,622 - ERROR - git push 失败，用时: 3834.9 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 23:06:44,623 - ERROR - 第 2 次上传失败: data_exp2_processed_samples_beta2.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-21 23:06:44,624 - INFO - 等待 10 秒后重试
+2025-09-21 23:06:54,635 - INFO - 重置git状态
+2025-09-21 23:06:54,636 - INFO - 执行命令: git reset HEAD~1
+2025-09-21 23:06:54,636 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 23:06:54,758 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-21 23:06:54,759 - INFO - 第 3/3 次上传尝试: data_exp2_processed_samples_beta2.tar.gz
+2025-09-21 23:06:54,760 - INFO - 执行 git add: data_exp2_processed_samples_beta2.tar.gz
+2025-09-21 23:06:54,761 - INFO - 执行命令: git add "data_exp2_processed_samples_beta2.tar.gz"
+2025-09-21 23:06:54,761 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 23:09:13,028 - INFO - 命令执行成功: git add "data_exp2_processed_samples_beta2.tar.gz"
+2025-09-21 23:09:13,029 - INFO - 执行 git commit: Add data_exp2_processed_samples_beta2.tar.gz (3605.0MB)
+2025-09-21 23:09:13,030 - INFO - 执行命令: git commit -m "Add data_exp2_processed_samples_beta2.tar.gz (3605.0MB)"
+2025-09-21 23:09:13,032 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 23:09:13,299 - INFO - 命令输出: [main 884eb6c] Add data_exp2_processed_samples_beta2.tar.gz (3605.0MB)
+2025-09-21 23:09:13,300 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-21 23:09:13,302 - INFO - 命令输出:  create mode 100644 data_exp2_processed_samples_beta2.tar.gz
+2025-09-21 23:09:13,303 - INFO - 命令执行成功: git commit -m "Add data_exp2_processed_samples_beta2.tar.gz (3605.0MB)"
+2025-09-21 23:09:13,304 - INFO - 开始 git push: data_exp2_processed_samples_beta2.tar.gz
+2025-09-21 23:09:13,305 - INFO - 执行命令: git push origin main
+2025-09-21 23:09:13,306 - INFO - 执行命令: git push origin main
+2025-09-21 23:09:13,307 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-21 23:09:58,749 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-21 23:09:58,751 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 00:13:07,654 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 00:13:07,655 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 00:13:07,658 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 00:13:07,937 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 00:13:07,937 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 00:13:07,939 - ERROR - git push 失败，用时: 3834.6 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 00:13:07,940 - ERROR - 第 3 次上传失败: data_exp2_processed_samples_beta2.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 00:13:07,941 - ERROR - 文件 data_exp2_processed_samples_beta2.tar.gz 最终上传失败
+2025-09-22 01:06:56,071 - INFO - 开始上传文件: data_exp2_processed_samples_beta3.tar.gz, 大小: 3583.9MB
+2025-09-22 01:06:56,072 - INFO - 第 1/3 次上传尝试: data_exp2_processed_samples_beta3.tar.gz
+2025-09-22 01:06:56,072 - INFO - 执行 git add: data_exp2_processed_samples_beta3.tar.gz
+2025-09-22 01:06:56,072 - INFO - 执行命令: git add "data_exp2_processed_samples_beta3.tar.gz"
+2025-09-22 01:06:56,072 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 01:07:56,973 - INFO - 命令执行成功: git add "data_exp2_processed_samples_beta3.tar.gz"
+2025-09-22 01:07:56,974 - INFO - 执行 git commit: Add data_exp2_processed_samples_beta3.tar.gz (3583.9MB)
+2025-09-22 01:07:56,974 - INFO - 执行命令: git commit -m "Add data_exp2_processed_samples_beta3.tar.gz (3583.9MB)"
+2025-09-22 01:07:56,974 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 01:07:57,248 - INFO - 命令输出: [main a5fe057] Add data_exp2_processed_samples_beta3.tar.gz (3583.9MB)
+2025-09-22 01:07:57,248 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 01:07:57,249 - INFO - 命令输出:  create mode 100644 data_exp2_processed_samples_beta3.tar.gz
+2025-09-22 01:07:57,249 - INFO - 命令执行成功: git commit -m "Add data_exp2_processed_samples_beta3.tar.gz (3583.9MB)"
+2025-09-22 01:07:57,249 - INFO - 开始 git push: data_exp2_processed_samples_beta3.tar.gz
+2025-09-22 01:07:57,249 - INFO - 执行命令: git push origin main
+2025-09-22 01:07:57,250 - INFO - 执行命令: git push origin main
+2025-09-22 01:07:57,250 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 01:08:42,539 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 01:08:42,541 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 01:54:19,819 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 01:54:19,820 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 01:54:19,820 - INFO - 命令输出: Uploading LFS objects:   0% (0/5), 0 B | 0 B/s, done.
+2025-09-22 01:54:19,824 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 01:54:20,220 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 01:54:20,221 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 01:54:20,221 - ERROR - git push 失败，用时: 2783.0 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 01:54:20,222 - ERROR - 第 1 次上传失败: data_exp2_processed_samples_beta3.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 01:54:20,222 - INFO - 等待 5 秒后重试
+2025-09-22 01:54:25,227 - INFO - 重置git状态
+2025-09-22 01:54:25,227 - INFO - 执行命令: git reset HEAD~1
+2025-09-22 01:54:25,227 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 01:54:25,369 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-22 01:54:25,370 - INFO - 第 2/3 次上传尝试: data_exp2_processed_samples_beta3.tar.gz
+2025-09-22 01:54:25,371 - INFO - 执行 git add: data_exp2_processed_samples_beta3.tar.gz
+2025-09-22 01:54:25,371 - INFO - 执行命令: git add "data_exp2_processed_samples_beta3.tar.gz"
+2025-09-22 01:54:25,371 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 01:55:26,755 - INFO - 命令执行成功: git add "data_exp2_processed_samples_beta3.tar.gz"
+2025-09-22 01:55:26,757 - INFO - 执行 git commit: Add data_exp2_processed_samples_beta3.tar.gz (3583.9MB)
+2025-09-22 01:55:26,757 - INFO - 执行命令: git commit -m "Add data_exp2_processed_samples_beta3.tar.gz (3583.9MB)"
+2025-09-22 01:55:26,757 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 01:55:27,040 - INFO - 命令输出: [main b48a4ba] Add data_exp2_processed_samples_beta3.tar.gz (3583.9MB)
+2025-09-22 01:55:27,041 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 01:55:27,041 - INFO - 命令输出:  create mode 100644 data_exp2_processed_samples_beta3.tar.gz
+2025-09-22 01:55:27,042 - INFO - 命令执行成功: git commit -m "Add data_exp2_processed_samples_beta3.tar.gz (3583.9MB)"
+2025-09-22 01:55:27,042 - INFO - 开始 git push: data_exp2_processed_samples_beta3.tar.gz
+2025-09-22 01:55:27,042 - INFO - 执行命令: git push origin main
+2025-09-22 01:55:27,042 - INFO - 执行命令: git push origin main
+2025-09-22 01:55:27,042 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 01:56:13,180 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 01:56:13,181 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 02:41:50,433 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 02:41:50,434 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 02:41:50,438 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 02:41:50,761 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 02:41:50,761 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 02:41:50,761 - ERROR - git push 失败，用时: 2783.7 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 02:41:50,762 - ERROR - 第 2 次上传失败: data_exp2_processed_samples_beta3.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 02:41:50,762 - INFO - 等待 10 秒后重试
+2025-09-22 02:42:00,772 - INFO - 重置git状态
+2025-09-22 02:42:00,772 - INFO - 执行命令: git reset HEAD~1
+2025-09-22 02:42:00,772 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 02:42:00,898 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-22 02:42:00,898 - INFO - 第 3/3 次上传尝试: data_exp2_processed_samples_beta3.tar.gz
+2025-09-22 02:42:00,899 - INFO - 执行 git add: data_exp2_processed_samples_beta3.tar.gz
+2025-09-22 02:42:00,899 - INFO - 执行命令: git add "data_exp2_processed_samples_beta3.tar.gz"
+2025-09-22 02:42:00,899 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 02:43:01,040 - INFO - 命令执行成功: git add "data_exp2_processed_samples_beta3.tar.gz"
+2025-09-22 02:43:01,041 - INFO - 执行 git commit: Add data_exp2_processed_samples_beta3.tar.gz (3583.9MB)
+2025-09-22 02:43:01,041 - INFO - 执行命令: git commit -m "Add data_exp2_processed_samples_beta3.tar.gz (3583.9MB)"
+2025-09-22 02:43:01,042 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 02:43:01,295 - INFO - 命令输出: [main 91c6b96] Add data_exp2_processed_samples_beta3.tar.gz (3583.9MB)
+2025-09-22 02:43:01,296 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 02:43:01,296 - INFO - 命令输出:  create mode 100644 data_exp2_processed_samples_beta3.tar.gz
+2025-09-22 02:43:01,296 - INFO - 命令执行成功: git commit -m "Add data_exp2_processed_samples_beta3.tar.gz (3583.9MB)"
+2025-09-22 02:43:01,297 - INFO - 开始 git push: data_exp2_processed_samples_beta3.tar.gz
+2025-09-22 02:43:01,297 - INFO - 执行命令: git push origin main
+2025-09-22 02:43:01,297 - INFO - 执行命令: git push origin main
+2025-09-22 02:43:01,297 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 02:43:47,976 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 02:43:47,977 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 03:46:57,022 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 03:46:57,022 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 03:46:57,023 - INFO - 命令输出: Uploading LFS objects:   0% (0/5), 0 B | 0 B/s, done.
+2025-09-22 03:46:57,026 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 03:46:57,383 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 03:46:57,384 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 03:46:57,384 - ERROR - git push 失败，用时: 3836.1 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 03:46:57,384 - ERROR - 第 3 次上传失败: data_exp2_processed_samples_beta3.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 03:46:57,384 - ERROR - 文件 data_exp2_processed_samples_beta3.tar.gz 最终上传失败
+2025-09-22 03:49:01,607 - INFO - 开始上传文件: data_exp3_wo_plot.tar.gz, 大小: 1184.6MB
+2025-09-22 03:49:01,608 - INFO - 第 1/3 次上传尝试: data_exp3_wo_plot.tar.gz
+2025-09-22 03:49:01,608 - INFO - 执行 git add: data_exp3_wo_plot.tar.gz
+2025-09-22 03:49:01,608 - INFO - 执行命令: git add "data_exp3_wo_plot.tar.gz"
+2025-09-22 03:49:01,608 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 03:49:22,638 - INFO - 命令执行成功: git add "data_exp3_wo_plot.tar.gz"
+2025-09-22 03:49:22,639 - INFO - 执行 git commit: Add data_exp3_wo_plot.tar.gz (1184.6MB)
+2025-09-22 03:49:22,639 - INFO - 执行命令: git commit -m "Add data_exp3_wo_plot.tar.gz (1184.6MB)"
+2025-09-22 03:49:22,639 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 03:49:22,925 - INFO - 命令输出: [main ca4b4dd] Add data_exp3_wo_plot.tar.gz (1184.6MB)
+2025-09-22 03:49:22,926 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 03:49:22,926 - INFO - 命令输出:  create mode 100644 data_exp3_wo_plot.tar.gz
+2025-09-22 03:49:22,927 - INFO - 命令执行成功: git commit -m "Add data_exp3_wo_plot.tar.gz (1184.6MB)"
+2025-09-22 03:49:22,927 - INFO - 开始 git push: data_exp3_wo_plot.tar.gz
+2025-09-22 03:49:22,927 - INFO - 执行命令: git push origin main
+2025-09-22 03:49:22,927 - INFO - 执行命令: git push origin main
+2025-09-22 03:49:22,927 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 03:50:09,403 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 03:50:09,404 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 04:31:16,519 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 04:31:16,520 - INFO - 命令输出: Uploading LFS objects:   0% (0/6), 0 B | 0 B/s, done.
+2025-09-22 04:31:16,524 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 04:31:16,806 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 04:31:16,806 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 04:31:16,806 - ERROR - git push 失败，用时: 2513.9 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 04:31:16,806 - ERROR - 第 1 次上传失败: data_exp3_wo_plot.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 04:31:16,807 - INFO - 等待 5 秒后重试
+2025-09-22 04:31:21,812 - INFO - 重置git状态
+2025-09-22 04:31:21,812 - INFO - 执行命令: git reset HEAD~1
+2025-09-22 04:31:21,812 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 04:31:21,953 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-22 04:31:21,953 - INFO - 第 2/3 次上传尝试: data_exp3_wo_plot.tar.gz
+2025-09-22 04:31:21,953 - INFO - 执行 git add: data_exp3_wo_plot.tar.gz
+2025-09-22 04:31:21,954 - INFO - 执行命令: git add "data_exp3_wo_plot.tar.gz"
+2025-09-22 04:31:21,954 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 04:31:41,998 - INFO - 命令执行成功: git add "data_exp3_wo_plot.tar.gz"
+2025-09-22 04:31:41,999 - INFO - 执行 git commit: Add data_exp3_wo_plot.tar.gz (1184.6MB)
+2025-09-22 04:31:41,999 - INFO - 执行命令: git commit -m "Add data_exp3_wo_plot.tar.gz (1184.6MB)"
+2025-09-22 04:31:41,999 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 04:31:42,238 - INFO - 命令输出: [main 7a5c001] Add data_exp3_wo_plot.tar.gz (1184.6MB)
+2025-09-22 04:31:42,239 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 04:31:42,239 - INFO - 命令输出:  create mode 100644 data_exp3_wo_plot.tar.gz
+2025-09-22 04:31:42,240 - INFO - 命令执行成功: git commit -m "Add data_exp3_wo_plot.tar.gz (1184.6MB)"
+2025-09-22 04:31:42,240 - INFO - 开始 git push: data_exp3_wo_plot.tar.gz
+2025-09-22 04:31:42,240 - INFO - 执行命令: git push origin main
+2025-09-22 04:31:42,240 - INFO - 执行命令: git push origin main
+2025-09-22 04:31:42,240 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 04:32:28,008 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 04:32:28,009 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 05:18:05,297 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 05:18:05,298 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 05:18:05,298 - INFO - 命令输出: Uploading LFS objects:   0% (0/6), 0 B | 0 B/s, done.
+2025-09-22 05:18:05,301 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 05:18:05,583 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 05:18:05,583 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 05:18:05,583 - ERROR - git push 失败，用时: 2783.3 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 05:18:05,584 - ERROR - 第 2 次上传失败: data_exp3_wo_plot.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 05:18:05,584 - INFO - 等待 10 秒后重试
+2025-09-22 05:18:15,594 - INFO - 重置git状态
+2025-09-22 05:18:15,595 - INFO - 执行命令: git reset HEAD~1
+2025-09-22 05:18:15,595 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 05:18:15,745 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-22 05:18:15,746 - INFO - 第 3/3 次上传尝试: data_exp3_wo_plot.tar.gz
+2025-09-22 05:18:15,746 - INFO - 执行 git add: data_exp3_wo_plot.tar.gz
+2025-09-22 05:18:15,746 - INFO - 执行命令: git add "data_exp3_wo_plot.tar.gz"
+2025-09-22 05:18:15,746 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 05:18:36,023 - INFO - 命令执行成功: git add "data_exp3_wo_plot.tar.gz"
+2025-09-22 05:18:36,023 - INFO - 执行 git commit: Add data_exp3_wo_plot.tar.gz (1184.6MB)
+2025-09-22 05:18:36,023 - INFO - 执行命令: git commit -m "Add data_exp3_wo_plot.tar.gz (1184.6MB)"
+2025-09-22 05:18:36,024 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 05:18:36,268 - INFO - 命令输出: [main 3823507] Add data_exp3_wo_plot.tar.gz (1184.6MB)
+2025-09-22 05:18:36,269 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 05:18:36,269 - INFO - 命令输出:  create mode 100644 data_exp3_wo_plot.tar.gz
+2025-09-22 05:18:36,269 - INFO - 命令执行成功: git commit -m "Add data_exp3_wo_plot.tar.gz (1184.6MB)"
+2025-09-22 05:18:36,269 - INFO - 开始 git push: data_exp3_wo_plot.tar.gz
+2025-09-22 05:18:36,269 - INFO - 执行命令: git push origin main
+2025-09-22 05:18:36,269 - INFO - 执行命令: git push origin main
+2025-09-22 05:18:36,270 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 05:19:21,888 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 05:19:21,888 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 06:00:29,024 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 06:00:29,025 - INFO - 命令输出: Uploading LFS objects:   0% (0/6), 0 B | 0 B/s, done.
+2025-09-22 06:00:29,029 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 06:00:29,317 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 06:00:29,317 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 06:00:29,317 - ERROR - git push 失败，用时: 2513.0 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 06:00:29,317 - ERROR - 第 3 次上传失败: data_exp3_wo_plot.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 06:00:29,317 - ERROR - 文件 data_exp3_wo_plot.tar.gz 最终上传失败
+2025-09-22 06:36:15,454 - INFO - 开始上传文件: data_exp3_wo_skintype.tar.gz, 大小: 30128.5MB
+2025-09-22 06:36:15,454 - INFO - 第 1/3 次上传尝试: data_exp3_wo_skintype.tar.gz
+2025-09-22 06:36:15,454 - INFO - 执行 git add: data_exp3_wo_skintype.tar.gz
+2025-09-22 06:36:15,454 - INFO - 执行命令: git add "data_exp3_wo_skintype.tar.gz"
+2025-09-22 06:36:15,455 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 06:44:27,190 - INFO - 命令执行成功: git add "data_exp3_wo_skintype.tar.gz"
+2025-09-22 06:44:27,191 - INFO - 执行 git commit: Add data_exp3_wo_skintype.tar.gz (30128.5MB)
+2025-09-22 06:44:27,192 - INFO - 执行命令: git commit -m "Add data_exp3_wo_skintype.tar.gz (30128.5MB)"
+2025-09-22 06:44:27,192 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 06:44:27,496 - INFO - 命令输出: [main 647fe5f] Add data_exp3_wo_skintype.tar.gz (30128.5MB)
+2025-09-22 06:44:27,497 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 06:44:27,498 - INFO - 命令输出:  create mode 100644 data_exp3_wo_skintype.tar.gz
+2025-09-22 06:44:27,498 - INFO - 命令执行成功: git commit -m "Add data_exp3_wo_skintype.tar.gz (30128.5MB)"
+2025-09-22 06:44:27,498 - INFO - 开始 git push: data_exp3_wo_skintype.tar.gz
+2025-09-22 06:44:27,498 - INFO - 执行命令: git push origin main
+2025-09-22 06:44:27,498 - INFO - 执行命令: git push origin main
+2025-09-22 06:44:27,499 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 06:45:12,968 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 06:45:12,969 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 07:48:21,872 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 07:48:21,873 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 07:48:21,876 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 07:48:22,173 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 07:48:22,174 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 07:48:22,174 - ERROR - git push 失败，用时: 3834.7 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 07:48:22,174 - ERROR - 第 1 次上传失败: data_exp3_wo_skintype.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 07:48:22,174 - INFO - 等待 5 秒后重试
+2025-09-22 07:48:27,179 - INFO - 重置git状态
+2025-09-22 07:48:27,179 - INFO - 执行命令: git reset HEAD~1
+2025-09-22 07:48:27,180 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 07:48:27,308 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-22 07:48:27,309 - INFO - 第 2/3 次上传尝试: data_exp3_wo_skintype.tar.gz
+2025-09-22 07:48:27,309 - INFO - 执行 git add: data_exp3_wo_skintype.tar.gz
+2025-09-22 07:48:27,309 - INFO - 执行命令: git add "data_exp3_wo_skintype.tar.gz"
+2025-09-22 07:48:27,309 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 07:56:26,958 - INFO - 命令执行成功: git add "data_exp3_wo_skintype.tar.gz"
+2025-09-22 07:56:26,959 - INFO - 执行 git commit: Add data_exp3_wo_skintype.tar.gz (30128.5MB)
+2025-09-22 07:56:26,959 - INFO - 执行命令: git commit -m "Add data_exp3_wo_skintype.tar.gz (30128.5MB)"
+2025-09-22 07:56:26,959 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 07:56:27,240 - INFO - 命令输出: [main 31ab3dc] Add data_exp3_wo_skintype.tar.gz (30128.5MB)
+2025-09-22 07:56:27,240 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 07:56:27,241 - INFO - 命令输出:  create mode 100644 data_exp3_wo_skintype.tar.gz
+2025-09-22 07:56:27,241 - INFO - 命令执行成功: git commit -m "Add data_exp3_wo_skintype.tar.gz (30128.5MB)"
+2025-09-22 07:56:27,241 - INFO - 开始 git push: data_exp3_wo_skintype.tar.gz
+2025-09-22 07:56:27,241 - INFO - 执行命令: git push origin main
+2025-09-22 07:56:27,241 - INFO - 执行命令: git push origin main
+2025-09-22 07:56:27,242 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 07:57:12,646 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 07:57:12,647 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 08:38:19,729 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 08:38:19,733 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 08:38:20,027 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 08:38:20,027 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 08:38:20,027 - ERROR - git push 失败，用时: 2512.8 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 08:38:20,027 - ERROR - 第 2 次上传失败: data_exp3_wo_skintype.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 08:38:20,028 - INFO - 等待 10 秒后重试
+2025-09-22 08:38:30,038 - INFO - 重置git状态
+2025-09-22 08:38:30,038 - INFO - 执行命令: git reset HEAD~1
+2025-09-22 08:38:30,038 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 08:38:30,206 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-22 08:38:30,207 - INFO - 第 3/3 次上传尝试: data_exp3_wo_skintype.tar.gz
+2025-09-22 08:38:30,207 - INFO - 执行 git add: data_exp3_wo_skintype.tar.gz
+2025-09-22 08:38:30,207 - INFO - 执行命令: git add "data_exp3_wo_skintype.tar.gz"
+2025-09-22 08:38:30,208 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 08:46:38,393 - INFO - 命令执行成功: git add "data_exp3_wo_skintype.tar.gz"
+2025-09-22 08:46:38,394 - INFO - 执行 git commit: Add data_exp3_wo_skintype.tar.gz (30128.5MB)
+2025-09-22 08:46:38,394 - INFO - 执行命令: git commit -m "Add data_exp3_wo_skintype.tar.gz (30128.5MB)"
+2025-09-22 08:46:38,394 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 08:46:38,679 - INFO - 命令输出: [main f86748b] Add data_exp3_wo_skintype.tar.gz (30128.5MB)
+2025-09-22 08:46:38,680 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 08:46:38,680 - INFO - 命令输出:  create mode 100644 data_exp3_wo_skintype.tar.gz
+2025-09-22 08:46:38,680 - INFO - 命令执行成功: git commit -m "Add data_exp3_wo_skintype.tar.gz (30128.5MB)"
+2025-09-22 08:46:38,680 - INFO - 开始 git push: data_exp3_wo_skintype.tar.gz
+2025-09-22 08:46:38,680 - INFO - 执行命令: git push origin main
+2025-09-22 08:46:38,681 - INFO - 执行命令: git push origin main
+2025-09-22 08:46:38,681 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 08:47:24,375 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 08:47:24,376 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 09:50:33,207 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 09:50:33,208 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 09:50:33,211 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 09:50:33,500 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 09:50:33,500 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 09:50:33,500 - ERROR - git push 失败，用时: 3834.8 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 09:50:33,500 - ERROR - 第 3 次上传失败: data_exp3_wo_skintype.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 09:50:33,500 - ERROR - 文件 data_exp3_wo_skintype.tar.gz 最终上传失败
+2025-09-22 09:58:00,207 - INFO - 开始上传文件: data_exp3_processed_sample_wo_skintype_50.tar.gz, 大小: 6316.5MB
+2025-09-22 09:58:00,208 - INFO - 第 1/3 次上传尝试: data_exp3_processed_sample_wo_skintype_50.tar.gz
+2025-09-22 09:58:00,208 - INFO - 执行 git add: data_exp3_processed_sample_wo_skintype_50.tar.gz
+2025-09-22 09:58:00,208 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_skintype_50.tar.gz"
+2025-09-22 09:58:00,208 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 09:59:42,200 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_skintype_50.tar.gz"
+2025-09-22 09:59:42,201 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_skintype_50.tar.gz (6316.5MB)
+2025-09-22 09:59:42,202 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_skintype_50.tar.gz (6316.5MB)"
+2025-09-22 09:59:42,202 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 09:59:42,503 - INFO - 命令输出: [main 5de130b] Add data_exp3_processed_sample_wo_skintype_50.tar.gz (6316.5MB)
+2025-09-22 09:59:42,503 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 09:59:42,503 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_skintype_50.tar.gz
+2025-09-22 09:59:42,504 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_skintype_50.tar.gz (6316.5MB)"
+2025-09-22 09:59:42,504 - INFO - 开始 git push: data_exp3_processed_sample_wo_skintype_50.tar.gz
+2025-09-22 09:59:42,504 - INFO - 执行命令: git push origin main
+2025-09-22 09:59:42,504 - INFO - 执行命令: git push origin main
+2025-09-22 09:59:42,505 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 10:00:28,528 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 10:00:28,529 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 10:41:35,605 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 10:41:35,608 - INFO - 命令输出: Uploading LFS objects:   0% (0/8), 0 B | 0 B/s, done.
+2025-09-22 10:41:35,609 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 10:41:35,902 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 10:41:35,902 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 10:41:35,903 - ERROR - git push 失败，用时: 2513.4 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 10:41:35,903 - ERROR - 第 1 次上传失败: data_exp3_processed_sample_wo_skintype_50.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 10:41:35,903 - INFO - 等待 5 秒后重试
+2025-09-22 10:41:40,908 - INFO - 重置git状态
+2025-09-22 10:41:40,908 - INFO - 执行命令: git reset HEAD~1
+2025-09-22 10:41:40,908 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 10:41:41,057 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-22 10:41:41,058 - INFO - 第 2/3 次上传尝试: data_exp3_processed_sample_wo_skintype_50.tar.gz
+2025-09-22 10:41:41,058 - INFO - 执行 git add: data_exp3_processed_sample_wo_skintype_50.tar.gz
+2025-09-22 10:41:41,059 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_skintype_50.tar.gz"
+2025-09-22 10:41:41,059 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 10:43:25,858 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_skintype_50.tar.gz"
+2025-09-22 10:43:25,859 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_skintype_50.tar.gz (6316.5MB)
+2025-09-22 10:43:25,859 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_skintype_50.tar.gz (6316.5MB)"
+2025-09-22 10:43:25,860 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 10:43:26,143 - INFO - 命令输出: [main 57d1352] Add data_exp3_processed_sample_wo_skintype_50.tar.gz (6316.5MB)
+2025-09-22 10:43:26,143 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 10:43:26,143 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_skintype_50.tar.gz
+2025-09-22 10:43:26,144 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_skintype_50.tar.gz (6316.5MB)"
+2025-09-22 10:43:26,144 - INFO - 开始 git push: data_exp3_processed_sample_wo_skintype_50.tar.gz
+2025-09-22 10:43:26,144 - INFO - 执行命令: git push origin main
+2025-09-22 10:43:26,144 - INFO - 执行命令: git push origin main
+2025-09-22 10:43:26,144 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 10:44:11,547 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 10:44:11,548 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 11:38:29,045 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 11:38:29,046 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 11:38:29,046 - INFO - 命令输出: Uploading LFS objects:   0% (0/8), 0 B | 0 B/s, done.
+2025-09-22 11:38:29,049 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 11:38:29,576 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 11:38:29,576 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 11:38:29,576 - ERROR - git push 失败，用时: 3303.4 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 11:38:29,576 - ERROR - 第 2 次上传失败: data_exp3_processed_sample_wo_skintype_50.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 11:38:29,576 - INFO - 等待 10 秒后重试
+2025-09-22 11:38:39,586 - INFO - 重置git状态
+2025-09-22 11:38:39,587 - INFO - 执行命令: git reset HEAD~1
+2025-09-22 11:38:39,587 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 11:38:39,749 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-22 11:38:39,749 - INFO - 第 3/3 次上传尝试: data_exp3_processed_sample_wo_skintype_50.tar.gz
+2025-09-22 11:38:39,750 - INFO - 执行 git add: data_exp3_processed_sample_wo_skintype_50.tar.gz
+2025-09-22 11:38:39,750 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_skintype_50.tar.gz"
+2025-09-22 11:38:39,750 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 11:40:25,567 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_skintype_50.tar.gz"
+2025-09-22 11:40:25,568 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_skintype_50.tar.gz (6316.5MB)
+2025-09-22 11:40:25,568 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_skintype_50.tar.gz (6316.5MB)"
+2025-09-22 11:40:25,569 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 11:40:25,868 - INFO - 命令输出: [main ebd4d61] Add data_exp3_processed_sample_wo_skintype_50.tar.gz (6316.5MB)
+2025-09-22 11:40:25,868 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 11:40:25,869 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_skintype_50.tar.gz
+2025-09-22 11:40:25,869 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_skintype_50.tar.gz (6316.5MB)"
+2025-09-22 11:40:25,869 - INFO - 开始 git push: data_exp3_processed_sample_wo_skintype_50.tar.gz
+2025-09-22 11:40:25,869 - INFO - 执行命令: git push origin main
+2025-09-22 11:40:25,869 - INFO - 执行命令: git push origin main
+2025-09-22 11:40:25,869 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 11:41:11,407 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 11:41:11,408 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 12:26:48,676 - INFO - 命令输出: Uploading LFS objects:   0% (0/8), 0 B | 0 B/s, done.
+2025-09-22 12:26:48,680 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 12:26:48,681 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 12:26:48,699 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 12:26:49,294 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 12:26:49,295 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 12:26:49,295 - ERROR - git push 失败，用时: 2783.4 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 12:26:49,295 - ERROR - 第 3 次上传失败: data_exp3_processed_sample_wo_skintype_50.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 12:26:49,295 - ERROR - 文件 data_exp3_processed_sample_wo_skintype_50.tar.gz 最终上传失败
+2025-09-22 13:02:56,494 - INFO - 开始上传文件: data_exp3_wo.tar.gz, 大小: 30043.4MB
+2025-09-22 13:02:56,494 - INFO - 第 1/3 次上传尝试: data_exp3_wo.tar.gz
+2025-09-22 13:02:56,494 - INFO - 执行 git add: data_exp3_wo.tar.gz
+2025-09-22 13:02:56,496 - INFO - 执行命令: git add "data_exp3_wo.tar.gz"
+2025-09-22 13:02:56,496 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 13:27:38,364 - INFO - 命令执行成功: git add "data_exp3_wo.tar.gz"
+2025-09-22 13:27:38,365 - INFO - 执行 git commit: Add data_exp3_wo.tar.gz (30043.4MB)
+2025-09-22 13:27:38,366 - INFO - 执行命令: git commit -m "Add data_exp3_wo.tar.gz (30043.4MB)"
+2025-09-22 13:27:38,368 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 13:27:38,749 - INFO - 命令输出: [main 8e5886c] Add data_exp3_wo.tar.gz (30043.4MB)
+2025-09-22 13:27:38,750 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 13:27:38,751 - INFO - 命令输出:  create mode 100644 data_exp3_wo.tar.gz
+2025-09-22 13:27:38,753 - INFO - 命令执行成功: git commit -m "Add data_exp3_wo.tar.gz (30043.4MB)"
+2025-09-22 13:27:38,754 - INFO - 开始 git push: data_exp3_wo.tar.gz
+2025-09-22 13:27:38,755 - INFO - 执行命令: git push origin main
+2025-09-22 13:27:38,756 - INFO - 执行命令: git push origin main
+2025-09-22 13:27:38,757 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 13:28:27,332 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 13:28:27,333 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 14:14:04,510 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 14:14:04,511 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 14:14:04,511 - INFO - 命令输出: Uploading LFS objects:   0% (0/9), 0 B | 0 B/s, done.
+2025-09-22 14:14:04,515 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 14:14:05,230 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 14:14:05,231 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 14:14:05,232 - ERROR - git push 失败，用时: 2786.5 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 14:14:05,234 - ERROR - 第 1 次上传失败: data_exp3_wo.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 14:14:05,235 - INFO - 等待 5 秒后重试
+2025-09-22 14:14:10,241 - INFO - 重置git状态
+2025-09-22 14:14:10,241 - INFO - 执行命令: git reset HEAD~1
+2025-09-22 14:14:10,241 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 14:14:10,373 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-22 14:14:10,373 - INFO - 第 2/3 次上传尝试: data_exp3_wo.tar.gz
+2025-09-22 14:14:10,375 - INFO - 执行 git add: data_exp3_wo.tar.gz
+2025-09-22 14:14:10,376 - INFO - 执行命令: git add "data_exp3_wo.tar.gz"
+2025-09-22 14:14:10,378 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 14:34:22,922 - INFO - 命令执行成功: git add "data_exp3_wo.tar.gz"
+2025-09-22 14:34:22,923 - INFO - 执行 git commit: Add data_exp3_wo.tar.gz (30043.4MB)
+2025-09-22 14:34:22,924 - INFO - 执行命令: git commit -m "Add data_exp3_wo.tar.gz (30043.4MB)"
+2025-09-22 14:34:22,925 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 14:34:23,211 - INFO - 命令输出: [main e1ca98f] Add data_exp3_wo.tar.gz (30043.4MB)
+2025-09-22 14:34:23,212 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 14:34:23,213 - INFO - 命令输出:  create mode 100644 data_exp3_wo.tar.gz
+2025-09-22 14:34:23,215 - INFO - 命令执行成功: git commit -m "Add data_exp3_wo.tar.gz (30043.4MB)"
+2025-09-22 14:34:23,216 - INFO - 开始 git push: data_exp3_wo.tar.gz
+2025-09-22 14:34:23,216 - INFO - 执行命令: git push origin main
+2025-09-22 14:34:23,218 - INFO - 执行命令: git push origin main
+2025-09-22 14:34:23,219 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 14:35:22,363 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 14:35:22,364 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 15:38:31,130 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 15:38:31,131 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 15:38:31,131 - INFO - 命令输出: Uploading LFS objects:   0% (0/9), 0 B | 0 B/s, done.
+2025-09-22 15:38:31,135 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 15:38:31,690 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 15:38:31,690 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 15:38:31,691 - ERROR - git push 失败，用时: 3848.5 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 15:38:31,692 - ERROR - 第 2 次上传失败: data_exp3_wo.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 15:38:31,693 - INFO - 等待 10 秒后重试
+2025-09-22 15:38:41,705 - INFO - 重置git状态
+2025-09-22 15:38:41,705 - INFO - 执行命令: git reset HEAD~1
+2025-09-22 15:38:41,707 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 15:38:41,844 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-22 15:38:41,844 - INFO - 第 3/3 次上传尝试: data_exp3_wo.tar.gz
+2025-09-22 15:38:41,846 - INFO - 执行 git add: data_exp3_wo.tar.gz
+2025-09-22 15:38:41,847 - INFO - 执行命令: git add "data_exp3_wo.tar.gz"
+2025-09-22 15:38:41,848 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 15:59:08,326 - INFO - 命令执行成功: git add "data_exp3_wo.tar.gz"
+2025-09-22 15:59:08,327 - INFO - 执行 git commit: Add data_exp3_wo.tar.gz (30043.4MB)
+2025-09-22 15:59:08,328 - INFO - 执行命令: git commit -m "Add data_exp3_wo.tar.gz (30043.4MB)"
+2025-09-22 15:59:08,329 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 15:59:08,620 - INFO - 命令输出: [main 277ac8a] Add data_exp3_wo.tar.gz (30043.4MB)
+2025-09-22 15:59:08,620 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 15:59:08,622 - INFO - 命令输出:  create mode 100644 data_exp3_wo.tar.gz
+2025-09-22 15:59:08,623 - INFO - 命令执行成功: git commit -m "Add data_exp3_wo.tar.gz (30043.4MB)"
+2025-09-22 15:59:08,624 - INFO - 开始 git push: data_exp3_wo.tar.gz
+2025-09-22 15:59:08,626 - INFO - 执行命令: git push origin main
+2025-09-22 15:59:08,627 - INFO - 执行命令: git push origin main
+2025-09-22 15:59:08,628 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 15:59:54,996 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 15:59:54,997 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 17:03:03,928 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 17:03:03,928 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 17:03:03,930 - INFO - 命令输出: Uploading LFS objects:   0% (0/9), 0 B | 0 B/s, done.
+2025-09-22 17:03:03,932 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 17:03:04,568 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 17:03:04,568 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 17:03:04,570 - ERROR - git push 失败，用时: 3835.9 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 17:03:04,571 - ERROR - 第 3 次上传失败: data_exp3_wo.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 17:03:04,571 - ERROR - 文件 data_exp3_wo.tar.gz 最终上传失败
+2025-09-22 17:10:25,516 - INFO - 开始上传文件: data_exp3_processed_sample_wo_50.tar.gz, 大小: 6315.4MB
+2025-09-22 17:10:25,516 - INFO - 第 1/3 次上传尝试: data_exp3_processed_sample_wo_50.tar.gz
+2025-09-22 17:10:25,516 - INFO - 执行 git add: data_exp3_processed_sample_wo_50.tar.gz
+2025-09-22 17:10:25,518 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_50.tar.gz"
+2025-09-22 17:10:25,518 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 17:15:27,743 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_50.tar.gz"
+2025-09-22 17:15:27,744 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_50.tar.gz (6315.4MB)
+2025-09-22 17:15:27,746 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_50.tar.gz (6315.4MB)"
+2025-09-22 17:15:27,747 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 17:15:28,117 - INFO - 命令输出: [main 6493571] Add data_exp3_processed_sample_wo_50.tar.gz (6315.4MB)
+2025-09-22 17:15:28,118 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 17:15:28,119 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_50.tar.gz
+2025-09-22 17:15:28,121 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_50.tar.gz (6315.4MB)"
+2025-09-22 17:15:28,122 - INFO - 开始 git push: data_exp3_processed_sample_wo_50.tar.gz
+2025-09-22 17:15:28,123 - INFO - 执行命令: git push origin main
+2025-09-22 17:15:28,124 - INFO - 执行命令: git push origin main
+2025-09-22 17:15:28,125 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 17:16:24,083 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 17:16:24,084 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 18:02:01,332 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 18:02:01,333 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 18:02:01,334 - INFO - 命令输出: Uploading LFS objects:   0% (0/10), 0 B | 0 B/s, done.
+2025-09-22 18:02:01,338 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 18:02:01,690 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 18:02:01,690 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 18:02:01,691 - ERROR - git push 失败，用时: 2793.6 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 18:02:01,691 - ERROR - 第 1 次上传失败: data_exp3_processed_sample_wo_50.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 18:02:01,691 - INFO - 等待 5 秒后重试
+2025-09-22 18:02:06,696 - INFO - 重置git状态
+2025-09-22 18:02:06,696 - INFO - 执行命令: git reset HEAD~1
+2025-09-22 18:02:06,696 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 18:02:06,860 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-22 18:02:06,861 - INFO - 第 2/3 次上传尝试: data_exp3_processed_sample_wo_50.tar.gz
+2025-09-22 18:02:06,861 - INFO - 执行 git add: data_exp3_processed_sample_wo_50.tar.gz
+2025-09-22 18:02:06,861 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_50.tar.gz"
+2025-09-22 18:02:06,861 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 18:03:50,072 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_50.tar.gz"
+2025-09-22 18:03:50,073 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_50.tar.gz (6315.4MB)
+2025-09-22 18:03:50,073 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_50.tar.gz (6315.4MB)"
+2025-09-22 18:03:50,073 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 18:03:50,370 - INFO - 命令输出: [main e6a0a05] Add data_exp3_processed_sample_wo_50.tar.gz (6315.4MB)
+2025-09-22 18:03:50,371 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 18:03:50,371 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_50.tar.gz
+2025-09-22 18:03:50,372 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_50.tar.gz (6315.4MB)"
+2025-09-22 18:03:50,372 - INFO - 开始 git push: data_exp3_processed_sample_wo_50.tar.gz
+2025-09-22 18:03:50,372 - INFO - 执行命令: git push origin main
+2025-09-22 18:03:50,372 - INFO - 执行命令: git push origin main
+2025-09-22 18:03:50,373 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 18:04:50,377 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 18:04:50,379 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 19:08:00,295 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 19:08:00,296 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 19:08:00,296 - INFO - 命令输出: Uploading LFS objects:   0% (0/10), 0 B | 0 B/s, done.
+2025-09-22 19:08:00,301 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 19:08:00,678 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 19:08:00,678 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 19:08:00,678 - ERROR - git push 失败，用时: 3850.3 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 19:08:00,678 - ERROR - 第 2 次上传失败: data_exp3_processed_sample_wo_50.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 19:08:00,678 - INFO - 等待 10 秒后重试
+2025-09-22 19:08:10,689 - INFO - 重置git状态
+2025-09-22 19:08:10,689 - INFO - 执行命令: git reset HEAD~1
+2025-09-22 19:08:10,689 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 19:08:10,866 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-22 19:08:10,867 - INFO - 第 3/3 次上传尝试: data_exp3_processed_sample_wo_50.tar.gz
+2025-09-22 19:08:10,867 - INFO - 执行 git add: data_exp3_processed_sample_wo_50.tar.gz
+2025-09-22 19:08:10,868 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_50.tar.gz"
+2025-09-22 19:08:10,868 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 19:09:55,676 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_50.tar.gz"
+2025-09-22 19:09:55,677 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_50.tar.gz (6315.4MB)
+2025-09-22 19:09:55,677 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_50.tar.gz (6315.4MB)"
+2025-09-22 19:09:55,677 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 19:09:55,986 - INFO - 命令输出: [main 78e5b74] Add data_exp3_processed_sample_wo_50.tar.gz (6315.4MB)
+2025-09-22 19:09:55,987 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 19:09:55,987 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_50.tar.gz
+2025-09-22 19:09:55,987 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_50.tar.gz (6315.4MB)"
+2025-09-22 19:09:55,987 - INFO - 开始 git push: data_exp3_processed_sample_wo_50.tar.gz
+2025-09-22 19:09:55,987 - INFO - 执行命令: git push origin main
+2025-09-22 19:09:55,988 - INFO - 执行命令: git push origin main
+2025-09-22 19:09:55,988 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 19:10:52,244 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 19:10:52,245 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 20:00:49,629 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 20:00:49,630 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 20:00:49,630 - INFO - 命令输出: Uploading LFS objects:   0% (0/10), 0 B | 0 B/s, done.
+2025-09-22 20:00:49,633 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 20:00:50,011 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 20:00:50,012 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 20:00:50,012 - ERROR - git push 失败，用时: 3054.0 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 20:00:50,012 - ERROR - 第 3 次上传失败: data_exp3_processed_sample_wo_50.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 20:00:50,012 - ERROR - 文件 data_exp3_processed_sample_wo_50.tar.gz 最终上传失败
+2025-09-22 20:03:07,941 - INFO - 开始上传文件: data_exp3_processed_sample_wo_large.tar.gz, 大小: 1952.5MB
+2025-09-22 20:03:07,941 - INFO - 第 1/3 次上传尝试: data_exp3_processed_sample_wo_large.tar.gz
+2025-09-22 20:03:07,941 - INFO - 执行 git add: data_exp3_processed_sample_wo_large.tar.gz
+2025-09-22 20:03:07,941 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_large.tar.gz"
+2025-09-22 20:03:07,941 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 20:03:40,425 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_large.tar.gz"
+2025-09-22 20:03:40,426 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_large.tar.gz (1952.5MB)
+2025-09-22 20:03:40,426 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_large.tar.gz (1952.5MB)"
+2025-09-22 20:03:40,427 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 20:03:40,713 - INFO - 命令输出: [main fe12d1b] Add data_exp3_processed_sample_wo_large.tar.gz (1952.5MB)
+2025-09-22 20:03:40,713 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 20:03:40,714 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_large.tar.gz
+2025-09-22 20:03:40,714 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_large.tar.gz (1952.5MB)"
+2025-09-22 20:03:40,714 - INFO - 开始 git push: data_exp3_processed_sample_wo_large.tar.gz
+2025-09-22 20:03:40,714 - INFO - 执行命令: git push origin main
+2025-09-22 20:03:40,714 - INFO - 执行命令: git push origin main
+2025-09-22 20:03:40,714 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 20:04:31,203 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 20:04:31,204 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 20:45:38,378 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 20:45:38,382 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 20:45:38,756 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 20:45:38,757 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 20:45:38,757 - ERROR - git push 失败，用时: 2518.0 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 20:45:38,757 - ERROR - 第 1 次上传失败: data_exp3_processed_sample_wo_large.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 20:45:38,757 - INFO - 等待 5 秒后重试
+2025-09-22 20:45:43,762 - INFO - 重置git状态
+2025-09-22 20:45:43,763 - INFO - 执行命令: git reset HEAD~1
+2025-09-22 20:45:43,763 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 20:45:43,925 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-22 20:45:43,925 - INFO - 第 2/3 次上传尝试: data_exp3_processed_sample_wo_large.tar.gz
+2025-09-22 20:45:43,926 - INFO - 执行 git add: data_exp3_processed_sample_wo_large.tar.gz
+2025-09-22 20:45:43,926 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_large.tar.gz"
+2025-09-22 20:45:43,926 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 20:46:17,080 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_large.tar.gz"
+2025-09-22 20:46:17,081 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_large.tar.gz (1952.5MB)
+2025-09-22 20:46:17,081 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_large.tar.gz (1952.5MB)"
+2025-09-22 20:46:17,081 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 20:46:17,350 - INFO - 命令输出: [main 995665e] Add data_exp3_processed_sample_wo_large.tar.gz (1952.5MB)
+2025-09-22 20:46:17,351 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 20:46:17,351 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_large.tar.gz
+2025-09-22 20:46:17,352 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_large.tar.gz (1952.5MB)"
+2025-09-22 20:46:17,352 - INFO - 开始 git push: data_exp3_processed_sample_wo_large.tar.gz
+2025-09-22 20:46:17,352 - INFO - 执行命令: git push origin main
+2025-09-22 20:46:17,352 - INFO - 执行命令: git push origin main
+2025-09-22 20:46:17,352 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 20:47:08,340 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 20:47:08,342 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 22:03:45,139 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 22:03:45,140 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 22:03:45,140 - INFO - 命令输出: Uploading LFS objects:   0% (0/11), 0 B | 0 B/s, done.
+2025-09-22 22:03:45,144 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 22:03:45,883 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 22:03:45,883 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 22:03:45,884 - ERROR - git push 失败，用时: 4648.5 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 22:03:45,884 - ERROR - 第 2 次上传失败: data_exp3_processed_sample_wo_large.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 22:03:45,884 - INFO - 等待 10 秒后重试
+2025-09-22 22:03:55,894 - INFO - 重置git状态
+2025-09-22 22:03:55,894 - INFO - 执行命令: git reset HEAD~1
+2025-09-22 22:03:55,895 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 22:03:56,047 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-22 22:03:56,048 - INFO - 第 3/3 次上传尝试: data_exp3_processed_sample_wo_large.tar.gz
+2025-09-22 22:03:56,048 - INFO - 执行 git add: data_exp3_processed_sample_wo_large.tar.gz
+2025-09-22 22:03:56,048 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_large.tar.gz"
+2025-09-22 22:03:56,048 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 22:04:29,246 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_large.tar.gz"
+2025-09-22 22:04:29,247 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_large.tar.gz (1952.5MB)
+2025-09-22 22:04:29,247 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_large.tar.gz (1952.5MB)"
+2025-09-22 22:04:29,247 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 22:04:29,550 - INFO - 命令输出: [main a494829] Add data_exp3_processed_sample_wo_large.tar.gz (1952.5MB)
+2025-09-22 22:04:29,551 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 22:04:29,551 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_large.tar.gz
+2025-09-22 22:04:29,551 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_large.tar.gz (1952.5MB)"
+2025-09-22 22:04:29,552 - INFO - 开始 git push: data_exp3_processed_sample_wo_large.tar.gz
+2025-09-22 22:04:29,552 - INFO - 执行命令: git push origin main
+2025-09-22 22:04:29,552 - INFO - 执行命令: git push origin main
+2025-09-22 22:04:29,552 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 22:05:20,511 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 22:05:20,512 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-22 22:50:57,800 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 22:50:57,801 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-22 22:50:57,801 - INFO - 命令输出: Uploading LFS objects:   0% (0/11), 0 B | 0 B/s, done.
+2025-09-22 22:50:57,805 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-22 22:50:58,202 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 22:50:58,202 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 22:50:58,202 - ERROR - git push 失败，用时: 2788.7 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 22:50:58,202 - ERROR - 第 3 次上传失败: data_exp3_processed_sample_wo_large.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-22 22:50:58,203 - ERROR - 文件 data_exp3_processed_sample_wo_large.tar.gz 最终上传失败
+2025-09-22 22:55:33,049 - INFO - 开始上传文件: data_exp3_processed_sample_wo_10.tar.gz, 大小: 3898.9MB
+2025-09-22 22:55:33,049 - INFO - 第 1/3 次上传尝试: data_exp3_processed_sample_wo_10.tar.gz
+2025-09-22 22:55:33,049 - INFO - 执行 git add: data_exp3_processed_sample_wo_10.tar.gz
+2025-09-22 22:55:33,049 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_10.tar.gz"
+2025-09-22 22:55:33,049 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 22:56:38,428 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_10.tar.gz"
+2025-09-22 22:56:38,429 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_10.tar.gz (3898.9MB)
+2025-09-22 22:56:38,429 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_10.tar.gz (3898.9MB)"
+2025-09-22 22:56:38,429 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 22:56:38,749 - INFO - 命令输出: [main d4986c6] Add data_exp3_processed_sample_wo_10.tar.gz (3898.9MB)
+2025-09-22 22:56:38,749 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-22 22:56:38,750 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_10.tar.gz
+2025-09-22 22:56:38,750 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_10.tar.gz (3898.9MB)"
+2025-09-22 22:56:38,750 - INFO - 开始 git push: data_exp3_processed_sample_wo_10.tar.gz
+2025-09-22 22:56:38,751 - INFO - 执行命令: git push origin main
+2025-09-22 22:56:38,751 - INFO - 执行命令: git push origin main
+2025-09-22 22:56:38,751 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-22 22:57:30,546 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-22 22:57:30,547 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 00:00:40,240 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 00:00:40,241 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 00:00:40,241 - INFO - 命令输出: Uploading LFS objects:   0% (0/12), 0 B | 0 B/s, done.
+2025-09-23 00:00:40,247 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 00:00:40,627 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 00:00:40,628 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 00:00:40,628 - ERROR - git push 失败，用时: 3841.9 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 00:00:40,628 - ERROR - 第 1 次上传失败: data_exp3_processed_sample_wo_10.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 00:00:40,628 - INFO - 等待 5 秒后重试
+2025-09-23 00:00:45,633 - INFO - 重置git状态
+2025-09-23 00:00:45,634 - INFO - 执行命令: git reset HEAD~1
+2025-09-23 00:00:45,634 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 00:00:45,783 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-23 00:00:45,784 - INFO - 第 2/3 次上传尝试: data_exp3_processed_sample_wo_10.tar.gz
+2025-09-23 00:00:45,784 - INFO - 执行 git add: data_exp3_processed_sample_wo_10.tar.gz
+2025-09-23 00:00:45,784 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_10.tar.gz"
+2025-09-23 00:00:45,785 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 00:01:51,411 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_10.tar.gz"
+2025-09-23 00:01:51,412 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_10.tar.gz (3898.9MB)
+2025-09-23 00:01:51,412 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_10.tar.gz (3898.9MB)"
+2025-09-23 00:01:51,412 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 00:01:51,696 - INFO - 命令输出: [main bcf7df3] Add data_exp3_processed_sample_wo_10.tar.gz (3898.9MB)
+2025-09-23 00:01:51,696 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-23 00:01:51,696 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_10.tar.gz
+2025-09-23 00:01:51,697 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_10.tar.gz (3898.9MB)"
+2025-09-23 00:01:51,697 - INFO - 开始 git push: data_exp3_processed_sample_wo_10.tar.gz
+2025-09-23 00:01:51,697 - INFO - 执行命令: git push origin main
+2025-09-23 00:01:51,697 - INFO - 执行命令: git push origin main
+2025-09-23 00:01:51,697 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 00:02:41,822 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-23 00:02:41,823 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 01:05:50,702 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 01:05:50,703 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 01:05:50,703 - INFO - 命令输出: Uploading LFS objects:   0% (0/12), 0 B | 0 B/s, done.
+2025-09-23 01:05:50,707 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 01:05:51,001 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 01:05:51,001 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 01:05:51,002 - ERROR - git push 失败，用时: 3839.3 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 01:05:51,002 - ERROR - 第 2 次上传失败: data_exp3_processed_sample_wo_10.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 01:05:51,002 - INFO - 等待 10 秒后重试
+2025-09-23 01:06:01,012 - INFO - 重置git状态
+2025-09-23 01:06:01,012 - INFO - 执行命令: git reset HEAD~1
+2025-09-23 01:06:01,012 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 01:06:01,179 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-23 01:06:01,180 - INFO - 第 3/3 次上传尝试: data_exp3_processed_sample_wo_10.tar.gz
+2025-09-23 01:06:01,180 - INFO - 执行 git add: data_exp3_processed_sample_wo_10.tar.gz
+2025-09-23 01:06:01,180 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_10.tar.gz"
+2025-09-23 01:06:01,180 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 01:07:07,191 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_10.tar.gz"
+2025-09-23 01:07:07,192 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_10.tar.gz (3898.9MB)
+2025-09-23 01:07:07,192 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_10.tar.gz (3898.9MB)"
+2025-09-23 01:07:07,192 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 01:07:07,491 - INFO - 命令输出: [main 1161e55] Add data_exp3_processed_sample_wo_10.tar.gz (3898.9MB)
+2025-09-23 01:07:07,492 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-23 01:07:07,492 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_10.tar.gz
+2025-09-23 01:07:07,493 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_10.tar.gz (3898.9MB)"
+2025-09-23 01:07:07,493 - INFO - 开始 git push: data_exp3_processed_sample_wo_10.tar.gz
+2025-09-23 01:07:07,493 - INFO - 执行命令: git push origin main
+2025-09-23 01:07:07,493 - INFO - 执行命令: git push origin main
+2025-09-23 01:07:07,494 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 01:07:55,441 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-23 01:07:55,442 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 02:11:04,486 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 02:11:04,487 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 02:11:04,487 - INFO - 命令输出: Uploading LFS objects:   0% (0/12), 0 B | 0 B/s, done.
+2025-09-23 02:11:04,492 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 02:11:04,772 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 02:11:04,772 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 02:11:04,772 - ERROR - git push 失败，用时: 3837.3 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 02:11:04,772 - ERROR - 第 3 次上传失败: data_exp3_processed_sample_wo_10.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 02:11:04,772 - ERROR - 文件 data_exp3_processed_sample_wo_10.tar.gz 最终上传失败
+2025-09-23 02:18:30,615 - INFO - 开始上传文件: data_exp3_processed_sample_wo_helotype_50.tar.gz, 大小: 6315.4MB
+2025-09-23 02:18:30,615 - INFO - 第 1/3 次上传尝试: data_exp3_processed_sample_wo_helotype_50.tar.gz
+2025-09-23 02:18:30,615 - INFO - 执行 git add: data_exp3_processed_sample_wo_helotype_50.tar.gz
+2025-09-23 02:18:30,615 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_helotype_50.tar.gz"
+2025-09-23 02:18:30,615 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 02:20:14,197 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_helotype_50.tar.gz"
+2025-09-23 02:20:14,198 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_helotype_50.tar.gz (6315.4MB)
+2025-09-23 02:20:14,198 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_helotype_50.tar.gz (6315.4MB)"
+2025-09-23 02:20:14,198 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 02:20:14,594 - INFO - 命令输出: [main e25c34e] Add data_exp3_processed_sample_wo_helotype_50.tar.gz (6315.4MB)
+2025-09-23 02:20:14,595 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-23 02:20:14,595 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_helotype_50.tar.gz
+2025-09-23 02:20:14,600 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_helotype_50.tar.gz (6315.4MB)"
+2025-09-23 02:20:14,600 - INFO - 开始 git push: data_exp3_processed_sample_wo_helotype_50.tar.gz
+2025-09-23 02:20:14,600 - INFO - 执行命令: git push origin main
+2025-09-23 02:20:14,600 - INFO - 执行命令: git push origin main
+2025-09-23 02:20:14,600 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 02:21:00,382 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-23 02:21:00,383 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 03:37:36,137 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 03:37:36,138 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 03:37:36,138 - INFO - 命令输出: Uploading LFS objects:   0% (0/13), 0 B | 0 B/s, done.
+2025-09-23 03:37:36,145 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 03:37:36,432 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 03:37:36,432 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 03:37:36,433 - ERROR - git push 失败，用时: 4641.8 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 03:37:36,433 - ERROR - 第 1 次上传失败: data_exp3_processed_sample_wo_helotype_50.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 03:37:36,433 - INFO - 等待 5 秒后重试
+2025-09-23 03:37:41,438 - INFO - 重置git状态
+2025-09-23 03:37:41,438 - INFO - 执行命令: git reset HEAD~1
+2025-09-23 03:37:41,438 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 03:37:41,598 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-23 03:37:41,598 - INFO - 第 2/3 次上传尝试: data_exp3_processed_sample_wo_helotype_50.tar.gz
+2025-09-23 03:37:41,599 - INFO - 执行 git add: data_exp3_processed_sample_wo_helotype_50.tar.gz
+2025-09-23 03:37:41,599 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_helotype_50.tar.gz"
+2025-09-23 03:37:41,599 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 03:39:29,744 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_helotype_50.tar.gz"
+2025-09-23 03:39:29,745 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_helotype_50.tar.gz (6315.4MB)
+2025-09-23 03:39:29,745 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_helotype_50.tar.gz (6315.4MB)"
+2025-09-23 03:39:29,745 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 03:39:30,038 - INFO - 命令输出: [main 618e7f5] Add data_exp3_processed_sample_wo_helotype_50.tar.gz (6315.4MB)
+2025-09-23 03:39:30,038 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-23 03:39:30,039 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_helotype_50.tar.gz
+2025-09-23 03:39:30,039 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_helotype_50.tar.gz (6315.4MB)"
+2025-09-23 03:39:30,040 - INFO - 开始 git push: data_exp3_processed_sample_wo_helotype_50.tar.gz
+2025-09-23 03:39:30,040 - INFO - 执行命令: git push origin main
+2025-09-23 03:39:30,040 - INFO - 执行命令: git push origin main
+2025-09-23 03:39:30,040 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 03:40:15,561 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-23 03:40:15,563 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 04:56:51,342 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 04:56:51,343 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 04:56:51,343 - INFO - 命令输出: Uploading LFS objects:   0% (0/13), 0 B | 0 B/s, done.
+2025-09-23 04:56:51,347 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 04:56:51,649 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 04:56:51,649 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 04:56:51,649 - ERROR - git push 失败，用时: 4641.6 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 04:56:51,649 - ERROR - 第 2 次上传失败: data_exp3_processed_sample_wo_helotype_50.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 04:56:51,649 - INFO - 等待 10 秒后重试
+2025-09-23 04:57:01,660 - INFO - 重置git状态
+2025-09-23 04:57:01,660 - INFO - 执行命令: git reset HEAD~1
+2025-09-23 04:57:01,660 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 04:57:01,811 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-23 04:57:01,812 - INFO - 第 3/3 次上传尝试: data_exp3_processed_sample_wo_helotype_50.tar.gz
+2025-09-23 04:57:01,812 - INFO - 执行 git add: data_exp3_processed_sample_wo_helotype_50.tar.gz
+2025-09-23 04:57:01,812 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_helotype_50.tar.gz"
+2025-09-23 04:57:01,812 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 04:58:47,000 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_helotype_50.tar.gz"
+2025-09-23 04:58:47,001 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_helotype_50.tar.gz (6315.4MB)
+2025-09-23 04:58:47,001 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_helotype_50.tar.gz (6315.4MB)"
+2025-09-23 04:58:47,001 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 04:58:47,315 - INFO - 命令输出: [main 75d972b] Add data_exp3_processed_sample_wo_helotype_50.tar.gz (6315.4MB)
+2025-09-23 04:58:47,316 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-23 04:58:47,316 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_helotype_50.tar.gz
+2025-09-23 04:58:47,316 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_helotype_50.tar.gz (6315.4MB)"
+2025-09-23 04:58:47,317 - INFO - 开始 git push: data_exp3_processed_sample_wo_helotype_50.tar.gz
+2025-09-23 04:58:47,317 - INFO - 执行命令: git push origin main
+2025-09-23 04:58:47,317 - INFO - 执行命令: git push origin main
+2025-09-23 04:58:47,317 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 04:59:32,943 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-23 04:59:32,944 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 05:53:50,515 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 05:53:50,516 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 05:53:50,520 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 05:53:50,806 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 05:53:50,807 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 05:53:50,807 - ERROR - git push 失败，用时: 3303.5 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 05:53:50,807 - ERROR - 第 3 次上传失败: data_exp3_processed_sample_wo_helotype_50.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 05:53:50,807 - ERROR - 文件 data_exp3_processed_sample_wo_helotype_50.tar.gz 最终上传失败
+2025-09-23 06:15:28,867 - INFO - 开始上传文件: data_exp3_processed_sample_whs_50.tar.gz, 大小: 18947.4MB
+2025-09-23 06:15:28,868 - INFO - 第 1/3 次上传尝试: data_exp3_processed_sample_whs_50.tar.gz
+2025-09-23 06:15:28,868 - INFO - 执行 git add: data_exp3_processed_sample_whs_50.tar.gz
+2025-09-23 06:15:28,868 - INFO - 执行命令: git add "data_exp3_processed_sample_whs_50.tar.gz"
+2025-09-23 06:15:28,868 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 06:20:36,967 - INFO - 命令执行成功: git add "data_exp3_processed_sample_whs_50.tar.gz"
+2025-09-23 06:20:36,968 - INFO - 执行 git commit: Add data_exp3_processed_sample_whs_50.tar.gz (18947.4MB)
+2025-09-23 06:20:36,968 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_whs_50.tar.gz (18947.4MB)"
+2025-09-23 06:20:36,968 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 06:20:37,306 - INFO - 命令输出: [main dd04017] Add data_exp3_processed_sample_whs_50.tar.gz (18947.4MB)
+2025-09-23 06:20:37,307 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-23 06:20:37,307 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_whs_50.tar.gz
+2025-09-23 06:20:37,308 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_whs_50.tar.gz (18947.4MB)"
+2025-09-23 06:20:37,308 - INFO - 开始 git push: data_exp3_processed_sample_whs_50.tar.gz
+2025-09-23 06:20:37,308 - INFO - 执行命令: git push origin main
+2025-09-23 06:20:37,308 - INFO - 执行命令: git push origin main
+2025-09-23 06:20:37,308 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 06:21:22,864 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-23 06:21:22,865 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 07:24:31,752 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 07:24:31,753 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 07:24:31,753 - INFO - 命令输出: Uploading LFS objects:   0% (0/14), 0 B | 0 B/s, done.
+2025-09-23 07:24:31,757 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 07:24:32,046 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 07:24:32,047 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 07:24:32,047 - ERROR - git push 失败，用时: 3834.7 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 07:24:32,047 - ERROR - 第 1 次上传失败: data_exp3_processed_sample_whs_50.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 07:24:32,047 - INFO - 等待 5 秒后重试
+2025-09-23 07:24:37,052 - INFO - 重置git状态
+2025-09-23 07:24:37,052 - INFO - 执行命令: git reset HEAD~1
+2025-09-23 07:24:37,053 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 07:24:37,213 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-23 07:24:37,214 - INFO - 第 2/3 次上传尝试: data_exp3_processed_sample_whs_50.tar.gz
+2025-09-23 07:24:37,214 - INFO - 执行 git add: data_exp3_processed_sample_whs_50.tar.gz
+2025-09-23 07:24:37,214 - INFO - 执行命令: git add "data_exp3_processed_sample_whs_50.tar.gz"
+2025-09-23 07:24:37,214 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 07:29:43,709 - INFO - 命令执行成功: git add "data_exp3_processed_sample_whs_50.tar.gz"
+2025-09-23 07:29:43,710 - INFO - 执行 git commit: Add data_exp3_processed_sample_whs_50.tar.gz (18947.4MB)
+2025-09-23 07:29:43,710 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_whs_50.tar.gz (18947.4MB)"
+2025-09-23 07:29:43,711 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 07:29:44,010 - INFO - 命令输出: [main 2af221b] Add data_exp3_processed_sample_whs_50.tar.gz (18947.4MB)
+2025-09-23 07:29:44,011 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-23 07:29:44,011 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_whs_50.tar.gz
+2025-09-23 07:29:44,012 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_whs_50.tar.gz (18947.4MB)"
+2025-09-23 07:29:44,012 - INFO - 开始 git push: data_exp3_processed_sample_whs_50.tar.gz
+2025-09-23 07:29:44,012 - INFO - 执行命令: git push origin main
+2025-09-23 07:29:44,012 - INFO - 执行命令: git push origin main
+2025-09-23 07:29:44,012 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 07:30:29,912 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-23 07:30:29,913 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 08:33:38,716 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 08:33:38,717 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 08:33:38,717 - INFO - 命令输出: Uploading LFS objects:   0% (0/14), 0 B | 0 B/s, done.
+2025-09-23 08:33:38,721 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 08:33:39,252 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 08:33:39,252 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 08:33:39,252 - ERROR - git push 失败，用时: 3835.2 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 08:33:39,252 - ERROR - 第 2 次上传失败: data_exp3_processed_sample_whs_50.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 08:33:39,252 - INFO - 等待 10 秒后重试
+2025-09-23 08:33:49,263 - INFO - 重置git状态
+2025-09-23 08:33:49,263 - INFO - 执行命令: git reset HEAD~1
+2025-09-23 08:33:49,263 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 08:33:49,419 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-23 08:33:49,419 - INFO - 第 3/3 次上传尝试: data_exp3_processed_sample_whs_50.tar.gz
+2025-09-23 08:33:49,419 - INFO - 执行 git add: data_exp3_processed_sample_whs_50.tar.gz
+2025-09-23 08:33:49,420 - INFO - 执行命令: git add "data_exp3_processed_sample_whs_50.tar.gz"
+2025-09-23 08:33:49,420 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 08:38:57,834 - INFO - 命令执行成功: git add "data_exp3_processed_sample_whs_50.tar.gz"
+2025-09-23 08:38:57,835 - INFO - 执行 git commit: Add data_exp3_processed_sample_whs_50.tar.gz (18947.4MB)
+2025-09-23 08:38:57,835 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_whs_50.tar.gz (18947.4MB)"
+2025-09-23 08:38:57,835 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 08:38:58,145 - INFO - 命令输出: [main ee4135c] Add data_exp3_processed_sample_whs_50.tar.gz (18947.4MB)
+2025-09-23 08:38:58,146 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-23 08:38:58,146 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_whs_50.tar.gz
+2025-09-23 08:38:58,146 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_whs_50.tar.gz (18947.4MB)"
+2025-09-23 08:38:58,146 - INFO - 开始 git push: data_exp3_processed_sample_whs_50.tar.gz
+2025-09-23 08:38:58,146 - INFO - 执行命令: git push origin main
+2025-09-23 08:38:58,146 - INFO - 执行命令: git push origin main
+2025-09-23 08:38:58,147 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 08:39:44,118 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-23 08:39:44,119 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 09:51:50,534 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 09:51:50,535 - INFO - 命令输出: Uploading LFS objects:   0% (0/14), 0 B | 0 B/s, done.
+2025-09-23 09:51:50,535 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 09:51:50,539 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 09:51:50,844 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 09:51:50,844 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 09:51:50,845 - ERROR - git push 失败，用时: 4372.7 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 09:51:50,845 - ERROR - 第 3 次上传失败: data_exp3_processed_sample_whs_50.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 09:51:50,845 - ERROR - 文件 data_exp3_processed_sample_whs_50.tar.gz 最终上传失败
+2025-09-23 09:53:47,831 - INFO - 开始上传文件: data_exp3_processed_sample_wo_50_plot.tar.gz, 大小: 1073.0MB
+2025-09-23 09:53:47,831 - INFO - 第 1/3 次上传尝试: data_exp3_processed_sample_wo_50_plot.tar.gz
+2025-09-23 09:53:47,831 - INFO - 执行 git add: data_exp3_processed_sample_wo_50_plot.tar.gz
+2025-09-23 09:53:47,831 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_50_plot.tar.gz"
+2025-09-23 09:53:47,831 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 09:54:05,958 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_50_plot.tar.gz"
+2025-09-23 09:54:05,959 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_50_plot.tar.gz (1073.0MB)
+2025-09-23 09:54:05,959 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_50_plot.tar.gz (1073.0MB)"
+2025-09-23 09:54:05,959 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 09:54:06,260 - INFO - 命令输出: [main a21d2ca] Add data_exp3_processed_sample_wo_50_plot.tar.gz (1073.0MB)
+2025-09-23 09:54:06,261 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-23 09:54:06,261 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_50_plot.tar.gz
+2025-09-23 09:54:06,262 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_50_plot.tar.gz (1073.0MB)"
+2025-09-23 09:54:06,262 - INFO - 开始 git push: data_exp3_processed_sample_wo_50_plot.tar.gz
+2025-09-23 09:54:06,262 - INFO - 执行命令: git push origin main
+2025-09-23 09:54:06,262 - INFO - 执行命令: git push origin main
+2025-09-23 09:54:06,263 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 09:54:51,927 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-23 09:54:51,928 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 11:06:58,078 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 11:06:58,079 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 11:06:58,083 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 11:06:58,423 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 11:06:58,423 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 11:06:58,423 - ERROR - git push 失败，用时: 4372.2 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 11:06:58,424 - ERROR - 第 1 次上传失败: data_exp3_processed_sample_wo_50_plot.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 11:06:58,424 - INFO - 等待 5 秒后重试
+2025-09-23 11:07:03,429 - INFO - 重置git状态
+2025-09-23 11:07:03,429 - INFO - 执行命令: git reset HEAD~1
+2025-09-23 11:07:03,429 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 11:07:03,659 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-23 11:07:03,660 - INFO - 第 2/3 次上传尝试: data_exp3_processed_sample_wo_50_plot.tar.gz
+2025-09-23 11:07:03,660 - INFO - 执行 git add: data_exp3_processed_sample_wo_50_plot.tar.gz
+2025-09-23 11:07:03,660 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_50_plot.tar.gz"
+2025-09-23 11:07:03,660 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 11:07:22,406 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_50_plot.tar.gz"
+2025-09-23 11:07:22,407 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_50_plot.tar.gz (1073.0MB)
+2025-09-23 11:07:22,407 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_50_plot.tar.gz (1073.0MB)"
+2025-09-23 11:07:22,407 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 11:07:22,686 - INFO - 命令输出: [main 3b0ceee] Add data_exp3_processed_sample_wo_50_plot.tar.gz (1073.0MB)
+2025-09-23 11:07:22,687 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-23 11:07:22,687 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_50_plot.tar.gz
+2025-09-23 11:07:22,688 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_50_plot.tar.gz (1073.0MB)"
+2025-09-23 11:07:22,688 - INFO - 开始 git push: data_exp3_processed_sample_wo_50_plot.tar.gz
+2025-09-23 11:07:22,688 - INFO - 执行命令: git push origin main
+2025-09-23 11:07:22,688 - INFO - 执行命令: git push origin main
+2025-09-23 11:07:22,688 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 11:08:08,356 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-23 11:08:08,357 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 12:11:17,211 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 12:11:17,212 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 12:11:17,212 - INFO - 命令输出: Uploading LFS objects:   0% (0/15), 0 B | 0 B/s, done.
+2025-09-23 12:11:17,216 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 12:11:17,518 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 12:11:17,518 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 12:11:17,519 - ERROR - git push 失败，用时: 3834.8 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 12:11:17,519 - ERROR - 第 2 次上传失败: data_exp3_processed_sample_wo_50_plot.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 12:11:17,519 - INFO - 等待 10 秒后重试
+2025-09-23 12:11:27,529 - INFO - 重置git状态
+2025-09-23 12:11:27,529 - INFO - 执行命令: git reset HEAD~1
+2025-09-23 12:11:27,529 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 12:11:27,672 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-23 12:11:27,673 - INFO - 第 3/3 次上传尝试: data_exp3_processed_sample_wo_50_plot.tar.gz
+2025-09-23 12:11:27,673 - INFO - 执行 git add: data_exp3_processed_sample_wo_50_plot.tar.gz
+2025-09-23 12:11:27,673 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_50_plot.tar.gz"
+2025-09-23 12:11:27,673 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 12:11:46,482 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_50_plot.tar.gz"
+2025-09-23 12:11:46,483 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_50_plot.tar.gz (1073.0MB)
+2025-09-23 12:11:46,484 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_50_plot.tar.gz (1073.0MB)"
+2025-09-23 12:11:46,484 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 12:11:46,757 - INFO - 命令输出: [main 4288a76] Add data_exp3_processed_sample_wo_50_plot.tar.gz (1073.0MB)
+2025-09-23 12:11:46,758 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-23 12:11:46,758 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_50_plot.tar.gz
+2025-09-23 12:11:46,759 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_50_plot.tar.gz (1073.0MB)"
+2025-09-23 12:11:46,759 - INFO - 开始 git push: data_exp3_processed_sample_wo_50_plot.tar.gz
+2025-09-23 12:11:46,759 - INFO - 执行命令: git push origin main
+2025-09-23 12:11:46,759 - INFO - 执行命令: git push origin main
+2025-09-23 12:11:46,759 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 12:12:32,222 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-23 12:12:32,222 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 13:02:29,622 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 13:02:29,623 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 13:02:29,626 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 13:02:29,928 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 13:02:29,928 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 13:02:29,928 - ERROR - git push 失败，用时: 3043.2 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 13:02:29,928 - ERROR - 第 3 次上传失败: data_exp3_processed_sample_wo_50_plot.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 13:02:29,929 - ERROR - 文件 data_exp3_processed_sample_wo_50_plot.tar.gz 最终上传失败
+2025-09-23 13:10:31,023 - INFO - 开始上传文件: data_exp3_processed_sample_wo_skintype_20.tar.gz, 大小: 6759.5MB
+2025-09-23 13:10:31,024 - INFO - 第 1/3 次上传尝试: data_exp3_processed_sample_wo_skintype_20.tar.gz
+2025-09-23 13:10:31,024 - INFO - 执行 git add: data_exp3_processed_sample_wo_skintype_20.tar.gz
+2025-09-23 13:10:31,024 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_skintype_20.tar.gz"
+2025-09-23 13:10:31,024 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 13:12:22,788 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_skintype_20.tar.gz"
+2025-09-23 13:12:22,789 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_skintype_20.tar.gz (6759.5MB)
+2025-09-23 13:12:22,789 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_skintype_20.tar.gz (6759.5MB)"
+2025-09-23 13:12:22,789 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 13:12:23,135 - INFO - 命令输出: [main 8e3b9bf] Add data_exp3_processed_sample_wo_skintype_20.tar.gz (6759.5MB)
+2025-09-23 13:12:23,135 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-23 13:12:23,135 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_skintype_20.tar.gz
+2025-09-23 13:12:23,136 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_skintype_20.tar.gz (6759.5MB)"
+2025-09-23 13:12:23,136 - INFO - 开始 git push: data_exp3_processed_sample_wo_skintype_20.tar.gz
+2025-09-23 13:12:23,136 - INFO - 执行命令: git push origin main
+2025-09-23 13:12:23,136 - INFO - 执行命令: git push origin main
+2025-09-23 13:12:23,136 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 13:13:08,778 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-23 13:13:08,779 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 14:20:45,760 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 14:20:45,761 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 14:20:45,761 - INFO - 命令输出: Uploading LFS objects:   0% (0/16), 0 B | 0 B/s, done.
+2025-09-23 14:20:45,765 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 14:20:46,064 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 14:20:46,064 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 14:20:46,064 - ERROR - git push 失败，用时: 4102.9 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 14:20:46,064 - ERROR - 第 1 次上传失败: data_exp3_processed_sample_wo_skintype_20.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 14:20:46,065 - INFO - 等待 5 秒后重试
+2025-09-23 14:20:51,070 - INFO - 重置git状态
+2025-09-23 14:20:51,070 - INFO - 执行命令: git reset HEAD~1
+2025-09-23 14:20:51,070 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 14:20:51,211 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-23 14:20:51,212 - INFO - 第 2/3 次上传尝试: data_exp3_processed_sample_wo_skintype_20.tar.gz
+2025-09-23 14:20:51,212 - INFO - 执行 git add: data_exp3_processed_sample_wo_skintype_20.tar.gz
+2025-09-23 14:20:51,212 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_skintype_20.tar.gz"
+2025-09-23 14:20:51,213 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 14:22:42,760 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_skintype_20.tar.gz"
+2025-09-23 14:22:42,761 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_skintype_20.tar.gz (6759.5MB)
+2025-09-23 14:22:42,761 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_skintype_20.tar.gz (6759.5MB)"
+2025-09-23 14:22:42,761 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 14:22:43,055 - INFO - 命令输出: [main fabe30e] Add data_exp3_processed_sample_wo_skintype_20.tar.gz (6759.5MB)
+2025-09-23 14:22:43,056 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-23 14:22:43,056 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_skintype_20.tar.gz
+2025-09-23 14:22:43,057 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_skintype_20.tar.gz (6759.5MB)"
+2025-09-23 14:22:43,057 - INFO - 开始 git push: data_exp3_processed_sample_wo_skintype_20.tar.gz
+2025-09-23 14:22:43,057 - INFO - 执行命令: git push origin main
+2025-09-23 14:22:43,057 - INFO - 执行命令: git push origin main
+2025-09-23 14:22:43,057 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 14:23:28,646 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-23 14:23:28,647 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 15:26:37,537 - INFO - 命令输出: Uploading LFS objects:   0% (0/16), 0 B | 0 B/s, done.
+2025-09-23 15:26:37,538 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 15:26:37,538 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 15:26:37,543 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 15:26:37,997 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 15:26:37,997 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 15:26:37,997 - ERROR - git push 失败，用时: 3834.9 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 15:26:37,997 - ERROR - 第 2 次上传失败: data_exp3_processed_sample_wo_skintype_20.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 15:26:37,998 - INFO - 等待 10 秒后重试
+2025-09-23 15:26:48,008 - INFO - 重置git状态
+2025-09-23 15:26:48,008 - INFO - 执行命令: git reset HEAD~1
+2025-09-23 15:26:48,008 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 15:26:48,175 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-23 15:26:48,175 - INFO - 第 3/3 次上传尝试: data_exp3_processed_sample_wo_skintype_20.tar.gz
+2025-09-23 15:26:48,176 - INFO - 执行 git add: data_exp3_processed_sample_wo_skintype_20.tar.gz
+2025-09-23 15:26:48,176 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_skintype_20.tar.gz"
+2025-09-23 15:26:48,176 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 15:28:40,163 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_skintype_20.tar.gz"
+2025-09-23 15:28:40,164 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_skintype_20.tar.gz (6759.5MB)
+2025-09-23 15:28:40,164 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_skintype_20.tar.gz (6759.5MB)"
+2025-09-23 15:28:40,164 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 15:28:40,451 - INFO - 命令输出: [main c209f13] Add data_exp3_processed_sample_wo_skintype_20.tar.gz (6759.5MB)
+2025-09-23 15:28:40,452 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-23 15:28:40,452 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_skintype_20.tar.gz
+2025-09-23 15:28:40,452 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_skintype_20.tar.gz (6759.5MB)"
+2025-09-23 15:28:40,453 - INFO - 开始 git push: data_exp3_processed_sample_wo_skintype_20.tar.gz
+2025-09-23 15:28:40,453 - INFO - 执行命令: git push origin main
+2025-09-23 15:28:40,453 - INFO - 执行命令: git push origin main
+2025-09-23 15:28:40,453 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 15:29:27,695 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-23 15:29:27,696 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 16:10:34,803 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 16:10:34,804 - INFO - 命令输出: Uploading LFS objects:   0% (0/16), 0 B | 0 B/s, done.
+2025-09-23 16:10:34,808 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 16:10:35,096 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 16:10:35,096 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 16:10:35,096 - ERROR - git push 失败，用时: 2514.6 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 16:10:35,096 - ERROR - 第 3 次上传失败: data_exp3_processed_sample_wo_skintype_20.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 16:10:35,096 - ERROR - 文件 data_exp3_processed_sample_wo_skintype_20.tar.gz 最终上传失败
+2025-09-23 16:10:48,466 - INFO - 开始上传文件: data_exp3_processed_sample_wo_plot.tar.gz, 大小: 107.6MB
+2025-09-23 16:10:48,466 - INFO - 第 1/3 次上传尝试: data_exp3_processed_sample_wo_plot.tar.gz
+2025-09-23 16:10:48,467 - INFO - 执行 git add: data_exp3_processed_sample_wo_plot.tar.gz
+2025-09-23 16:10:48,467 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_plot.tar.gz"
+2025-09-23 16:10:48,467 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 16:10:50,591 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_plot.tar.gz"
+2025-09-23 16:10:50,591 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_plot.tar.gz (107.6MB)
+2025-09-23 16:10:50,591 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_plot.tar.gz (107.6MB)"
+2025-09-23 16:10:50,591 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 16:10:50,885 - INFO - 命令输出: [main bb5bdd5] Add data_exp3_processed_sample_wo_plot.tar.gz (107.6MB)
+2025-09-23 16:10:50,886 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-23 16:10:50,886 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_plot.tar.gz
+2025-09-23 16:10:50,886 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_plot.tar.gz (107.6MB)"
+2025-09-23 16:10:50,886 - INFO - 开始 git push: data_exp3_processed_sample_wo_plot.tar.gz
+2025-09-23 16:10:50,887 - INFO - 执行命令: git push origin main
+2025-09-23 16:10:50,887 - INFO - 执行命令: git push origin main
+2025-09-23 16:10:50,887 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 16:11:37,306 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-23 16:11:37,307 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 17:14:46,179 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 17:14:46,180 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 17:14:46,181 - INFO - 命令输出: Uploading LFS objects:   0% (0/17), 0 B | 0 B/s, done.
+2025-09-23 17:14:46,185 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 17:14:46,485 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 17:14:46,485 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 17:14:46,485 - ERROR - git push 失败，用时: 3835.6 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 17:14:46,485 - ERROR - 第 1 次上传失败: data_exp3_processed_sample_wo_plot.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 17:14:46,485 - INFO - 等待 5 秒后重试
+2025-09-23 17:14:51,491 - INFO - 重置git状态
+2025-09-23 17:14:51,491 - INFO - 执行命令: git reset HEAD~1
+2025-09-23 17:14:51,491 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 17:14:51,634 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-23 17:14:51,635 - INFO - 第 2/3 次上传尝试: data_exp3_processed_sample_wo_plot.tar.gz
+2025-09-23 17:14:51,635 - INFO - 执行 git add: data_exp3_processed_sample_wo_plot.tar.gz
+2025-09-23 17:14:51,635 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_plot.tar.gz"
+2025-09-23 17:14:51,635 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 17:14:53,738 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_plot.tar.gz"
+2025-09-23 17:14:53,739 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_plot.tar.gz (107.6MB)
+2025-09-23 17:14:53,739 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_plot.tar.gz (107.6MB)"
+2025-09-23 17:14:53,739 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 17:14:54,019 - INFO - 命令输出: [main d8fcca9] Add data_exp3_processed_sample_wo_plot.tar.gz (107.6MB)
+2025-09-23 17:14:54,020 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-23 17:14:54,020 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_plot.tar.gz
+2025-09-23 17:14:54,021 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_plot.tar.gz (107.6MB)"
+2025-09-23 17:14:54,021 - INFO - 开始 git push: data_exp3_processed_sample_wo_plot.tar.gz
+2025-09-23 17:14:54,021 - INFO - 执行命令: git push origin main
+2025-09-23 17:14:54,021 - INFO - 执行命令: git push origin main
+2025-09-23 17:14:54,021 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 17:15:39,546 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-23 17:15:39,547 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 18:23:16,576 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 18:23:16,577 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 18:23:16,577 - INFO - 命令输出: Uploading LFS objects:   0% (0/17), 0 B | 0 B/s, done.
+2025-09-23 18:23:16,581 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 18:23:16,866 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 18:23:16,866 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 18:23:16,867 - ERROR - git push 失败，用时: 4102.8 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 18:23:16,867 - ERROR - 第 2 次上传失败: data_exp3_processed_sample_wo_plot.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 18:23:16,867 - INFO - 等待 10 秒后重试
+2025-09-23 18:23:26,877 - INFO - 重置git状态
+2025-09-23 18:23:26,877 - INFO - 执行命令: git reset HEAD~1
+2025-09-23 18:23:26,877 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 18:23:27,050 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-23 18:23:27,051 - INFO - 第 3/3 次上传尝试: data_exp3_processed_sample_wo_plot.tar.gz
+2025-09-23 18:23:27,051 - INFO - 执行 git add: data_exp3_processed_sample_wo_plot.tar.gz
+2025-09-23 18:23:27,051 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_plot.tar.gz"
+2025-09-23 18:23:27,051 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 18:23:29,166 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_plot.tar.gz"
+2025-09-23 18:23:29,166 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_plot.tar.gz (107.6MB)
+2025-09-23 18:23:29,166 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_plot.tar.gz (107.6MB)"
+2025-09-23 18:23:29,166 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 18:23:29,449 - INFO - 命令输出: [main 7466f20] Add data_exp3_processed_sample_wo_plot.tar.gz (107.6MB)
+2025-09-23 18:23:29,449 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-23 18:23:29,449 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_plot.tar.gz
+2025-09-23 18:23:29,450 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_plot.tar.gz (107.6MB)"
+2025-09-23 18:23:29,450 - INFO - 开始 git push: data_exp3_processed_sample_wo_plot.tar.gz
+2025-09-23 18:23:29,450 - INFO - 执行命令: git push origin main
+2025-09-23 18:23:29,450 - INFO - 执行命令: git push origin main
+2025-09-23 18:23:29,450 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 18:24:14,902 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-23 18:24:14,903 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 19:40:50,694 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 19:40:50,695 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 19:40:50,695 - INFO - 命令输出: Uploading LFS objects:   0% (0/17), 0 B | 0 B/s, done.
+2025-09-23 19:40:50,699 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 19:40:50,991 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 19:40:50,992 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 19:40:50,992 - ERROR - git push 失败，用时: 4641.5 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 19:40:50,992 - ERROR - 第 3 次上传失败: data_exp3_processed_sample_wo_plot.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 19:40:50,992 - ERROR - 文件 data_exp3_processed_sample_wo_plot.tar.gz 最终上传失败
+2025-09-23 19:48:37,007 - INFO - 开始上传文件: data_exp3_processed_sample_wo_20.tar.gz, 大小: 6595.5MB
+2025-09-23 19:48:37,007 - INFO - 第 1/3 次上传尝试: data_exp3_processed_sample_wo_20.tar.gz
+2025-09-23 19:48:37,008 - INFO - 执行 git add: data_exp3_processed_sample_wo_20.tar.gz
+2025-09-23 19:48:37,008 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_20.tar.gz"
+2025-09-23 19:48:37,008 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 19:50:26,560 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_20.tar.gz"
+2025-09-23 19:50:26,561 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_20.tar.gz (6595.5MB)
+2025-09-23 19:50:26,561 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_20.tar.gz (6595.5MB)"
+2025-09-23 19:50:26,561 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 19:50:26,891 - INFO - 命令输出: [main 3225f5d] Add data_exp3_processed_sample_wo_20.tar.gz (6595.5MB)
+2025-09-23 19:50:26,892 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-23 19:50:26,892 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_20.tar.gz
+2025-09-23 19:50:26,892 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_20.tar.gz (6595.5MB)"
+2025-09-23 19:50:26,893 - INFO - 开始 git push: data_exp3_processed_sample_wo_20.tar.gz
+2025-09-23 19:50:26,893 - INFO - 执行命令: git push origin main
+2025-09-23 19:50:26,893 - INFO - 执行命令: git push origin main
+2025-09-23 19:50:26,893 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 19:51:13,282 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-23 19:51:13,283 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 20:54:22,154 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 20:54:22,155 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 20:54:22,155 - INFO - 命令输出: Uploading LFS objects:   0% (0/18), 0 B | 0 B/s, done.
+2025-09-23 20:54:22,160 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 20:54:22,457 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 20:54:22,457 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 20:54:22,457 - ERROR - git push 失败，用时: 3835.6 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 20:54:22,457 - ERROR - 第 1 次上传失败: data_exp3_processed_sample_wo_20.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 20:54:22,457 - INFO - 等待 5 秒后重试
+2025-09-23 20:54:27,462 - INFO - 重置git状态
+2025-09-23 20:54:27,463 - INFO - 执行命令: git reset HEAD~1
+2025-09-23 20:54:27,463 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 20:54:27,638 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-23 20:54:27,638 - INFO - 第 2/3 次上传尝试: data_exp3_processed_sample_wo_20.tar.gz
+2025-09-23 20:54:27,639 - INFO - 执行 git add: data_exp3_processed_sample_wo_20.tar.gz
+2025-09-23 20:54:27,639 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_20.tar.gz"
+2025-09-23 20:54:27,639 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 20:56:17,694 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_20.tar.gz"
+2025-09-23 20:56:17,694 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_20.tar.gz (6595.5MB)
+2025-09-23 20:56:17,694 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_20.tar.gz (6595.5MB)"
+2025-09-23 20:56:17,694 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 20:56:18,041 - INFO - 命令输出: [main d469ae5] Add data_exp3_processed_sample_wo_20.tar.gz (6595.5MB)
+2025-09-23 20:56:18,041 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-23 20:56:18,042 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_20.tar.gz
+2025-09-23 20:56:18,042 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_20.tar.gz (6595.5MB)"
+2025-09-23 20:56:18,043 - INFO - 开始 git push: data_exp3_processed_sample_wo_20.tar.gz
+2025-09-23 20:56:18,043 - INFO - 执行命令: git push origin main
+2025-09-23 20:56:18,043 - INFO - 执行命令: git push origin main
+2025-09-23 20:56:18,043 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 20:57:03,735 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-23 20:57:03,736 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 21:22:36,320 - INFO - 命令输出: remote:
+2025-09-23 21:22:36,321 - INFO - 命令输出: remote: ========================================================================
+2025-09-23 21:22:36,321 - INFO - 命令输出: remote:
+2025-09-23 21:22:36,321 - INFO - 命令输出: remote: ERROR: The git server, Gitaly, is not available at this time. Please contact your administrator.
+2025-09-23 21:22:36,321 - INFO - 命令输出: 
+2025-09-23 21:22:36,581 - INFO - 命令输出: remote:
+2025-09-23 21:22:36,581 - INFO - 命令输出: remote: ========================================================================
+2025-09-23 21:22:36,581 - INFO - 命令输出: remote:
+2025-09-23 22:13:39,814 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 22:13:39,815 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 22:13:39,819 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 22:13:39,819 - ERROR - 命令执行失败 (退出码: -13): git push origin main
+2025-09-23 22:13:39,819 - ERROR - 命令执行异常: 命令执行失败 (退出码: -13): git push origin main
+2025-09-23 22:13:39,820 - ERROR - git push 失败，用时: 4641.8 秒，错误: 命令执行异常: 命令执行失败 (退出码: -13): git push origin main
+2025-09-23 22:13:39,820 - ERROR - 第 2 次上传失败: data_exp3_processed_sample_wo_20.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: -13): git push origin main
+2025-09-23 22:13:39,820 - INFO - 等待 10 秒后重试
+2025-09-23 22:13:49,830 - INFO - 重置git状态
+2025-09-23 22:13:49,831 - INFO - 执行命令: git reset HEAD~1
+2025-09-23 22:13:49,832 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 22:13:49,993 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-23 22:13:49,994 - INFO - 第 3/3 次上传尝试: data_exp3_processed_sample_wo_20.tar.gz
+2025-09-23 22:13:49,994 - INFO - 执行 git add: data_exp3_processed_sample_wo_20.tar.gz
+2025-09-23 22:13:49,994 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_20.tar.gz"
+2025-09-23 22:13:49,994 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 22:15:39,900 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_20.tar.gz"
+2025-09-23 22:15:39,901 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_20.tar.gz (6595.5MB)
+2025-09-23 22:15:39,901 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_20.tar.gz (6595.5MB)"
+2025-09-23 22:15:39,902 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 22:15:40,196 - INFO - 命令输出: [main 8f96816] Add data_exp3_processed_sample_wo_20.tar.gz (6595.5MB)
+2025-09-23 22:15:40,197 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-23 22:15:40,197 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_20.tar.gz
+2025-09-23 22:15:40,197 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_20.tar.gz (6595.5MB)"
+2025-09-23 22:15:40,198 - INFO - 开始 git push: data_exp3_processed_sample_wo_20.tar.gz
+2025-09-23 22:15:40,198 - INFO - 执行命令: git push origin main
+2025-09-23 22:15:40,198 - INFO - 执行命令: git push origin main
+2025-09-23 22:15:40,198 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-23 22:16:27,363 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-23 22:16:27,364 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-23 23:19:36,182 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 23:19:36,183 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-23 23:19:36,188 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-23 23:19:36,479 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 23:19:36,480 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 23:19:36,480 - ERROR - git push 失败，用时: 3836.3 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 23:19:36,480 - ERROR - 第 3 次上传失败: data_exp3_processed_sample_wo_20.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-23 23:19:36,480 - ERROR - 文件 data_exp3_processed_sample_wo_20.tar.gz 最终上传失败
+2025-09-23 23:55:47,979 - INFO - 开始上传文件: data_exp3_wo_helotype.tar.gz, 大小: 30123.0MB
+2025-09-23 23:55:47,979 - INFO - 第 1/3 次上传尝试: data_exp3_wo_helotype.tar.gz
+2025-09-23 23:55:47,980 - INFO - 执行 git add: data_exp3_wo_helotype.tar.gz
+2025-09-23 23:55:47,980 - INFO - 执行命令: git add "data_exp3_wo_helotype.tar.gz"
+2025-09-23 23:55:47,980 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 00:03:55,087 - INFO - 命令执行成功: git add "data_exp3_wo_helotype.tar.gz"
+2025-09-24 00:03:55,088 - INFO - 执行 git commit: Add data_exp3_wo_helotype.tar.gz (30123.0MB)
+2025-09-24 00:03:55,089 - INFO - 执行命令: git commit -m "Add data_exp3_wo_helotype.tar.gz (30123.0MB)"
+2025-09-24 00:03:55,089 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 00:03:55,468 - INFO - 命令输出: [main 21c91ca] Add data_exp3_wo_helotype.tar.gz (30123.0MB)
+2025-09-24 00:03:55,469 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-24 00:03:55,469 - INFO - 命令输出:  create mode 100644 data_exp3_wo_helotype.tar.gz
+2025-09-24 00:03:55,470 - INFO - 命令执行成功: git commit -m "Add data_exp3_wo_helotype.tar.gz (30123.0MB)"
+2025-09-24 00:03:55,470 - INFO - 开始 git push: data_exp3_wo_helotype.tar.gz
+2025-09-24 00:03:55,470 - INFO - 执行命令: git push origin main
+2025-09-24 00:03:55,470 - INFO - 执行命令: git push origin main
+2025-09-24 00:03:55,470 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 00:04:42,055 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-24 00:04:42,056 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-24 01:16:48,221 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-24 01:16:48,222 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-24 01:16:48,226 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-24 01:16:48,531 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 01:16:48,531 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 01:16:48,531 - ERROR - git push 失败，用时: 4373.1 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 01:16:48,532 - ERROR - 第 1 次上传失败: data_exp3_wo_helotype.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 01:16:48,532 - INFO - 等待 5 秒后重试
+2025-09-24 01:16:53,537 - INFO - 重置git状态
+2025-09-24 01:16:53,537 - INFO - 执行命令: git reset HEAD~1
+2025-09-24 01:16:53,537 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 01:16:53,713 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-24 01:16:53,713 - INFO - 第 2/3 次上传尝试: data_exp3_wo_helotype.tar.gz
+2025-09-24 01:16:53,713 - INFO - 执行 git add: data_exp3_wo_helotype.tar.gz
+2025-09-24 01:16:53,714 - INFO - 执行命令: git add "data_exp3_wo_helotype.tar.gz"
+2025-09-24 01:16:53,714 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 01:25:22,615 - INFO - 命令执行成功: git add "data_exp3_wo_helotype.tar.gz"
+2025-09-24 01:25:22,615 - INFO - 执行 git commit: Add data_exp3_wo_helotype.tar.gz (30123.0MB)
+2025-09-24 01:25:22,615 - INFO - 执行命令: git commit -m "Add data_exp3_wo_helotype.tar.gz (30123.0MB)"
+2025-09-24 01:25:22,616 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 01:25:22,908 - INFO - 命令输出: [main 8e87780] Add data_exp3_wo_helotype.tar.gz (30123.0MB)
+2025-09-24 01:25:22,908 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-24 01:25:22,908 - INFO - 命令输出:  create mode 100644 data_exp3_wo_helotype.tar.gz
+2025-09-24 01:25:22,909 - INFO - 命令执行成功: git commit -m "Add data_exp3_wo_helotype.tar.gz (30123.0MB)"
+2025-09-24 01:25:22,909 - INFO - 开始 git push: data_exp3_wo_helotype.tar.gz
+2025-09-24 01:25:22,909 - INFO - 执行命令: git push origin main
+2025-09-24 01:25:22,909 - INFO - 执行命令: git push origin main
+2025-09-24 01:25:22,909 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 01:26:08,565 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-24 01:26:08,584 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-24 02:42:44,302 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-24 02:42:44,303 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-24 02:42:44,305 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-24 02:42:44,594 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 02:42:44,594 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 02:42:44,594 - ERROR - git push 失败，用时: 4641.7 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 02:42:44,594 - ERROR - 第 2 次上传失败: data_exp3_wo_helotype.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 02:42:44,594 - INFO - 等待 10 秒后重试
+2025-09-24 02:42:54,605 - INFO - 重置git状态
+2025-09-24 02:42:54,605 - INFO - 执行命令: git reset HEAD~1
+2025-09-24 02:42:54,605 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 02:42:54,783 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-24 02:42:54,783 - INFO - 第 3/3 次上传尝试: data_exp3_wo_helotype.tar.gz
+2025-09-24 02:42:54,784 - INFO - 执行 git add: data_exp3_wo_helotype.tar.gz
+2025-09-24 02:42:54,784 - INFO - 执行命令: git add "data_exp3_wo_helotype.tar.gz"
+2025-09-24 02:42:54,784 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 02:51:15,681 - INFO - 命令执行成功: git add "data_exp3_wo_helotype.tar.gz"
+2025-09-24 02:51:15,682 - INFO - 执行 git commit: Add data_exp3_wo_helotype.tar.gz (30123.0MB)
+2025-09-24 02:51:15,682 - INFO - 执行命令: git commit -m "Add data_exp3_wo_helotype.tar.gz (30123.0MB)"
+2025-09-24 02:51:15,682 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 02:51:16,023 - INFO - 命令输出: [main 10aad1f] Add data_exp3_wo_helotype.tar.gz (30123.0MB)
+2025-09-24 02:51:16,024 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-24 02:51:16,024 - INFO - 命令输出:  create mode 100644 data_exp3_wo_helotype.tar.gz
+2025-09-24 02:51:16,025 - INFO - 命令执行成功: git commit -m "Add data_exp3_wo_helotype.tar.gz (30123.0MB)"
+2025-09-24 02:51:16,025 - INFO - 开始 git push: data_exp3_wo_helotype.tar.gz
+2025-09-24 02:51:16,025 - INFO - 执行命令: git push origin main
+2025-09-24 02:51:16,025 - INFO - 执行命令: git push origin main
+2025-09-24 02:51:16,025 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 02:52:01,516 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-24 02:52:01,517 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-24 04:08:37,119 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-24 04:08:37,120 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-24 04:08:37,125 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-24 04:08:37,416 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 04:08:37,417 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 04:08:37,417 - ERROR - git push 失败，用时: 4641.4 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 04:08:37,417 - ERROR - 第 3 次上传失败: data_exp3_wo_helotype.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 04:08:37,417 - ERROR - 文件 data_exp3_wo_helotype.tar.gz 最终上传失败
+2025-09-24 04:16:36,864 - INFO - 开始上传文件: data_exp3_processed_sample_wo_helotype_20.tar.gz, 大小: 6759.7MB
+2025-09-24 04:16:36,864 - INFO - 第 1/3 次上传尝试: data_exp3_processed_sample_wo_helotype_20.tar.gz
+2025-09-24 04:16:36,865 - INFO - 执行 git add: data_exp3_processed_sample_wo_helotype_20.tar.gz
+2025-09-24 04:16:36,865 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_helotype_20.tar.gz"
+2025-09-24 04:16:36,865 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 04:18:22,999 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_helotype_20.tar.gz"
+2025-09-24 04:18:23,000 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_helotype_20.tar.gz (6759.7MB)
+2025-09-24 04:18:23,001 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_helotype_20.tar.gz (6759.7MB)"
+2025-09-24 04:18:23,001 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 04:18:23,330 - INFO - 命令输出: [main 2ae9355] Add data_exp3_processed_sample_wo_helotype_20.tar.gz (6759.7MB)
+2025-09-24 04:18:23,331 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-24 04:18:23,331 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_helotype_20.tar.gz
+2025-09-24 04:18:23,331 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_helotype_20.tar.gz (6759.7MB)"
+2025-09-24 04:18:23,331 - INFO - 开始 git push: data_exp3_processed_sample_wo_helotype_20.tar.gz
+2025-09-24 04:18:23,332 - INFO - 执行命令: git push origin main
+2025-09-24 04:18:23,332 - INFO - 执行命令: git push origin main
+2025-09-24 04:18:23,332 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 04:19:08,866 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-24 04:19:08,867 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-24 05:13:26,417 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-24 05:13:26,418 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-24 05:13:26,418 - INFO - 命令输出: Uploading LFS objects:   0% (0/20), 0 B | 0 B/s, done.
+2025-09-24 05:13:26,425 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-24 05:13:26,715 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 05:13:26,715 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 05:13:26,715 - ERROR - git push 失败，用时: 3303.4 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 05:13:26,715 - ERROR - 第 1 次上传失败: data_exp3_processed_sample_wo_helotype_20.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 05:13:26,715 - INFO - 等待 5 秒后重试
+2025-09-24 05:13:31,721 - INFO - 重置git状态
+2025-09-24 05:13:31,721 - INFO - 执行命令: git reset HEAD~1
+2025-09-24 05:13:31,721 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 05:13:31,898 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-24 05:13:31,899 - INFO - 第 2/3 次上传尝试: data_exp3_processed_sample_wo_helotype_20.tar.gz
+2025-09-24 05:13:31,899 - INFO - 执行 git add: data_exp3_processed_sample_wo_helotype_20.tar.gz
+2025-09-24 05:13:31,900 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_helotype_20.tar.gz"
+2025-09-24 05:13:31,900 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 05:15:24,167 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_helotype_20.tar.gz"
+2025-09-24 05:15:24,168 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_helotype_20.tar.gz (6759.7MB)
+2025-09-24 05:15:24,169 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_helotype_20.tar.gz (6759.7MB)"
+2025-09-24 05:15:24,169 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 05:15:24,487 - INFO - 命令输出: [main f006827] Add data_exp3_processed_sample_wo_helotype_20.tar.gz (6759.7MB)
+2025-09-24 05:15:24,488 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-24 05:15:24,488 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_helotype_20.tar.gz
+2025-09-24 05:15:24,488 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_helotype_20.tar.gz (6759.7MB)"
+2025-09-24 05:15:24,489 - INFO - 开始 git push: data_exp3_processed_sample_wo_helotype_20.tar.gz
+2025-09-24 05:15:24,489 - INFO - 执行命令: git push origin main
+2025-09-24 05:15:24,489 - INFO - 执行命令: git push origin main
+2025-09-24 05:15:24,489 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 05:16:10,071 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-24 05:16:10,072 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-24 06:23:47,239 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-24 06:23:47,240 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-24 06:23:47,244 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-24 06:23:47,533 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 06:23:47,533 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 06:23:47,533 - ERROR - git push 失败，用时: 4103.0 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 06:23:47,533 - ERROR - 第 2 次上传失败: data_exp3_processed_sample_wo_helotype_20.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 06:23:47,534 - INFO - 等待 10 秒后重试
+2025-09-24 06:23:57,544 - INFO - 重置git状态
+2025-09-24 06:23:57,544 - INFO - 执行命令: git reset HEAD~1
+2025-09-24 06:23:57,544 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 06:23:57,710 - INFO - 命令执行成功: git reset HEAD~1
+2025-09-24 06:23:57,711 - INFO - 第 3/3 次上传尝试: data_exp3_processed_sample_wo_helotype_20.tar.gz
+2025-09-24 06:23:57,711 - INFO - 执行 git add: data_exp3_processed_sample_wo_helotype_20.tar.gz
+2025-09-24 06:23:57,711 - INFO - 执行命令: git add "data_exp3_processed_sample_wo_helotype_20.tar.gz"
+2025-09-24 06:23:57,711 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 06:25:51,805 - INFO - 命令执行成功: git add "data_exp3_processed_sample_wo_helotype_20.tar.gz"
+2025-09-24 06:25:51,806 - INFO - 执行 git commit: Add data_exp3_processed_sample_wo_helotype_20.tar.gz (6759.7MB)
+2025-09-24 06:25:51,806 - INFO - 执行命令: git commit -m "Add data_exp3_processed_sample_wo_helotype_20.tar.gz (6759.7MB)"
+2025-09-24 06:25:51,806 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 06:25:52,105 - INFO - 命令输出: [main db8bc12] Add data_exp3_processed_sample_wo_helotype_20.tar.gz (6759.7MB)
+2025-09-24 06:25:52,106 - INFO - 命令输出:  1 file changed, 3 insertions(+)
+2025-09-24 06:25:52,106 - INFO - 命令输出:  create mode 100644 data_exp3_processed_sample_wo_helotype_20.tar.gz
+2025-09-24 06:25:52,107 - INFO - 命令执行成功: git commit -m "Add data_exp3_processed_sample_wo_helotype_20.tar.gz (6759.7MB)"
+2025-09-24 06:25:52,107 - INFO - 开始 git push: data_exp3_processed_sample_wo_helotype_20.tar.gz
+2025-09-24 06:25:52,107 - INFO - 执行命令: git push origin main
+2025-09-24 06:25:52,107 - INFO - 执行命令: git push origin main
+2025-09-24 06:25:52,107 - INFO - 工作目录: /storage/fdunphome/zhangjingzong/resnet-upc/resnet_upc_dataset_upload_tar
+2025-09-24 06:26:38,050 - INFO - 命令输出: Remote "origin" does not support the Git LFS locking API. Consider disabling it with:
+2025-09-24 06:26:38,051 - INFO - 命令输出:   $ git config lfs.https://hf.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs.locksverify false
+2025-09-24 07:43:13,743 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-24 07:43:13,744 - INFO - 命令输出: Uploading LFS objects:   0% (0/20), 0 B | 0 B/s, done.
+2025-09-24 07:43:13,745 - INFO - 命令输出: batch response: Post "https://huggingface.co/datasets/qiuyu20030108/resnet_upc_dataset_upload.git/info/lfs/objects/batch": proxyconnect tcp: dial tcp 8.8.8.8:80: i/o timeout
+2025-09-24 07:43:13,748 - INFO - 命令输出: error: failed to push some refs to 'hf.co:datasets/qiuyu20030108/resnet_upc_dataset_upload'
+2025-09-24 07:43:14,034 - ERROR - 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 07:43:14,034 - ERROR - 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 07:43:14,034 - ERROR - git push 失败，用时: 4641.9 秒，错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 07:43:14,034 - ERROR - 第 3 次上传失败: data_exp3_processed_sample_wo_helotype_20.tar.gz, 错误: 命令执行异常: 命令执行失败 (退出码: 1): git push origin main
+2025-09-24 07:43:14,035 - ERROR - 文件 data_exp3_processed_sample_wo_helotype_20.tar.gz 最终上传失败
