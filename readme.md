@@ -367,13 +367,6 @@ def custom_metric(y_true, y_pred):
 4. 推送到分支
 5. 创建Pull Request
 
-## 联系方式
-
-如有问题，请通过以下方式联系：
-
-- GitHub Issues: [项目地址]
-- Email: [您的邮箱]
-
 ---
 
 **注意**: 请确保您的数据符合项目要求，并根据实际硬件配置调整训练参数。
