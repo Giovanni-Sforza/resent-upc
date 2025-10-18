@@ -2,12 +2,12 @@
 # ==========================================
 
 # 实验基本配置
-experiment_name: "resnet34_pre_expO16_R2_sum_flip_largelr"        # 实验唯一标识符
+experiment_name: "resnet34_pre_expO16_R2_sum_flip_largelr_0p01_more"        # 实验唯一标识符
 seed: 42             # 实验结果根目录
 device: "auto"                          # 训练设备: 'cuda', 'cpu', 或 'auto' (自动检测)
 
 # 数据配置
-data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_O16/processed_flip_R2"    # 数据集根目录路径
+data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_O16/processed_flip_R2_more"    # 数据集根目录路径
 # ===================================================================
 # 推理模式配置
 # ===================================================================
@@ -67,7 +67,7 @@ num_workers: 4
 
 # 学习率配置
 learning_rates:
-  base: 0.1 #0.01
+  base: 0.01 #0.01
   layer_decay: 0.1  # 分层学习率衰减因子
 
 # 是否使用分层学习率
