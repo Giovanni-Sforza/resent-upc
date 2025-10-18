@@ -3,7 +3,7 @@
 # ===================================================================
 
 # 实验基本信息
-experiment_name: "resnet34_exp4_beta_regression_classification_50_cut_R2_2"
+experiment_name: "resnet34_exp4_50sum_pdatest"
 seed: 42
 device: "auto"
 
@@ -11,17 +11,17 @@ device: "auto"
 mode: "test"
 
 # 数据路径
-data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_50"
+data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50"
 
 # ===================================================================
 # 测试模式配置
 # ===================================================================
 test_config:
   # 测试数据路径 
-  test_data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_50/val"
+  test_data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50/val"
   
   # 模型权重路径
-  model_checkpoint: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments/resnet34_exp4_beta_regression_classification_50_cut_R2_2/checkpoints/best_multitask_gradnorm_model.pth"
+  model_checkpoint: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments_b12/resnet34_exp4_50sum/checkpoints/best_multitask_gradnorm_model.pth"
   
   # 特征保存配置
   save_features:
@@ -82,7 +82,7 @@ model_config:
 # ===================================================================
 # 输出配置
 # ===================================================================
-output_dir: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments"
+output_dir: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments_b12"
 num_workers: 4
 
 # ===================================================================
@@ -93,7 +93,7 @@ interpretability:
   
   # Grad-CAM配置
   gradcam:
-    enabled: true                    # 开启Grad-CAM分析
+    enabled: false                    # 开启Grad-CAM分析
     target_layers: ["feature_extractor.features.7"]        # 目标层（ResNet的最后一个卷积块）
     num_samples: -1                  # 分析的样本数量（-1表示所有样本）
     save_heatmaps: true             # 保存热力图
@@ -102,6 +102,20 @@ interpretability:
     alpha: 0.4                      # 叠加透明度
     output_dir: "gradcam"           # Grad-CAM输出目录
     
+  pda:
+    enabled: true
+    output_dir: "pda_maps"
+    patch_size: 8
+    stride: 4
+    perturbation_mode: "mean"   # 可选: zero, mean, noise
+    num_samples: 20
+    task_specific:
+      regression: true
+      classification: true
+    colormap: "jet"
+    alpha: 0.4
+
+
     # 任务特定分析
     task_specific:
       regression: true              # 对回归任务进行分析
@@ -119,6 +133,8 @@ gradnorm:
   alpha: 1.5
   lr: 0.025
   weight: 0.1
+
+
 
 logging:
   level: "INFO"

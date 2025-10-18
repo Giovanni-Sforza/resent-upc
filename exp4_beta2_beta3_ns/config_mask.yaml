@@ -3,7 +3,7 @@
 # ===================================================================
 
 # 实验基本信息
-experiment_name: "resnet34_exp4_50sum"
+experiment_name: "resnet34_exp4_50sum_b12_mask_gauss"
 seed: 42
 device: "auto"  # 可选: "auto", "cuda", "cpu"
 
@@ -92,6 +92,12 @@ preprocessing:
     mean: [0.485, 0.456, 0.406]  # ImageNet标准
     std: [0.229, 0.224, 0.225]   # ImageNet标准
   
+
+  threshold_smallest:
+    enabled: True
+    quantile: 0.1      # 处理最小的 5%
+    set_value:  0.000000001    # 设置为这个值
+        
   # 数据增强配置 (可扩展)
   augmentation:
     enabled: false

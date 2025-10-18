@@ -3,12 +3,12 @@
 # ===================================================================
 
 # 实验基本信息
-experiment_name: "resnet34_exp4_beta_regression_classification_50_cut_R2_sym"
+experiment_name: "resnet34_exp4_50sum_cut_sym_updown"
 seed: 42
 device: "auto"  # 可选: "auto", "cuda", "cpu"
 
 # 数据路径
-data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_50"
+data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50"
 
 # ===================================================================
 # 推理模式配置
@@ -49,7 +49,7 @@ symmetric_split:
 # ===================================================================
 gradnorm:
   enabled: true           # 是否启用GradNorm
-  alpha: 1.5             # GradNorm超参数，控制任务平衡强度
+  alpha: 0             # GradNorm超参数，控制任务平衡强度
                          # - alpha=0: 任务权重保持不变
                          # - alpha=1.5: 推荐值，适度平衡
                          # - alpha越大，任务平衡越激进
@@ -132,7 +132,7 @@ model_config:
 # ===================================================================
 # 输出和保存配置
 # ===================================================================
-output_dir: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments"
+output_dir: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments_b12"
 
 # 保存选项
 save_options:

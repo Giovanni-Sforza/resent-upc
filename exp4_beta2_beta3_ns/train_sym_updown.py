@@ -56,19 +56,19 @@ class SymmetricSplitter:
             image_tensor = image_tensor.unsqueeze(0)  # [H, W] -> [1, H, W]
         
         C, H, W = image_tensor.shape
-        mid_w = W // 2
+        mid_h = H // 2
         
         # 分割左右两部分
-        left_half = image_tensor[:, :, :mid_w]  # [C, H, W/2]
-        right_half = image_tensor[:, :, mid_w:]  # [C, H, W/2]
+        left_half = image_tensor[:, :mid_h, : ]  # [C, H, W/2]
+        right_half = image_tensor[:, mid_h:, :]  # [C, H, W/2]
         
         # 镜像对称
-        left_mirrored = torch.flip(left_half, dims=[2])  # 水平翻转
-        right_mirrored = torch.flip(right_half, dims=[2])
+        left_mirrored = torch.flip(left_half, dims=[1])  # 水平翻转
+        right_mirrored = torch.flip(right_half, dims=[1])
         
         # 拼接成完整图像
-        left_image = torch.cat([left_half, left_mirrored], dim=2)  # [C, H, W]
-        right_image = torch.cat([right_mirrored, right_half], dim=2)
+        left_image = torch.cat([left_half, left_mirrored], dim=1)  # [C, H, W]
+        right_image = torch.cat([right_mirrored, right_half], dim=1)
         
         return left_image, right_image
     

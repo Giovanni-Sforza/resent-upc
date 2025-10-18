@@ -156,6 +156,87 @@ class GradCAM:
         self.gradients.clear()
         self.activations.clear()
 
+class PredictionDifferenceAnalyzer:
+    """
+    Prediction Difference Analyzer (PDA)
+    参考: Zintgraf et al., Visualizing Deep Neural Network Decisions (ICLR 2017)
+    """
+    def __init__(self, model, task_type='classification', perturbation_size=8, perturbation_mode='zero', stride=4):
+        """
+        Args:
+            model: 已训练模型
+            task_type: 'classification' 或 'regression'
+            perturbation_size: 遮挡区域的边长（像素）
+            perturbation_mode: 遮挡方式 ('zero', 'mean', 'noise')
+            stride: 遮挡滑动步长
+        """
+        self.model = model
+        self.perturbation_size = perturbation_size
+        self.perturbation_mode = perturbation_mode
+        self.stride = stride
+
+    def generate_pda(self, input_tensor,task_type='classification', target_class=None, regression_dim=None):
+        """
+        生成PDA重要性图
+
+        Args:
+            input_tensor: 输入图像 (1, C, H, W)
+            target_class: 分类目标类别
+            regression_dim: 回归任务的目标维度
+
+        Returns:
+            heatmap: 重要性热力图 (H, W)
+        """
+        self.model.eval()
+        with torch.no_grad():
+            reg_output, cls_output = self.model(input_tensor)
+
+        if task_type == 'classification':
+            if target_class is None:
+                target_class = torch.argmax(cls_output, dim=1).item()
+            baseline_pred = cls_output[0, target_class].item()
+        else:
+            if regression_dim is None:
+                regression_dim = 0
+            baseline_pred = reg_output[0, regression_dim].item()
+
+        _, _, H, W = input_tensor.shape
+        heatmap = np.zeros((H, W))
+
+        # 遍历所有遮挡区域
+        for y in range(0, H, self.stride):
+            for x in range(0, W, self.stride):
+                x_end = min(x + self.perturbation_size, W)
+                y_end = min(y + self.perturbation_size, H)
+
+                perturbed = input_tensor.clone()
+
+                # 扰动该区域
+                if self.perturbation_mode == 'zero':
+                    perturbed[:, :, y:y_end, x:x_end] = 0
+                elif self.perturbation_mode == 'mean':
+                    mean_val = input_tensor.mean()
+                    perturbed[:, :, y:y_end, x:x_end] = mean_val
+                elif self.perturbation_mode == 'noise':
+                    noise = torch.randn_like(perturbed[:, :, y:y_end, x:x_end]) * 0.1
+                    perturbed[:, :, y:y_end, x:x_end] = noise
+
+                # 再次前向传播
+                with torch.no_grad():
+                    reg_out, cls_out = self.model(perturbed)
+                    if task_type == 'classification':
+                        new_pred = cls_out[0, target_class].item()
+                    else:
+                        new_pred = reg_out[0, regression_dim].item()
+
+                # 差值越大 → 该区域越重要
+                diff = abs(baseline_pred - new_pred)
+                heatmap[y:y_end, x:x_end] = diff
+
+        # 归一化到 [0,1]
+        heatmap -= heatmap.min()
+        heatmap /= (heatmap.max() + 1e-8)
+        return heatmap
 
 class FeatureExtractor:
     """特征提取器，用于保存ResNet特征"""
@@ -487,7 +568,99 @@ def perform_gradcam_analysis(model, test_loader, device, config, output_dir):
     
     print(f"Grad-CAM分析完成，共处理 {samples_processed} 个样本")
 
+def perform_pda_analysis(model, test_loader, device, config, output_dir):
+    """执行 Prediction Difference Analysis (PDA)"""
+    pda_config = config['interpretability']['pda']
+    if not pda_config['enabled']:
+        return
 
+    print("开始 Prediction Difference Analyzer 分析...")
+
+    pda_dir = output_dir / pda_config['output_dir']
+    pda_dir.mkdir(parents=True, exist_ok=True)
+
+    if pda_config['task_specific']['regression']:
+        (pda_dir / 'regression').mkdir(exist_ok=True)
+    if pda_config['task_specific']['classification']:
+        (pda_dir / 'classification').mkdir(exist_ok=True)
+
+    analyzer = PredictionDifferenceAnalyzer(
+        model,
+        perturbation_size=pda_config.get('patch_size', 8),
+        stride=pda_config.get('stride', 4),
+        perturbation_mode=pda_config.get('perturbation_mode', 'mean')
+    )
+
+    num_samples = pda_config['num_samples']
+    samples_processed = 0
+    pda_loader = tqdm(test_loader) 
+    for batch_idx, (inputs, reg_labels, cls_labels, file_paths, processed_images) in enumerate(pda_loader):
+        if num_samples != -1 and samples_processed >= num_samples:
+            break
+        inputs = inputs.to(device)
+        for i in range(inputs.size(0)):
+            if num_samples != -1 and samples_processed >= num_samples:
+                break
+
+            file_stem = Path(file_paths[i]).stem
+            single_input = inputs[i:i+1]
+            processed_image = processed_images[i]
+
+            if pda_config['task_specific']['classification']:
+                heatmap = analyzer.generate_pda(single_input, task_type='classification')
+                save_pda_visualization(
+                    heatmap, processed_image,
+                    pda_dir / 'classification' / f'{file_stem}_cls_pda.png',
+                    pda_config
+                )
+
+            if pda_config['task_specific']['regression']:
+                for dim, name in enumerate(['beta2', 'beta3']):
+                    heatmap = analyzer.generate_pda(single_input, task_type='regression', regression_dim=dim)
+                    save_pda_visualization(
+                        heatmap, processed_image,
+                        pda_dir / 'regression' / f'{file_stem}_{name}_pda.png',
+                        pda_config
+                    )
+
+            samples_processed += 1
+            #if samples_processed % 10 == 0:
+            #    print(f"PDA 进度: {samples_processed}/{num_samples if num_samples != -1 else '?'}")
+
+    print(f"PDA 分析完成，共处理 {samples_processed} 个样本。")
+
+def save_pda_visualization(heatmap, processed_image, output_path, config):
+    """保存PDA结果可视化"""
+    height, width = processed_image.shape[1], processed_image.shape[2]
+    heatmap_resized = cv2.resize(heatmap, (width, height))
+    heatmap_resized = np.transpose(heatmap_resized, (1, 0))
+
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+    img_display = processed_image.numpy().transpose(2, 1, 0)
+    mean = np.array([0.485, 0.456, 0.406])
+    std = np.array([0.229, 0.224, 0.225])
+    img_display = np.clip(std * img_display + mean, 0, 1)
+
+    axes[0].imshow(img_display)
+    axes[0].set_title('Original Image')
+    axes[0].axis('off')
+
+    im = axes[1].imshow(heatmap_resized, cmap=config.get('colormap', 'jet'))
+    axes[1].set_title('PDA Heatmap')
+    axes[1].axis('off')
+    plt.colorbar(im, ax=axes[1])
+
+    alpha = config.get('alpha', 0.4)
+    cm = plt.get_cmap(config.get('colormap', 'jet'))
+    overlay = (1 - alpha) * img_display + alpha * cm(heatmap_resized)[:, :, :3]
+    overlay = np.clip(overlay, 0, 1)
+    axes[2].imshow(overlay)
+    axes[2].set_title('Overlay')
+    axes[2].axis('off')
+
+    plt.tight_layout()
+    plt.savefig(output_path, dpi=150, bbox_inches='tight')
+    plt.close()
 def save_gradcam_visualization(cam, processed_image, output_path, config):
     """保存Grad-CAM可视化结果"""
     # 将CAM调整到原图尺寸
@@ -498,7 +671,7 @@ def save_gradcam_visualization(cam, processed_image, output_path, config):
     else:
         # 修改这一行：先移动到CPU再转换为numpy
         cam_resized = cam.cpu().numpy()
-    
+    cam_resized = np.transpose(cam_resized, (1, 0))
     # 创建图形
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
     
@@ -713,6 +886,8 @@ def main():
         # 执行Grad-CAM分析
         if config['interpretability']['gradcam']['enabled']:
             perform_gradcam_analysis(model, test_loader, device, config, test_output_dir)
+        if config['interpretability']['pda']['enabled']:
+            perform_pda_analysis(model, test_loader, device, config, test_output_dir)
         
         print("\n" + "="*60)
         print("测试完成!")
