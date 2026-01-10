@@ -33,7 +33,22 @@ from train3 import (
     LogNormalization
 )
 
-
+plt.rcParams.update({
+    "font.family": "serif",
+    #"font.serif": ["Times New Roman"],
+    "mathtext.fontset": "stix",
+    "axes.labelsize": 18,
+    "xtick.labelsize": 14,
+    "ytick.labelsize": 14,
+    "legend.fontsize": 14,
+    "axes.linewidth": 1.5,
+    "xtick.direction": "in",
+    "ytick.direction": "in",
+    "xtick.top": True,
+    "ytick.right": True,
+    "xtick.major.size": 6,
+    "ytick.major.size": 6,
+})
 class GradCAM:
     """Grad-CAM实现，用于生成类激活图"""
     
@@ -735,183 +750,236 @@ def evaluate_results(results):
 
 
 def plot_test_results(results, metrics, output_path):
-    """绘制测试结果"""
+    """
+    绘制测试结果。
+    注意：这将把原本的单张大图拆分为 3 张独立的出版级图片保存。
+    保存路径会基于 output_path 自动添加后缀。
+    """
+    # 处理路径：如果 output_path 是 "dir/results.png"
+    # 我们会保存为 "dir/results_Beta2.pdf", "dir/results_Beta3.pdf" 等
+    base_path = Path(output_path)
+    parent_dir = base_path.parent
+    stem = base_path.stem  # 文件名不带后缀
+    
     reg_preds = results['reg_predictions']
     reg_labels = results['reg_labels']
-    cls_preds = results['cls_predictions']
     cls_labels = results['cls_labels']
+    cls_preds = results['cls_predictions']
     
-    fig, axes = plt.subplots(2, 3, figsize=(18, 12))
+    # ---------------------------------------------------------
+    # 1. 绘制 Beta2 回归图 (独立保存)
+    # ---------------------------------------------------------
+    fig_b2, ax_b2 = plt.subplots(figsize=(6, 5))
     
-    # 第一行：回归结果
-    # Beta2 预测 vs 真实值
-    axes[0, 0].scatter(reg_labels[:, 0], reg_preds[:, 0], alpha=0.6)
-    axes[0, 0].plot([reg_labels[:, 0].min(), reg_labels[:, 0].max()], 
-                    [reg_labels[:, 0].min(), reg_labels[:, 0].max()], 'r--', lw=2)
-    axes[0, 0].set_xlabel('True Beta2')
-    axes[0, 0].set_ylabel('Predicted Beta2')
-    axes[0, 0].set_title('Beta2 Predictions vs True Values')
-    axes[0, 0].grid(True, alpha=0.3)
-    axes[0, 0].text(0.05, 0.95, f'MSE: {metrics["mse_beta2"]:.6f}\nR²: {metrics["r2_beta2"]:.6f}', 
-                   transform=axes[0, 0].transAxes, verticalalignment='top',
-                   bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
+    # 散点
+    ax_b2.scatter(reg_labels[:, 0], reg_preds[:, 0], alpha=0.6, s=40, 
+                  edgecolors='k', linewidth=0.5, label='Predictions')
     
-    # Beta3 预测 vs 真实值
-    axes[0, 1].scatter(reg_labels[:, 1], reg_preds[:, 1], alpha=0.6)
-    axes[0, 1].plot([reg_labels[:, 1].min(), reg_labels[:, 1].max()], 
-                    [reg_labels[:, 1].min(), reg_labels[:, 1].max()], 'r--', lw=2)
-    axes[0, 1].set_xlabel('True Beta3')
-    axes[0, 1].set_ylabel('Predicted Beta3')
-    axes[0, 1].set_title('Beta3 Predictions vs True Values')
-    axes[0, 1].grid(True, alpha=0.3)
-    axes[0, 1].text(0.05, 0.95, f'MSE: {metrics["mse_beta3"]:.6f}\nR²: {metrics["r2_beta3"]:.6f}', 
-                   transform=axes[0, 1].transAxes, verticalalignment='top',
-                   bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
+    # 红色参考线
+    min_b2 = min(reg_labels[:, 0].min(), reg_preds[:, 0].min())
+    max_b2 = max(reg_labels[:, 0].max(), reg_preds[:, 0].max())
+    margin_b2 = (max_b2 - min_b2) * 0.05
+    ax_b2.plot([min_b2-margin_b2, max_b2+margin_b2], 
+               [min_b2-margin_b2, max_b2+margin_b2], 
+               'r--', lw=2.5, label='Ideal (y=x)')
     
-    # 2D散点图：(beta2, beta3)空间
-    axes[0, 2].scatter(reg_labels[:, 0], reg_labels[:, 1], alpha=0.6, label='True', s=30)
-    axes[0, 2].scatter(reg_preds[:, 0], reg_preds[:, 1], alpha=0.6, label='Predicted', s=30)
-    axes[0, 2].set_xlabel('Beta2')
-    axes[0, 2].set_ylabel('Beta3')
-    axes[0, 2].set_title('Predictions in (Beta2, Beta3) Space')
-    axes[0, 2].legend()
-    axes[0, 2].grid(True, alpha=0.3)
+    ax_b2.set_xlabel(r'True $\beta_2$')
+    ax_b2.set_ylabel(r'Predicted $\beta_2$')
+    ax_b2.set_xlim(min_b2-margin_b2, max_b2+margin_b2)
+    ax_b2.set_ylim(min_b2-margin_b2, max_b2+margin_b2)
     
-    # 第二行：分类结果
-    cm = metrics['confusion_matrix']
-    class_names = ['Class 0', 'Class 1', 'Class 2']
+    # 文本框 (MSE 科学计数法)
+    stats_text_b2 = (f"$R^2 = {metrics['r2_beta2']:.4f}$"
+                     )
+    ax_b2.text(0.05, 0.95, stats_text_b2, transform=ax_b2.transAxes, va='top', fontsize=14,
+               bbox=dict(boxstyle='round', facecolor='white', alpha=0.9, edgecolor='gray'))
     
-    # 混淆矩阵
-    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 
-                xticklabels=class_names, yticklabels=class_names, ax=axes[1, 0])
-    axes[1, 0].set_title('Classification Confusion Matrix')
-    axes[1, 0].set_xlabel('Predicted')
-    axes[1, 0].set_ylabel('True')
+    ax_b2.legend(frameon=False, loc='lower right')
     
-    # 类别分布对比
-    true_counts = np.bincount(cls_labels, minlength=3)
-    pred_counts = np.bincount(cls_preds, minlength=3)
-    x = np.arange(3)
-    width = 0.35
-    
-    axes[1, 1].bar(x - width/2, true_counts, width, label='True', alpha=0.7)
-    axes[1, 1].bar(x + width/2, pred_counts, width, label='Predicted', alpha=0.7)
-    axes[1, 1].set_xlabel('Class')
-    axes[1, 1].set_ylabel('Count')
-    axes[1, 1].set_title('Class Distribution Comparison')
-    axes[1, 1].set_xticks(x)
-    axes[1, 1].set_xticklabels(class_names)
-    axes[1, 1].legend()
-    axes[1, 1].grid(True, alpha=0.3)
-    
-    # 测试性能总结
-    axes[1, 2].text(0.5, 0.5, f'Test Results Summary:\n\n'
-                               f'Classification Accuracy: {metrics["classification_accuracy"]:.2f}%\n\n'
-                               f'Regression Metrics:\n'
-                               f'  MSE: {metrics["regression_mse"]:.6f}\n'
-                               f'  MAE: {metrics["regression_mae"]:.6f}\n\n'
-                               f'Beta2: R² = {metrics["r2_beta2"]:.4f}\n'
-                               f'Beta3: R² = {metrics["r2_beta3"]:.4f}\n\n'
-                               f'Total Samples: {len(cls_labels)}', 
-                   transform=axes[1, 2].transAxes, fontsize=12,
-                   horizontalalignment='center', verticalalignment='center',
-                   bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.8))
-    axes[1, 2].set_title('Test Performance Summary')
-    axes[1, 2].axis('off')
-    
+    save_name_b2 = parent_dir / f"{stem}_Beta2.pdf"
+    plt.figure(fig_b2.number)
     plt.tight_layout()
-    plt.savefig(output_path, dpi=150, bbox_inches='tight')
-    plt.close()
+    plt.savefig(save_name_b2, dpi=300, bbox_inches='tight')
+    plt.close(fig_b2)
+    print(f"✅ Saved: {save_name_b2}")
 
+    # ---------------------------------------------------------
+    # 2. 绘制 Beta3 回归图 (独立保存)
+    # ---------------------------------------------------------
+    fig_b3, ax_b3 = plt.subplots(figsize=(6, 5))
+    
+    ax_b3.scatter(reg_labels[:, 1], reg_preds[:, 1], alpha=0.6, s=40, 
+                  edgecolors='k', linewidth=0.5, label='Predictions') # 换个颜色
+    
+    min_b3 = min(reg_labels[:, 1].min(), reg_preds[:, 1].min())
+    max_b3 = max(reg_labels[:, 1].max(), reg_preds[:, 1].max())
+    margin_b3 = (max_b3 - min_b3) * 0.05
+    ax_b3.plot([min_b3-margin_b3, max_b3+margin_b3], 
+               [min_b3-margin_b3, max_b3+margin_b3], 
+               'r--', lw=2.5, label='Ideal (y=x)')
+    
+    ax_b3.set_xlabel(r'True $\beta_3$')
+    ax_b3.set_ylabel(r'Predicted $\beta_3$')
+    ax_b3.set_xlim(min_b3-margin_b3, max_b3+margin_b3)
+    ax_b3.set_ylim(min_b3-margin_b3, max_b3+margin_b3)
+    
+    stats_text_b3 = (f"$R^2 = {metrics['r2_beta3']:.4f}$"
+                     )
+    ax_b3.text(0.05, 0.95, stats_text_b3, transform=ax_b3.transAxes, va='top', fontsize=14,
+               bbox=dict(boxstyle='round', facecolor='white', alpha=0.9, edgecolor='gray'))
+    
+    ax_b3.legend(frameon=False, loc='lower right')
+    
+    save_name_b3 = parent_dir / f"{stem}_Beta3.pdf"
+    plt.figure(fig_b3.number)
+    plt.tight_layout()
+    plt.savefig(save_name_b3, dpi=300, bbox_inches='tight')
+    plt.close(fig_b3)
+    print(f"✅ Saved: {save_name_b3}")
 
-"""def perform_gradcam_analysis(model, test_loader, device, config, output_dir):
-    '''执行Grad-CAM分析'''
-    gradcam_config = config['interpretability']['gradcam']
-    if not gradcam_config['enabled']:
-        return
+    # ---------------------------------------------------------
+    # 3. 绘制混淆矩阵 (独立保存)
+    # ---------------------------------------------------------
+    fig_cm, ax_cm = plt.subplots(figsize=(6, 5))
     
-    print("开始Grad-CAM分析...")
+    cm = metrics['confusion_matrix']
+    # 请确保这里的类别名称与你模型输出的 0,1,2 对应
+    # 假设顺序是 [Halo, Skin, None] 或者其他，根据你实际情况修改
+    class_names = ['Halo', 'Skin', 'None'] 
     
-    # 创建输出目录
-    gradcam_dir = output_dir / gradcam_config['output_dir']
-    gradcam_dir.mkdir(parents=True, exist_ok=True)
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 
+                xticklabels=class_names, yticklabels=class_names, 
+                ax=ax_cm, cbar=False, annot_kws={"size": 16})
     
-    # 为不同任务创建子目录
-    if gradcam_config['task_specific']['regression']:
-        (gradcam_dir / 'regression').mkdir(exist_ok=True)
-    if gradcam_config['task_specific']['classification']:
-        (gradcam_dir / 'classification').mkdir(exist_ok=True)
+    ax_cm.set_xlabel('Predicted Label')
+    ax_cm.set_ylabel('True Label')
+    # ax_cm.set_title('') # 显式移除标题
     
-    # 初始化Grad-CAM - 创建一个实例用于两个任务
-    target_layers = gradcam_config['target_layers']
-    gradcam_analyzer = None
-    
-    # 只创建一个GradCAM实例
-    if gradcam_config['task_specific']['classification'] or gradcam_config['task_specific']['regression']:
-        gradcam_analyzer = GradCAM(model, target_layers, task_type='classification')  # 后面会动态改变任务类型
-    
-    # 处理样本
-    num_samples = gradcam_config['num_samples']
-    samples_processed = 0
-    
-    for batch_idx, (inputs, reg_labels, cls_labels, file_paths, processed_images) in enumerate(test_loader):
-        if num_samples != -1 and samples_processed >= num_samples:
-            break
+    save_name_cm = parent_dir / f"{stem}_NeutronSkin_CM.pdf"
+    plt.figure(fig_cm.number)
+    plt.tight_layout()
+    plt.savefig(save_name_cm, dpi=300, bbox_inches='tight')
+    plt.close(fig_cm)
+    print(f"✅ Saved: {save_name_cm}")
+def _save_overlay_only(heatmap, processed_image, output_path, config):
+    """
+    保存带有坐标轴、Colorbar 和出版级样式的 Overlay 图片。
+    风格仿照 save_paper_plot，坐标范围 -0.17 到 0.17。
+    """
+    # ---------------------------------------------------------
+    # 1. 数据准备 (Image 反标准化)
+    # ---------------------------------------------------------
+    if isinstance(processed_image, torch.Tensor):
+        img_tensor = processed_image.cpu()
+    else:
+        img_tensor = torch.from_numpy(processed_image)
         
-        inputs = inputs.to(device)
-        batch_size = inputs.size(0)
+    # [C, H, W] -> [H, W, C]
+    img_display = img_tensor.numpy().transpose(2, 1, 0)
+    
+    # ImageNet 标准化参数
+    mean = np.array([0.485, 0.456, 0.406])
+    std = np.array([0.229, 0.224, 0.225])
+    img_display = std * img_display + mean
+    img_display = np.clip(img_display, 0, 1)
+    
+    height, width = img_display.shape[:2]
+
+    # ---------------------------------------------------------
+    # 2. 热力图处理
+    # ---------------------------------------------------------
+    if isinstance(heatmap, torch.Tensor):
+        heatmap = heatmap.cpu().numpy()
         
-        for i in range(batch_size):
-            if num_samples != -1 and samples_processed >= num_samples:
-                break
-            
-            # 单个样本处理
-            single_input = inputs[i:i+1]
-            file_path = file_paths[i]
-            processed_image = processed_images[i] if processed_images is not None else None
-            
-            # 获取文件名（用于保存）
-            file_stem = Path(file_path).stem
-            
-            # 分类任务的Grad-CAM
-            if gradcam_config['task_specific']['classification'] and gradcam_analyzer is not None:
-                try:
-                    gradcam_analyzer.task_type = 'classification'  # 设置任务类型
-                    cam = gradcam_analyzer.generate_cam(single_input)
-                    if cam is not None:
-                        save_gradcam_visualization(
-                            cam, processed_image, 
-                            gradcam_dir / 'classification' / f'{file_stem}_cls_gradcam.png',
-                            gradcam_config
-                        )
-                except Exception as e:
-                    print(f"分类Grad-CAM处理失败 {file_stem}: {e}")
-            
-            # 回归任务的Grad-CAM（beta2和beta3）
-            if gradcam_config['task_specific']['regression'] and gradcam_analyzer is not None:
-                for reg_dim, reg_name in enumerate(['beta2', 'beta3']):
-                    try:
-                        gradcam_analyzer.task_type = 'regression'  # 设置任务类型
-                        cam = gradcam_analyzer.generate_cam(single_input, regression_dim=reg_dim)
-                        if cam is not None:
-                            save_gradcam_visualization(
-                                cam, processed_image, 
-                                gradcam_dir / 'regression' / f'{file_stem}_{reg_name}_gradcam.png',
-                                gradcam_config
-                            )
-                    except Exception as e:
-                        print(f"回归Grad-CAM处理失败 {file_stem} {reg_name}: {e}")
-            
-            samples_processed += 1
-            
-            if samples_processed % 10 == 0:
-                print(f"Grad-CAM分析进度: {samples_processed}/{num_samples if num_samples != -1 else '?'}")
+    # Resize 到图片大小
+    heatmap_resized = cv2.resize(heatmap, (width, height))
     
-    # 清理
-    if gradcam_analyzer:
-        gradcam_analyzer.cleanup()
+    # 保持你原有的转置逻辑 (如果需要)
+    heatmap_resized = np.transpose(heatmap_resized, (1, 0))
     
-    print(f"Grad-CAM分析完成，共处理 {samples_processed} 个样本")"""
+    # 归一化热力图 (0-1) 用于显示
+    # 注意：这里我们归一化是为了 color mapping，
+    # 但如果 heatmap 本身有物理意义的数值范围，可以不归一化，直接调整 vmin/vmax
+    h_min, h_max = heatmap_resized.min(), heatmap_resized.max()
+    if h_max - h_min > 0:
+        heatmap_norm = (heatmap_resized - h_min) / (h_max - h_min)
+    else:
+        heatmap_norm = heatmap_resized
+
+    # ---------------------------------------------------------
+    # 3. 坐标系与方向处理 (关键)
+    # ---------------------------------------------------------
+    # 目标风格使用了 origin='lower' (y轴向上)。
+    # 计算机视觉图像通常 (0,0) 在左上角。
+    # 为了在 'lower' 模式下显示正常，我们需要上下翻转数据。
+    img_for_plot = np.flipud(img_display)
+    heatmap_for_plot = np.flipud(heatmap_norm)
+    
+    # 坐标范围
+    p_limit = 0.17
+    extent = [-p_limit, p_limit, -p_limit, p_limit]
+
+    # ---------------------------------------------------------
+    # 4. 绘图 (仿照 save_paper_plot 风格)
+    # ---------------------------------------------------------
+    # 自动生成标题
+    stem = Path(output_path).stem
+    if 'beta2' in stem.lower():
+        title_text = r'(a) $\beta_2$ Overlay'
+    elif 'beta3' in stem.lower():
+        title_text = r'(b) $\beta_3$ Overlay'
+    elif 'cls' in stem.lower():
+        title_text = r'(c) Class Overlay'
+    else:
+        title_text = "Overlay Analysis"
+
+    fig, ax = plt.subplots(figsize=(6, 5), facecolor='white')
+
+    # A. 绘制底层背景图 (灰度或彩色)
+    # 使用 gray cmap 如果图像是单通道，否则直接显示 RGB
+    ax.imshow(img_for_plot, extent=extent, origin='lower')
+
+    # B. 绘制顶层热力图 (带透明度)
+    alpha = config.get('alpha', 0.4) # 获取透明度配置
+    colormap = config.get('colormap', 'jet')
+    
+    # 绘制热力图层
+    im = ax.imshow(heatmap_for_plot, extent=extent, origin='lower',
+                   cmap=colormap, alpha=alpha, vmin=0, vmax=1)
+    
+    # C. 添加 Colorbar
+    cbar = fig.colorbar(im, ax=ax)
+    
+    # ---------------------------------------------------------
+    # 5. 样式精修 (完全复制参考代码)
+    # ---------------------------------------------------------
+    # Zoom / Limits
+    ax.set_xlim(-p_limit, p_limit)
+    ax.set_ylim(-p_limit, p_limit)
+    
+    # 标题居中
+    ax.set_title(title_text, color='black', weight='bold', fontsize=18, loc='center')
+    
+    # 轴标签
+    ax.set_xlabel(r'$p_x$ (GeV/c)', color='black', fontsize=14)
+    ax.set_ylabel(r'$p_y$ (GeV/c)', color='black', fontsize=14)
+
+    # 刻度与边框
+    ax.tick_params(direction='in', colors='black', which='both', top=True, right=True, labelsize=12)
+    for spine in ax.spines.values():
+        spine.set_edgecolor('black')
+        spine.set_linewidth(1.2)
+    
+    # Colorbar 样式
+    cbar.ax.yaxis.set_tick_params(color='black')
+    cbar.outline.set_edgecolor('black')
+    plt.setp(plt.getp(cbar.ax.axes, 'yticklabels'), color='black', fontsize=12)
+
+    plt.tight_layout()
+    
+    # 保存
+    plt.savefig(output_path, dpi=300, facecolor='white', edgecolor='none')
+    plt.close(fig)
 
 def perform_pda_analysis(model, test_loader, device, config, output_dir):
     """执行 Prediction Difference Analysis (PDA)"""
@@ -973,99 +1041,16 @@ def perform_pda_analysis(model, test_loader, device, config, output_dir):
             #    print(f"PDA 进度: {samples_processed}/{num_samples if num_samples != -1 else '?'}")
 
     print(f"PDA 分析完成，共处理 {samples_processed} 个样本。")
-
 def save_pda_visualization(heatmap, processed_image, output_path, config):
-    """保存PDA结果可视化"""
-    height, width = processed_image.shape[1], processed_image.shape[2]
-    heatmap_resized = cv2.resize(heatmap, (width, height))
-    heatmap_resized = np.transpose(heatmap_resized, (1, 0))
+    """保存PDA结果可视化 (仅 Overlay)"""
+    _save_overlay_only(heatmap, processed_image, output_path, config)
+    print(f"✅ Saved PDA Overlay: {output_path}")
 
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-    img_display = processed_image.numpy().transpose(2, 1, 0)
-    mean = np.array([0.485, 0.456, 0.406])
-    std = np.array([0.229, 0.224, 0.225])
-    img_display = np.clip(std * img_display + mean, 0, 1)
-
-    axes[0].imshow(img_display)
-    axes[0].set_title('Original Image')
-    axes[0].axis('off')
-
-    im = axes[1].imshow(heatmap_resized, cmap=config.get('colormap', 'jet'))
-    axes[1].set_title('PDA Heatmap')
-    axes[1].axis('off')
-    plt.colorbar(im, ax=axes[1])
-
-    alpha = config.get('alpha', 0.4)
-    cm = plt.get_cmap(config.get('colormap', 'jet'))
-    overlay = (1 - alpha) * img_display + alpha * cm(heatmap_resized)[:, :, :3]
-    overlay = np.clip(overlay, 0, 1)
-    axes[2].imshow(overlay)
-    axes[2].set_title('Overlay')
-    axes[2].axis('off')
-
-    plt.tight_layout()
-    plt.savefig(output_path, dpi=150, bbox_inches='tight')
-    plt.close()
 def save_gradcam_visualization(cam, processed_image, output_path, config):
-    """保存Grad-CAM可视化结果"""
-    # 将CAM调整到原图尺寸
-    if processed_image is not None:
-        height, width = processed_image.shape[1], processed_image.shape[2]
-        # 修改这一行：先移动到CPU再转换为numpy
-        cam_resized = cv2.resize(cam.cpu().numpy(), (width, height))
-    else:
-        # 修改这一行：先移动到CPU再转换为numpy
-        cam_resized = cam.cpu().numpy()
-    cam_resized = np.transpose(cam_resized, (1, 0))
-    # 创建图形
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-    
-    # 原图（如果有）
-    if processed_image is not None:
-        # 反标准化显示
-        img_display = processed_image.numpy().transpose(2, 1, 0)
-        # 简单的反标准化（假设使用了ImageNet标准化）
-        mean = np.array([0.485, 0.456, 0.406])
-        std = np.array([0.229, 0.224, 0.225])
-        img_display = std * img_display + mean
-        img_display = np.clip(img_display, 0, 1)
-        
-        axes[0].imshow(img_display)
-        axes[0].set_title('Original Image')
-        axes[0].axis('off')
-    else:
-        axes[0].text(0.5, 0.5, 'No Image Available', ha='center', va='center')
-        axes[0].axis('off')
-    
-    # Grad-CAM热力图
-    colormap = config.get('colormap', 'jet')
-    im = axes[1].imshow(cam_resized, cmap=colormap, alpha=1.0)
-    axes[1].set_title('Grad-CAM Heatmap')
-    axes[1].axis('off')
-    plt.colorbar(im, ax=axes[1])
-    
-    # 叠加图
-    if processed_image is not None and config.get('save_overlay', True):
-        alpha = config.get('alpha', 0.4)
-        # 将热力图转换为RGB
-        cm = plt.get_cmap(colormap)
-        heatmap_rgb = cm(cam_resized)[:, :, :3]
-        
-        # 叠加
-        overlay = (1 - alpha) * img_display + alpha * heatmap_rgb
-        overlay = np.clip(overlay, 0, 1)
-        
-        axes[2].imshow(overlay)
-        axes[2].set_title('Overlay')
-        axes[2].axis('off')
-    else:
-        axes[2].text(0.5, 0.5, 'No Overlay Available', ha='center', va='center')
-        axes[2].axis('off')
-    
-    plt.tight_layout()
-    plt.savefig(output_path, dpi=150, bbox_inches='tight')
-    plt.close()
-
+    """保存Grad-CAM可视化结果 (仅 Overlay)"""
+    # Grad-CAM 传入的 cam 通常尺寸较小，内部辅助函数会处理 resize
+    _save_overlay_only(cam, processed_image, output_path, config)
+    print(f"✅ Saved Grad-CAM Overlay: {output_path}")
 
 def save_features_and_data(results, output_dir, config):
     """保存特征和数据"""

@@ -3,7 +3,7 @@
 # ===================================================================
 
 # 实验基本信息
-experiment_name: "resnet34_exp4_50_inch4、5"
+experiment_name: "resnet34_exp4_50_pda"
 seed: 42
 device: "auto"
 
@@ -11,7 +11,7 @@ device: "auto"
 mode: "test"
 
 # 数据路径
-data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50" #"/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50_right_mean" #"/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50"
+data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50" 
 
 # ===================================================================
 # 测试模式配置
@@ -21,9 +21,8 @@ test_config:
   test_data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50/val" # "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50_right_mean/val" #"/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50/val"
   
   # 模型权重路径
-  #model_checkpoint: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments_b12/resnet34_exp4_50sum/checkpoints/best_multitask_gradnorm_model.pth"
-  #model_checkpoint: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments_b12/resnet34_exp4_50_inch_gausion/checkpoints/best_multitask_gradnorm_model.pth"
-  model_checkpoint: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments_plot/resnet34_exp4_50_inch2/checkpoints/best_multitask_gradnorm_model.pth"
+  model_checkpoint: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments_b12/resnet34_exp4_50sum/checkpoints/best_multitask_gradnorm_model.pth"
+  #model_checkpoint: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments_plot/resnet34_exp4_50_inch2/checkpoints/best_multitask_gradnorm_model.pth"
   # 特征保存配置
   save_features:
     enabled: false                    # 开启特征保存
@@ -33,8 +32,8 @@ test_config:
     include_original_paths: true    # 保存原始文件路径
     
   # 结果保存
-  save_predictions: true            # 保存预测结果
-  save_plots: true                 # 保存结果图表
+  save_predictions: false            # 保存预测结果
+  save_plots: false                 # 保存结果图表
 
 # ===================================================================
 # 推理模式配置（需要与训练时保持一致）
@@ -74,10 +73,10 @@ preprocessing:
     enabled: false
 
   gaussian_spatial_noise: 
-    enabled: True
+    enabled: false
     factor: 0.01     # 这里设定倍率为 0.01
     scale: 0.0015503876
-         
+
 
 # ===================================================================
 # 模型配置（需要与训练时保持一致）
@@ -111,21 +110,42 @@ interpretability:
     
   pda:
     enabled: true
-    output_dir: "pda_maps"
-    patch_size: 8
-    stride: 4
-    num_conditional_samples: 1 #10 #3 #10  # 关键参数
-    sampling_mode: 'gaussian'  # 推荐
-    context_size: 3
-    internal_batch_size: 256 #64
-    colormap: "jet"
-    alpha: 0.4
+    output_dir: "pda_maps_paper"
+    patch_size: 8              # [建议] 保持8或减小到4。越小细节越丰富，但过小可能无响应。
+    stride: 4                  # [核心修改] 设为1：逐像素滑动，彻底消除马赛克方块感。
+    num_conditional_samples: 10 # [核心修改] 3 -> 50：大幅增加采样，让热力图如丝般顺滑，消除噪点。
+    sampling_mode: 'gaussian'  # 保持
+    context_size: 3            # [微调] 稍微增大上下文，利用更多周边信息（视具体算法而定，可保持3）。
+    internal_batch_size: 32    # [建议] 稍微降低。因为步长为1会生成海量遮挡图，降低batch防显存溢出。
 
+    # === 新增：指定处理文件列表 ===
+    # 请确保这些文件在 test_data_path 中存在
+    target_files_regression: [
+      "class0_val_sample_0072_beta2_0.1400_beta3_0.1556_files_21.npy",
+      "class0_val_sample_0090_beta2_0.1133_beta3_0.1333_files_21.npy",
+      "class1_val_sample_0009_beta2_0.0600_beta3_0.0222_files_12.npy",
+      "class1_val_sample_0058_beta2_0.2467_beta3_0.0667_files_14.npy",
+      "class2_val_sample_0066_beta2_0.0600_beta3_0.0000_files_20.npy",
+      "class2_val_sample_0005_beta2_0.2200_beta3_0.0000_files_23.npy"
+    ]
+    
+    target_files_classification: [
+      "class1_val_sample_0059_beta2_0.0600_beta3_0.2000_files_24.npy",
+      "class1_val_sample_0084_beta2_0.3000_beta3_0.0000_files_25.npy",
+      "class2_val_sample_0000_beta2_0.0867_beta3_0.2000_files_23.npy",
+      "class0_val_sample_0002_beta2_0.3000_beta3_0.0222_files_18.npy"
+    ]
 
     # 任务特定分析
     task_specific:
-      regression: true              # 对回归任务进行分析
-      classification: true          # 对分类任务进行分析
+      regression: true      
+      classification: true 
+    
+    # 绘图样式参数
+    p_limit: 0.17  # 坐标轴范围
+    colormap: "seismic"        # [论文建议] 推荐修改（见下文详解）。
+    alpha: 0.5     # Overlay 透明度
+
     
     # 高级选项
     guided_backprop: false
