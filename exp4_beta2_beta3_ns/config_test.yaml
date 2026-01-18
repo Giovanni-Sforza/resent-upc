@@ -3,7 +3,7 @@
 # ===================================================================
 
 # 实验基本信息
-experiment_name: "resnet34_exp4_50_inch4、5"
+experiment_name: "resnet34_exp4_50_inch3"
 seed: 42
 device: "auto"
 

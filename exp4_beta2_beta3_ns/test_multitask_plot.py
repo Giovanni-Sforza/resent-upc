@@ -749,33 +749,55 @@ def evaluate_results(results):
     return metrics
 
 
-def plot_test_results(results, metrics, output_path):
+import matplotlib.pyplot as plt
+import seaborn as sns
+from pathlib import Path
+import numpy as np
+
+def plot_test_results(results, metrics, output_path, stats=None):
     """
     绘制测试结果。
-    注意：这将把原本的单张大图拆分为 3 张独立的出版级图片保存。
-    保存路径会基于 output_path 自动添加后缀。
+    
+    Args:
+        results: 包含预测值和真实值的字典 (numpy array)
+        metrics: 指标字典
+        output_path: 保存路径
+        stats: (新增) 数据集的统计量字典 {'mean': tensor, 'std': tensor}，用于反归一化
     """
-    # 处理路径：如果 output_path 是 "dir/results.png"
-    # 我们会保存为 "dir/results_Beta2.pdf", "dir/results_Beta3.pdf" 等
     base_path = Path(output_path)
     parent_dir = base_path.parent
-    stem = base_path.stem  # 文件名不带后缀
+    stem = base_path.stem 
     
-    reg_preds = results['reg_predictions']
-    reg_labels = results['reg_labels']
+    # 获取原始数据 (此时是归一化后的状态)
+    reg_preds = results['reg_predictions'].copy() # copy防止修改原数据
+    reg_labels = results['reg_labels'].copy()
     cls_labels = results['cls_labels']
     cls_preds = results['cls_predictions']
     
+    # --- 新增：反向归一化逻辑 ---
+    if stats is not None:
+        # 1. 将 tensor 转换为 numpy，并确保在 CPU 上
+        # 注意：dataset中计算的 stats['mean'] 形状通常是 (2,) 对应 [beta2, beta3]
+        mean = stats['mean'].cpu().numpy()
+        std = stats['std'].cpu().numpy()
+        
+        # 2. 应用公式: Original = Normalized * Std + Mean
+        # 利用 numpy 的广播机制，会自动对应 Beta2 和 Beta3
+        reg_preds = reg_preds * std + mean
+        reg_labels = reg_labels * std + mean
+        print("✅ 已执行反向归一化：预测值和真实值已恢复为物理数值。")
+    else:
+        print("⚠️ 警告：未传入 stats，绘图将使用归一化后的数值。")
+
     # ---------------------------------------------------------
     # 1. 绘制 Beta2 回归图 (独立保存)
     # ---------------------------------------------------------
     fig_b2, ax_b2 = plt.subplots(figsize=(6, 5))
     
-    # 散点
+    # 使用反算后的 reg_labels 和 reg_preds
     ax_b2.scatter(reg_labels[:, 0], reg_preds[:, 0], alpha=0.6, s=40, 
                   edgecolors='k', linewidth=0.5, label='Predictions')
     
-    # 红色参考线
     min_b2 = min(reg_labels[:, 0].min(), reg_preds[:, 0].min())
     max_b2 = max(reg_labels[:, 0].max(), reg_preds[:, 0].max())
     margin_b2 = (max_b2 - min_b2) * 0.05
@@ -788,9 +810,7 @@ def plot_test_results(results, metrics, output_path):
     ax_b2.set_xlim(min_b2-margin_b2, max_b2+margin_b2)
     ax_b2.set_ylim(min_b2-margin_b2, max_b2+margin_b2)
     
-    # 文本框 (MSE 科学计数法)
-    stats_text_b2 = (f"$R^2 = {metrics['r2_beta2']:.4f}$"
-                     )
+    stats_text_b2 = (f"$R^2 = {metrics['r2_beta2']:.4f}$")
     ax_b2.text(0.05, 0.95, stats_text_b2, transform=ax_b2.transAxes, va='top', fontsize=14,
                bbox=dict(boxstyle='round', facecolor='white', alpha=0.9, edgecolor='gray'))
     
@@ -808,8 +828,9 @@ def plot_test_results(results, metrics, output_path):
     # ---------------------------------------------------------
     fig_b3, ax_b3 = plt.subplots(figsize=(6, 5))
     
+    # 使用反算后的数据
     ax_b3.scatter(reg_labels[:, 1], reg_preds[:, 1], alpha=0.6, s=40, 
-                  edgecolors='k', linewidth=0.5, label='Predictions') # 换个颜色
+                  edgecolors='k', linewidth=0.5, label='Predictions')
     
     min_b3 = min(reg_labels[:, 1].min(), reg_preds[:, 1].min())
     max_b3 = max(reg_labels[:, 1].max(), reg_preds[:, 1].max())
@@ -823,8 +844,7 @@ def plot_test_results(results, metrics, output_path):
     ax_b3.set_xlim(min_b3-margin_b3, max_b3+margin_b3)
     ax_b3.set_ylim(min_b3-margin_b3, max_b3+margin_b3)
     
-    stats_text_b3 = (f"$R^2 = {metrics['r2_beta3']:.4f}$"
-                     )
+    stats_text_b3 = (f"$R^2 = {metrics['r2_beta3']:.4f}$")
     ax_b3.text(0.05, 0.95, stats_text_b3, transform=ax_b3.transAxes, va='top', fontsize=14,
                bbox=dict(boxstyle='round', facecolor='white', alpha=0.9, edgecolor='gray'))
     
@@ -838,13 +858,11 @@ def plot_test_results(results, metrics, output_path):
     print(f"✅ Saved: {save_name_b3}")
 
     # ---------------------------------------------------------
-    # 3. 绘制混淆矩阵 (独立保存)
+    # 3. 绘制混淆矩阵 (保持不变)
     # ---------------------------------------------------------
     fig_cm, ax_cm = plt.subplots(figsize=(6, 5))
     
     cm = metrics['confusion_matrix']
-    # 请确保这里的类别名称与你模型输出的 0,1,2 对应
-    # 假设顺序是 [Halo, Skin, None] 或者其他，根据你实际情况修改
     class_names = ['Halo', 'Skin', 'None'] 
     
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 
@@ -853,7 +871,6 @@ def plot_test_results(results, metrics, output_path):
     
     ax_cm.set_xlabel('Predicted Label')
     ax_cm.set_ylabel('True Label')
-    # ax_cm.set_title('') # 显式移除标题
     
     save_name_cm = parent_dir / f"{stem}_NeutronSkin_CM.pdf"
     plt.figure(fig_cm.number)
@@ -1207,7 +1224,7 @@ def main():
         # 绘制结果图
         if config['test_config']['save_plots']:
             plot_path = test_output_dir / 'test_results.png'
-            plot_test_results(results, metrics, plot_path)
+            plot_test_results(results, metrics, plot_path,stats=test_dataset.stats)
             print(f"结果图已保存到: {plot_path}")
         
         # 保存特征和数据

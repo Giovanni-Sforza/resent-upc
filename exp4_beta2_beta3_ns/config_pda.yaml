@@ -3,7 +3,7 @@
 # ===================================================================
 
 # 实验基本信息
-experiment_name: "resnet34_exp4_50_pda"
+experiment_name: "resnet34_exp4_50_pda4"
 seed: 42
 device: "auto"
 
@@ -121,19 +121,21 @@ interpretability:
     # === 新增：指定处理文件列表 ===
     # 请确保这些文件在 test_data_path 中存在
     target_files_regression: [
-      "class0_val_sample_0072_beta2_0.1400_beta3_0.1556_files_21.npy",
-      "class0_val_sample_0090_beta2_0.1133_beta3_0.1333_files_21.npy",
-      "class1_val_sample_0009_beta2_0.0600_beta3_0.0222_files_12.npy",
-      "class1_val_sample_0058_beta2_0.2467_beta3_0.0667_files_14.npy",
-      "class2_val_sample_0066_beta2_0.0600_beta3_0.0000_files_20.npy",
-      "class2_val_sample_0005_beta2_0.2200_beta3_0.0000_files_23.npy"
+    #  "class1_val_sample_0059_beta2_0.0600_beta3_0.2000_files_24.npy",
+    #  "class1_val_sample_0084_beta2_0.3000_beta3_0.0000_files_25.npy",
+    #  "class2_val_sample_0000_beta2_0.0867_beta3_0.2000_files_23.npy",
+    #  "class0_val_sample_0002_beta2_0.3000_beta3_0.0222_files_18.npy"
+    "class2_val_sample_0000_beta2_0.0867_beta3_0.2000_files_23.npy"
     ]
     
     target_files_classification: [
-      "class1_val_sample_0059_beta2_0.0600_beta3_0.2000_files_24.npy",
-      "class1_val_sample_0084_beta2_0.3000_beta3_0.0000_files_25.npy",
-      "class2_val_sample_0000_beta2_0.0867_beta3_0.2000_files_23.npy",
-      "class0_val_sample_0002_beta2_0.3000_beta3_0.0222_files_18.npy"
+    #  "class0_val_sample_0072_beta2_0.1400_beta3_0.1556_files_21.npy",
+    #  "class0_val_sample_0090_beta2_0.1133_beta3_0.1333_files_21.npy",
+    #  "class1_val_sample_0009_beta2_0.0600_beta3_0.0222_files_12.npy",
+    "class0_val_sample_0090_beta2_0.1133_beta3_0.1333_files_21.npy",
+    #  "class2_val_sample_0066_beta2_0.0600_beta3_0.0000_files_20.npy",
+    #  "class2_val_sample_0005_beta2_0.2200_beta3_0.0000_files_23.npy"
+    "class1_val_sample_0058_beta2_0.2467_beta3_0.0667_files_14.npy"
     ]
 
     # 任务特定分析
@@ -143,8 +145,8 @@ interpretability:
     
     # 绘图样式参数
     p_limit: 0.17  # 坐标轴范围
-    colormap: "seismic"        # [论文建议] 推荐修改（见下文详解）。
-    alpha: 0.5     # Overlay 透明度
+    colormap:  "jet"   #"seismic"       # [论文建议] 推荐修改（见下文详解）。
+    alpha: 0.7     # Overlay 透明度
 
     
     # 高级选项

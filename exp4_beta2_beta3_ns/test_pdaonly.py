@@ -134,23 +134,47 @@ class ConditionalPredictionDifferenceAnalyzer:
 # 3. 数据集类 (复用)
 # =========================================================================
 class SpecificFilesDataset(MultiTaskInterferenceDataset):
+    """
+    继承自原数据集，通过索引映射的方式只读取 target_files 列表中的文件。
+    保证数据和标签的对应关系正确，且不破坏父类结构。
+    """
     def __init__(self, root_dir, config, target_files):
+        # 1. 初始化父类，加载所有数据
         super().__init__(root_dir, config, split='test')
-        self.file_paths = []
-        # 严格按照 target_files 列表顺序加载
-        for target_name in target_files:
-            target_path = Path(root_dir) / target_name
-            if target_path.exists():
-                self.file_paths.append(target_path)
-            else:
-                print(f"Warning: 指定的文件不存在 {target_path}")
         
-    def __getitem__(self, idx):
-        image_tensor, regression_label, classification_label = super().__getitem__(idx)
-        file_path = str(self.file_paths[idx])
-        processed_image = image_tensor.clone()
-        return image_tensor, regression_label, classification_label, file_path, processed_image
+        # 2. 构建文件名到索引的映射表
+        # self.file_paths 是父类加载的完整路径列表
+        name_to_idx = {Path(p).name: i for i, p in enumerate(self.file_paths)}
+        
+        # 3. 按 target_files 的顺序找到对应的原始索引
+        self.target_indices = []
+        for target_name in target_files:
+            if target_name in name_to_idx:
+                self.target_indices.append(name_to_idx[target_name])
+            else:
+                print(f"Warning: 指定的文件不存在或不在测试集中: {target_name}")
+        
+        if len(self.target_indices) == 0:
+            print("Error: 未找到任何目标文件，请检查文件名或路径配置。")
+        
+        print(f"特定文件数据集初始化完成，共命中 {len(self.target_indices)} / {len(target_files)} 个文件。")
 
+    def __len__(self):
+        # 必须重写长度，返回特定文件的数量
+        return len(self.target_indices)
+
+    def __getitem__(self, idx):
+        # 1. 获取映射后的真实索引
+        real_idx = self.target_indices[idx]
+        
+        # 2. 使用真实索引调用父类方法，确保取到正确的图像和标签
+        image_tensor, regression_label, classification_label = super().__getitem__(real_idx)
+        
+        # 3. 获取额外信息
+        file_path = str(self.file_paths[real_idx])
+        processed_image = image_tensor.clone()
+        
+        return image_tensor, regression_label, classification_label, file_path, processed_image
 # =========================================================================
 # 4. 绘图函数
 # =========================================================================
@@ -175,8 +199,8 @@ def save_pda_paper_style(heatmap, processed_image, output_path, config, global_p
     # 翻转逻辑
     heatmap_resized = cv2.resize(heatmap, (width, height))
     img_for_plot = np.flipud(img_display)
-    heatmap_for_plot = np.flipud(heatmap_resized)
-    heatmap_high_res = cv2.resize(heatmap_for_plot, (heatmap_for_plot.shape[1], heatmap_for_plot.shape[0]), interpolation=cv2.INTER_CUBIC)
+    heatmap_for_plot = np.flipud(heatmap_resized).T
+    #heatmap_high_res = cv2.resize(heatmap_for_plot, (heatmap_for_plot.shape[1], heatmap_for_plot.shape[0]), interpolation=cv2.INTER_CUBIC)
     # --- B. 绘图 ---
     fig, ax = plt.subplots(figsize=(6, 5), facecolor='white')
     p_limit = config['interpretability']['pda'].get('p_limit', 0.17)
@@ -186,8 +210,9 @@ def save_pda_paper_style(heatmap, processed_image, output_path, config, global_p
     
     alpha = config['interpretability']['pda'].get('alpha', 0.4)
     cmap = config['interpretability']['pda'].get('colormap', 'jet')
-    
-    im = ax.imshow(heatmap_for_plot, extent=extent, origin='lower',
+    threshold = 0.2 
+    heatmap_masked = np.ma.masked_where(heatmap_for_plot < threshold, heatmap_for_plot)
+    im = ax.imshow(heatmap_masked, extent=extent, origin='lower',
                    cmap=cmap, alpha=alpha, vmin=0, vmax=1)
     
     cbar = fig.colorbar(im, ax=ax)
@@ -256,19 +281,21 @@ def process_task_queue(model, device, config, output_dir):
                 processed_image = processed_images[0]
                 file_name = Path(file_path_tuple[0]).stem
                 
-                # Beta 2
-                heatmap_b2 = analyzer.generate_pda(inputs, task_type='regression', regression_dim=0,
-                                                   batch_size=pda_config.get('internal_batch_size', 32))
-                save_name_b2 = save_dir / f"{file_name}_beta2.png"
-                save_pda_paper_style(heatmap_b2, processed_image, save_name_b2, config, counter)
-                counter += 1 # (a) -> (b)
-                
                 # Beta 3
                 heatmap_b3 = analyzer.generate_pda(inputs, task_type='regression', regression_dim=1,
                                                    batch_size=pda_config.get('internal_batch_size', 32))
-                save_name_b3 = save_dir / f"{file_name}_beta3.png"
+                save_name_b3 = save_dir / f"{file_name}_beta3.pdf"
                 save_pda_paper_style(heatmap_b3, processed_image, save_name_b3, config, counter)
                 counter += 1 # (b) -> (c)
+
+                # Beta 2
+                heatmap_b2 = analyzer.generate_pda(inputs, task_type='regression', regression_dim=0,
+                                                   batch_size=pda_config.get('internal_batch_size', 32))
+                save_name_b2 = save_dir / f"{file_name}_beta2.pdf"
+                save_pda_paper_style(heatmap_b2, processed_image, save_name_b2, config, counter)
+                counter += 1 # (a) -> (b)
+                
+                
         else:
             print("Config 中未找到 'target_files_regression' 或为空。")
 
@@ -294,7 +321,7 @@ def process_task_queue(model, device, config, output_dir):
                 
                 heatmap = analyzer.generate_pda(inputs, task_type='classification',
                                                 batch_size=pda_config.get('internal_batch_size', 32))
-                save_name = save_dir / f"{file_name}_cls.png"
+                save_name = save_dir / f"{file_name}_cls.pdf"
                 save_pda_paper_style(heatmap, processed_image, save_name, config, counter)
                 counter += 1 # (a) -> (b)
         else:

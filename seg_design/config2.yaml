@@ -1,0 +1,93 @@
+# ===================================================================
+# 物理路由验证 PoC 配置文件
+# ===================================================================
+
+experiment_name: "learnable_mask"
+seed: 42
+device: "auto"
+
+# 数据路径 (保持不变)
+data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50" #"/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_inch" #
+
+# ===================================================================
+# 核心模式配置
+# ===================================================================
+# 切换到新的物理路由模型
+inference_mode: "PhysicalDiscoveryModel" 
+
+# 路由器参数配置 (PoC 特有)
+router:
+  start_temp: 2.0   # 初始温度高，鼓励探索
+  end_temp: 0.1     # 结束温度低，逼近 One-hot
+  temp_epochs: 20   # 在前 20 个 epoch 完成退火
+
+# GradNorm 配置 (依然使用 GradNorm 平衡 Skin/Def 任务)
+gradnorm:
+  enabled: true
+  alpha: 1.5
+  lr: 0.025
+  weight: 0.1
+
+# ===================================================================
+# 模型配置 (用于兼容 Dataset 和 Model 初始化)
+# ===================================================================
+multitask_mlp_config:
+  feature_dim: 4  # 这里的 feature_dim 实际上被 PhysicsAdapter 的 output_dim 替代了
+  regression_loss_type: "huber"
+
+# ===================================================================
+# 训练参数
+# ===================================================================
+epochs: 100         # PoC 不需要跑太多轮，通常 30-50 轮即可收敛
+batch_size: 128
+num_workers: 4
+
+learning_rates:
+  base: 0.001       # 线性层比较简单，可以尝试稍大的 LR
+  layer_decay: 1.0 # 不需要分层衰减
+
+weight_decay: 0.0001
+use_discriminative_lr: false # 关闭分层学习率
+
+# ===================================================================
+# 数据预处理
+# ===================================================================
+preprocessing:
+  center_crop:
+    enabled: true
+    size: 224
+  
+  log_normalization:
+    enabled: true
+    epsilon: 0.0000001
+  
+  gaussian_spatial_noise: 
+    enabled: false
+    factor: 0.01
+    scale: 0.0015503876
+         
+  resize:
+    enabled: true
+    size: 224
+  
+  normalize:
+    enabled: true
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+
+# ===================================================================
+# 输出和日志
+# ===================================================================
+output_dir: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments_poc"
+
+logging:
+  level: "INFO"
+  tensorboard: true
+  log_gradnorm_weights: true
+
+validation:
+  plot_predictions: true
+  plot_interval: 5
+
+save_options:
+  save_best_only: true
