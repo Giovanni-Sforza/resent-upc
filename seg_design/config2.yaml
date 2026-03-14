@@ -43,7 +43,7 @@ batch_size: 128
 num_workers: 4
 
 learning_rates:
-  base: 0.01 #0.001       # 线性层比较简单，可以尝试稍大的 LR
+  base: 0.001 #0.001       # 线性层比较简单，可以尝试稍大的 LR
   layer_decay: 1.0 # 不需要分层衰减
 
 weight_decay: 0.0001

@@ -587,67 +587,7 @@ class LearnableMultiRegionGenerator(nn.Module):
 
 
 # ==========================================
-# 模块 B: Gumbel-Sinkhorn 路由器
-# ==========================================
-class GumbelSinkhornRouter(nn.Module):
-    def __init__(self, num_masks=3, num_tasks=3, n_iters=3, init_temp=1.0):
-        super().__init__()
-        self.num_masks = num_masks
-        self.num_tasks = num_tasks
-        self.n_iters = n_iters
-        
-        # Logits: (Task, Mask)
-        # 初始化为微小随机数
-        self.logits = nn.Parameter(torch.randn(num_tasks, num_masks) * 0.1)
-        
-        # Temperature buffer
-        self.register_buffer('temperature', torch.tensor(init_temp))
-
-    def set_temperature(self, temp):
-        self.temperature.fill_(temp)
-
-    def _sample_gumbel(self, shape):
-        U = torch.rand(shape, device=self.logits.device)
-        return -torch.log(-torch.log(U + 1e-20) + 1e-20)
-
-    def _sinkhorn(self, log_alpha):
-        for _ in range(self.n_iters):
-            # Row Norm (Task constraint)
-            log_alpha = log_alpha - torch.logsumexp(log_alpha, dim=-1, keepdim=True)
-            # Col Norm (Mask constraint)
-            log_alpha = log_alpha - torch.logsumexp(log_alpha, dim=-2, keepdim=True)
-        return torch.exp(log_alpha)
-
-    def forward(self, masks, hard=False):
-        """
-        masks: (B, 3, H, W)
-        Returns:
-            routed_masks: (B, 3, H, W)
-            P: (3, 3) Assignment Matrix
-        """
-        # 1. Logits -> Soft P
-        if self.training:
-            noise = self._sample_gumbel(self.logits.shape)
-            noisy_logits = (self.logits + noise) / self.temperature
-        else:
-            noisy_logits = self.logits / self.temperature
-            
-        P = self._sinkhorn(noisy_logits) # (Tasks, Masks)
-
-        # 2. Hard Routing (Straight-Through Estimator)
-        if hard:
-            P_hard = torch.zeros_like(P)
-            P_hard.scatter_(1, P.argmax(dim=1, keepdim=True), 1.0)
-            P = (P_hard - P).detach() + P
-        
-        # 3. Apply Routing
-        # Einstein Summation: Task_t = Sum(P_tm * Mask_m)
-        routed_masks = torch.einsum('tm, bmhw -> bthw', P, masks)
-        
-        return routed_masks, P
-
-# ==========================================
-# 模块 C: 物理算子适配器 (Physics OpLib)
+# 模块 B: 物理算子适配器 (Physics OpLib)
 # ==========================================
 class LearnablePhysicsOperatorAdapter(nn.Module):
     def __init__(self, max_power=4, max_harmonics=6):
@@ -780,7 +720,7 @@ class TaskHead(nn.Module):
     def forward(self, x):
         return self.net(x)
 # ==========================================
-# 模块 D: 整合模型 (Replacing MultiTaskResNetMLP)
+# 模块 C: 整合模型 (Replacing MultiTaskResNetMLP)
 # ==========================================
 
 class PhysicalDiscoveryModel(nn.Module):

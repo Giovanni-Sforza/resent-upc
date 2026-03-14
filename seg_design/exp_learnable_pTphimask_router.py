@@ -220,43 +220,6 @@ class GradNormTrainer:
 
 
 
-
-class ExperimentalFeasibilityLoss(nn.Module):
-    def __init__(self, lambda_sep=0.1, lambda_size=1.0, min_dist=0.5, target_sigma=0.15):
-        super().__init__()
-        self.lambda_sep = lambda_sep
-        self.lambda_size = lambda_size
-        self.min_dist = min_dist
-        self.target_sigma = target_sigma # [新增] 期望的最小尺寸 (~33像素)
-
-    def forward(self, model):
-        generator = model.region_generator
-        locs = generator.locs
-        # 限制 sigma 的最大值，防止它虽然不产生负loss，但在内部数值爆炸
-        # 这里的 exp 出来最大是 1.0 (全图宽的一半)
-        sigmas = torch.exp(torch.clamp(generator.log_sigma, max=0.0)) 
-        
-        # --- A. 排斥 Loss (不变) ---
-        dists = torch.pdist(locs, p=2)
-        repulsion_loss = torch.mean(1.0 / (dists + 1e-6))
-        
-        # --- B. [关键修改] 大小 Loss (Hinge Loss) ---
-        # 旧代码: size_loss = -torch.mean(sigmas)  <-- 导致负无穷
-        # 新代码: 只惩罚小于 target_sigma 的情况
-        # 如果 sigma > 0.15，ReLU 输出 0，Loss 为 0。
-        # 如果 sigma < 0.15，Loss 为正数，迫使它变大。
-        size_loss = torch.mean(torch.relu(self.target_sigma - sigmas))
-        
-        # --- C. 边界 Loss (不变) ---
-        boundary_loss = torch.mean(torch.relu(torch.abs(locs) - 0.9)**2)
-
-        # 总 Loss (保证永远是非负数)
-        total_reg_loss = (self.lambda_sep * repulsion_loss + 
-                          self.lambda_size * size_loss + 
-                          10.0 * boundary_loss)
-                          
-        return total_reg_loss, repulsion_loss, size_loss
-
 class SectorFeasibilityLoss(nn.Module):
     def __init__(self, lambda_sep=0.1, lambda_size=1.0, target_pt_width=0.1, target_phi_width=0.3):
         super().__init__()
@@ -568,70 +531,6 @@ class MultiTaskInterferenceDataset(Dataset):
 # ===================================================================
 # 3. 多任务模型定义
 # ===================================================================
-
-# ==========================================
-# 模块 A: gaussian式分割器 (GaussianMask)
-# ==========================================
-class LearnableMultiRegionGenerator(nn.Module):
-    """
-    [Module A - Spatial Discovery] 多区域探针生成器
-    
-    生成 num_regions 个独立的高斯 Mask。
-    每个 Mask 代表一个独立的“探测窗口”。
-    AI 将学习将这些窗口移动到动量谱的关键位置（如：一个去亮斑中心，一个去暗纹处）。
-    """
-    def __init__(self, H=224, W=224, num_regions=8):
-        super().__init__()
-        self.num_regions = num_regions
-        self.H, self.W = H, W
-        
-        # --- 初始化参数 ---
-        # 1. 位置 (mu_x, mu_y): 
-        # 为了防止一开始所有探针叠在一起，我们用均匀网格初始化它们
-        # 范围 [-0.8, 0.8] 避免太靠边
-        initial_locs = torch.rand(num_regions, 2) * 1.6 - 0.8
-        self.locs = nn.Parameter(initial_locs)
-        
-        # 2. 宽度 (sigma): 
-        # 初始化为较小的区域，让它专注于局部细节
-        # log(-2.0) approx 0.13 (相对于 [-1,1] 坐标系)
-        self.log_sigma = nn.Parameter(torch.ones(num_regions) * -2.0)
-        
-        # 3. 形状参数 (可选): 允许变成椭圆 (sigma_x != sigma_y) 增加灵活性
-        # 这里先保持圆形，简单一点
-
-        # --- 坐标网格 Buffer ---
-        y = torch.linspace(-1, 1, H)
-        x = torch.linspace(-1, 1, W)
-        gy, gx = torch.meshgrid(y, x)
-        self.register_buffer('grid_y', gy.unsqueeze(0).unsqueeze(0)) # (1, 1, H, W)
-        self.register_buffer('grid_x', gx.unsqueeze(0).unsqueeze(0)) # (1, 1, H, W)
-
-    def forward(self, batch_size):
-        """
-        Returns: (B, num_regions, H, W)
-        """
-        # (num_regions, 1, 1)
-        mu_x = self.locs[:, 1].view(self.num_regions, 1, 1)
-        mu_y = self.locs[:, 0].view(self.num_regions, 1, 1)
-        if self.training:
-            # 抖动幅度 0.02 (约等于 224*0.02 = 4.5 个像素)
-            jitter = torch.randn_like(mu_x) * 0.02 
-            mu_x = mu_x + jitter
-            mu_y = mu_y + jitter
-        sigma = torch.exp(torch.clamp(self.log_sigma, min=-1)).view(self.num_regions, 1, 1)
-        
-        # 计算高斯分布
-        # Broadcasting: Grid(1,1,H,W) - Mu(N,1,1) -> (1,N,H,W)
-        dist_sq = (self.grid_x - mu_x)**2 + (self.grid_y - mu_y)**2
-        
-        # 生成 Masks: (1, num_regions, H, W)
-        masks = torch.exp(-dist_sq / (2 * sigma**2 + 1e-6))
-        
-        # 扩展到 Batch: (B, num_regions, H, W)
-        batch_masks = masks.expand(batch_size, -1, -1, -1)
-        
-        return batch_masks
 
 
 class LearnableSectorGenerator(nn.Module):

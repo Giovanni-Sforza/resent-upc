@@ -771,18 +771,14 @@ def plot_test_results(results, metrics, output_path, stats=None):
     # 获取原始数据 (此时是归一化后的状态)
     reg_preds = results['reg_predictions'].copy() # copy防止修改原数据
     reg_labels = results['reg_labels'].copy()
-    cls_labels = results['cls_labels']
-    cls_preds = results['cls_predictions']
     
     # --- 新增：反向归一化逻辑 ---
     if stats is not None:
         # 1. 将 tensor 转换为 numpy，并确保在 CPU 上
-        # 注意：dataset中计算的 stats['mean'] 形状通常是 (2,) 对应 [beta2, beta3]
         mean = stats['mean'].cpu().numpy()
         std = stats['std'].cpu().numpy()
         
         # 2. 应用公式: Original = Normalized * Std + Mean
-        # 利用 numpy 的广播机制，会自动对应 Beta2 和 Beta3
         reg_preds = reg_preds * std + mean
         reg_labels = reg_labels * std + mean
         print("✅ 已执行反向归一化：预测值和真实值已恢复为物理数值。")
@@ -790,20 +786,29 @@ def plot_test_results(results, metrics, output_path, stats=None):
         print("⚠️ 警告：未传入 stats，绘图将使用归一化后的数值。")
 
     # ---------------------------------------------------------
-    # 1. 绘制 Beta2 回归图 (独立保存)
+    # 1. 绘制 Beta2 回归图 (使用 Hist2d 密度图)
     # ---------------------------------------------------------
-    fig_b2, ax_b2 = plt.subplots(figsize=(6, 5))
+    fig_b2, ax_b2 = plt.subplots(figsize=(6, 5)) # 稍微增加宽度以容纳colorbar
     
-    # 使用反算后的 reg_labels 和 reg_preds
-    ax_b2.scatter(reg_labels[:, 0], reg_preds[:, 0], alpha=0.6, s=40, 
-                  edgecolors='k', linewidth=0.5, label='Predictions')
+    # [修改处] 使用 hist2d 替代 scatter
+    # bins=50: 网格密度，可根据需要调整
+    # cmap='Blues': 对应学姐图片的蓝色风格
+    # cmin=1: 计数小于1的格子不显示颜色（显示为白色背景）
+    h_b2 = ax_b2.hist2d(reg_labels[:, 0], reg_preds[:, 0], bins=10, cmap='Blues', cmin=1)
     
+    # [修改处] 添加 Colorbar
+    cb_b2 = fig_b2.colorbar(h_b2[3], ax=ax_b2)
+    cb_b2.set_label('Counts')
+
+    # 计算坐标范围（保持你原来的逻辑）
     min_b2 = min(reg_labels[:, 0].min(), reg_preds[:, 0].min())
     max_b2 = max(reg_labels[:, 0].max(), reg_preds[:, 0].max())
     margin_b2 = (max_b2 - min_b2) * 0.05
+    
+    # 绘制对角线
     ax_b2.plot([min_b2-margin_b2, max_b2+margin_b2], 
                [min_b2-margin_b2, max_b2+margin_b2], 
-               'r--', lw=2.5, label='Ideal (y=x)')
+               'r--', lw=2.5)
     
     ax_b2.set_xlabel(r'True $\beta_2$')
     ax_b2.set_ylabel(r'Predicted $\beta_2$')
@@ -814,9 +819,11 @@ def plot_test_results(results, metrics, output_path, stats=None):
     ax_b2.text(0.05, 0.95, stats_text_b2, transform=ax_b2.transAxes, va='top', fontsize=14,
                bbox=dict(boxstyle='round', facecolor='white', alpha=0.9, edgecolor='gray'))
     
+    # 图例 (只保留对角线的图例，因为散点已变成密度图)
     ax_b2.legend(frameon=False, loc='lower right')
     
     save_name_b2 = parent_dir / f"{stem}_Beta2.pdf"
+    # 注意：使用tight_layout会自动调整colorbar的位置，防止重叠
     plt.figure(fig_b2.number)
     plt.tight_layout()
     plt.savefig(save_name_b2, dpi=300, bbox_inches='tight')
@@ -824,20 +831,24 @@ def plot_test_results(results, metrics, output_path, stats=None):
     print(f"✅ Saved: {save_name_b2}")
 
     # ---------------------------------------------------------
-    # 2. 绘制 Beta3 回归图 (独立保存)
+    # 2. 绘制 Beta3 回归图 (使用 Hist2d 密度图)
     # ---------------------------------------------------------
     fig_b3, ax_b3 = plt.subplots(figsize=(6, 5))
     
-    # 使用反算后的数据
-    ax_b3.scatter(reg_labels[:, 1], reg_preds[:, 1], alpha=0.6, s=40, 
-                  edgecolors='k', linewidth=0.5, label='Predictions')
+    # [修改处] 使用 hist2d 替代 scatter
+    h_b3 = ax_b3.hist2d(reg_labels[:, 1], reg_preds[:, 1], bins=10, cmap='Blues', cmin=1)
+    
+    # [修改处] 添加 Colorbar
+    cb_b3 = fig_b3.colorbar(h_b3[3], ax=ax_b3)
+    cb_b3.set_label('Counts')
     
     min_b3 = min(reg_labels[:, 1].min(), reg_preds[:, 1].min())
     max_b3 = max(reg_labels[:, 1].max(), reg_preds[:, 1].max())
     margin_b3 = (max_b3 - min_b3) * 0.05
+    
     ax_b3.plot([min_b3-margin_b3, max_b3+margin_b3], 
                [min_b3-margin_b3, max_b3+margin_b3], 
-               'r--', lw=2.5, label='Ideal (y=x)')
+               'r--', lw=2.5)
     
     ax_b3.set_xlabel(r'True $\beta_3$')
     ax_b3.set_ylabel(r'Predicted $\beta_3$')
@@ -851,9 +862,11 @@ def plot_test_results(results, metrics, output_path, stats=None):
     ax_b3.legend(frameon=False, loc='lower right')
     
     save_name_b3 = parent_dir / f"{stem}_Beta3.pdf"
+    save_name_b3_png = parent_dir / f"{stem}_Beta3.png"
     plt.figure(fig_b3.number)
     plt.tight_layout()
     plt.savefig(save_name_b3, dpi=300, bbox_inches='tight')
+    plt.savefig(save_name_b3_png, dpi=300, bbox_inches='tight')
     plt.close(fig_b3)
     print(f"✅ Saved: {save_name_b3}")
 
@@ -1130,7 +1143,7 @@ class TestMultiTaskDataset(MultiTaskInterferenceDataset):
 def main():
     """主测试函数"""
     # 加载配置
-    with open('config_test.yaml', 'r', encoding='utf-8') as f:
+    with open('config_test_inch_plot.yaml', 'r', encoding='utf-8') as f:
         config = yaml.safe_load(f)
     
     # 检查是否为测试模式
@@ -1224,7 +1237,11 @@ def main():
         # 绘制结果图
         if config['test_config']['save_plots']:
             plot_path = test_output_dir / 'test_results.png'
-            plot_test_results(results, metrics, plot_path,stats=test_dataset.stats)
+            if hasattr(test_dataset, "stats"):
+                plot_test_results(results, metrics, plot_path,
+                                stats=test_dataset.stats)
+            else:
+                plot_test_results(results, metrics, plot_path)
             print(f"结果图已保存到: {plot_path}")
         
         # 保存特征和数据

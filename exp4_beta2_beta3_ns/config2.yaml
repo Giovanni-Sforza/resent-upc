@@ -3,12 +3,12 @@
 # ===================================================================
 
 # 实验基本信息
-experiment_name: "resnet34_exp4_50_inch2"
+experiment_name: "resnet34_exp4_50_inch_fix_20_50"
 seed: 42
 device: "auto"  # 可选: "auto", "cuda", "cpu"
 
 # 数据路径
-data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50" #"/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_inch" # #"/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50_rotated"
+data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_inch_correct_20" #"/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50" # #"/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50_rotated"
 
 # ===================================================================
 # 推理模式配置
@@ -82,8 +82,8 @@ preprocessing:
     epsilon: 0.0000001  # 防止log(0)的小值
   
   gaussian_spatial_noise: 
-    enabled: True
-    factor: 0.01     # 这里设定倍率为 0.01
+    enabled: true
+    factor: 50 #0.01     # 这里设定倍率为 0.01
     scale: 0.0015503876
          
 
@@ -132,7 +132,7 @@ model_config:
 # ===================================================================
 # 输出和保存配置
 # ===================================================================
-output_dir: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments_plot"
+output_dir: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments_noice_correct_fix_noice_scale"
 
 # 保存选项
 save_options:

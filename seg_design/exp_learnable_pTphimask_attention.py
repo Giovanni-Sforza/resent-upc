@@ -856,7 +856,7 @@ class ExplainableAttentionHead(nn.Module):
         
         encoder_layer = nn.TransformerEncoderLayer(d_model=embed_dim, nhead=nhead, 
                                                    dim_feedforward=embed_dim*2, 
-                                                   dropout=0.1, activation='gelu')
+                                                   dropout=0.4, activation='gelu')
         self.transformer = nn.TransformerEncoder(encoder_layer, num_layers=num_layers)
         
         self.norm = nn.LayerNorm(embed_dim)
@@ -950,14 +950,14 @@ class PhysicalDiscoveryModel(nn.Module):
             input_dim=self.obs_dim_per_region, 
             output_dim=3, 
             num_regions=self.n_regions_skin,
-            embed_dim=64, num_layers=3, nhead=4
+            embed_dim=64, num_layers=6, nhead=2
         )
         
         self.head_def = ExplainableAttentionHead(
             input_dim=self.obs_dim_per_region, 
             output_dim=2, 
             num_regions=self.n_regions_def,
-            embed_dim=64, num_layers=3, nhead=4
+            embed_dim=64, num_layers=6, nhead=2
         )
 
     def forward(self, x):
@@ -1116,10 +1116,20 @@ def train_epoch_multitask_gradnorm(model, train_loader, regression_criterion, cl
         
         geo_reg_loss = feasibility_loss_fn(model)
 
+        gate_skin = model.head_skin.feature_gate
+        gate_def = model.head_def.feature_gate
+        
+        # L1 范数：所有权重的绝对值之和
+        l1_loss = torch.norm(gate_skin, p=1) + torch.norm(gate_def, p=1)
+        
+        # 3. 总 Loss
+        # lambda_l1 是超参数，建议从 1e-3, 1e-4 开始尝试
+        # 强力压制：如果过拟合依然严重，增大这个系数
+        lambda_l1 = 1e-2 
 
         # 总损失 = 加权任务损失 + GradNorm正则化损失
         gradnorm_weight = config.get('gradnorm', {}).get('weight', 0.1)
-        total_loss = weighted_loss + gradnorm_weight * gradnorm_loss + geo_reg_loss
+        total_loss = weighted_loss + gradnorm_weight * gradnorm_loss + geo_reg_loss + lambda_l1 * l1_loss
         
         # 反向传播和优化
         total_loss.backward()
@@ -1234,9 +1244,20 @@ def validate_epoch_multitask_gradnorm(model, val_loader, regression_criterion, c
 
             geo_reg_loss = feasibility_loss_fn(model)
 
+            gate_skin = model.head_skin.feature_gate
+            gate_def = model.head_def.feature_gate
+            
+            # L1 范数：所有权重的绝对值之和
+            l1_loss = torch.norm(gate_skin, p=1) + torch.norm(gate_def, p=1)
+            
+            # 3. 总 Loss
+            # lambda_l1 是超参数，建议从 1e-3, 1e-4 开始尝试
+            # 强力压制：如果过拟合依然严重，增大这个系数
+            lambda_l1 = 1e-2 
+
             # 使用 3 个 GradNorm 权重计算加权总损失
             # 注意：这里的顺序必须和训练循环中 torch.stack 的顺序一致
-            total_loss = w_beta2 * loss_beta2 + w_beta3 * loss_beta3 + w_cls * loss_cls + geo_reg_loss
+            total_loss = w_beta2 * loss_beta2 + w_beta3 * loss_beta3 + w_cls * loss_cls + geo_reg_loss+ lambda_l1 * l1_loss
             
 
             # 记录损失

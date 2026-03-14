@@ -3,7 +3,7 @@
 # ===================================================================
 
 # 实验基本信息
-experiment_name: "resnet34_exp4_50_coh" #+train3
+experiment_name: "resnet34_exp4_50_inch"
 seed: 42
 device: "auto"
 
@@ -11,19 +11,19 @@ device: "auto"
 mode: "test"
 
 # 数据路径
-data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50" #"/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50_right_mean" #"/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50"
+data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_inch_correct_20" #"/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50_right_mean" #"/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50"
 
 # ===================================================================
 # 测试模式配置
 # ===================================================================
 test_config:
   # 测试数据路径 
-  test_data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50/val" # "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50_right_mean/val" #"/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50/val"
+  test_data_path: "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_inch_correct_20/val" # "/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50_right_mean/val" #"/storage/fdunphome/zhangjingzong/resnet-upc/data_exp3/processed_sample_whs_b12_50/val"
   
   # 模型权重路径
-  model_checkpoint: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments_b12/resnet34_exp4_50sum/checkpoints/best_multitask_gradnorm_model.pth"
+  #model_checkpoint: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments_b12/resnet34_exp4_50sum/checkpoints/best_multitask_gradnorm_model.pth"
   #model_checkpoint: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments_b12/resnet34_exp4_50_inch_gausion/checkpoints/best_multitask_gradnorm_model.pth"
-  #model_checkpoint: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments_plot/resnet34_exp4_50_inch2/checkpoints/best_multitask_gradnorm_model.pth" #+train3
+  model_checkpoint: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments_noice/resnet34_exp4_50_inch_correct_20/checkpoints/best_multitask_gradnorm_model.pth" #"/storage/fdunphome/zhangjingzong/resnet-upc/experiments_plot/resnet34_exp4_50_inch2/checkpoints/best_multitask_gradnorm_model.pth"
   # 特征保存配置
   save_features:
     enabled: false                    # 开启特征保存
@@ -74,7 +74,7 @@ preprocessing:
     enabled: false
 
   gaussian_spatial_noise: 
-    enabled: False
+    enabled: True
     factor: 0.01     # 这里设定倍率为 0.01
     scale: 0.0015503876
          
@@ -89,7 +89,7 @@ model_config:
 # ===================================================================
 # 输出配置
 # ===================================================================
-output_dir: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments_plot_test"
+output_dir: "/storage/fdunphome/zhangjingzong/resnet-upc/experiments_plot_noise_test"
 num_workers: 4
 
 # ===================================================================

@@ -221,8 +221,8 @@ class GaussianSpatialNoise:
         # 1. 动态计算 C = mean(tensor) * 0.01
         # -------------------------------------------------------
         # 计算整张图（所有通道）的平均值
-        image_mean = tensor.mean()
-        C = image_mean * self.factor
+        #image_mean = tensor.mean()
+        C =  self.factor*0.12*20 #image_mean * self.factor
 
         # -------------------------------------------------------
         # 2. 计算网格坐标与距离 r
