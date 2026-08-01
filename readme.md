@@ -178,28 +178,5 @@ learning_rates:
 use_discriminative_lr: true
 ```
 
-## Method highlights
 
-- **Discriminative learning rates** — the classification/regression head trains
-  at ~1e-3 while early ResNet layers decay by 0.1 per stage down to ~1e-6,
-  stabilizing transfer learning.
-- **GradNorm** — task weights are learnable parameters adjusted so gradient
-  magnitudes across the regression and classification tasks stay balanced
-  (with warmup, constraints, and renormalization).
-- **Variational GP heads** — a GPyTorch `ApproximateGP` with RBF-ARD kernel per
-  target gives calibrated predictive uncertainty on top of ResNet features.
-- **Physics-informed structure** — symmetry splitting (left/right mirroring with
-  an auxiliary side-classification task) and learnable spatial masks encode prior
-  knowledge about the symmetry and locality of the interference pattern.
-- **Explainability** — Grad-CAM (target-layer configurable) and Prediction
-  Difference Analysis verify that predictions rely on physically meaningful
-  regions rather than artifacts.
 
-## Notes
-
-- Detailed Chinese guides are kept next to the code they describe:
-  `pre_exp1_classify_beta2&3/README_zh.md` (classification pipeline) and
-  `exp4_beta2_beta3_ns/readme.md` (multi-task testing/Grad-CAM guide).
-- Data paths in the checked-in configs point to the original training server;
-  update `data_path` / `test_data_path` to your local dataset location.
-- `performer_noise.py` is an empty placeholder.
