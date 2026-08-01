@@ -85,8 +85,9 @@ class2_val_sample_0090_beta2_0.1133_beta3_0.1333_files_21.npy   # classification
 
 Labels are parsed from file names at load time; no separate annotation files are
 needed. Raw data and experiment outputs are excluded via `.gitignore`
-(`data*`, `experiments*`). A processed dataset snapshot is published on
-HuggingFace (see `upload_huggingface.py` for the upload pipeline).
+(`data*`, `experiments*`); you will need to obtain or regenerate the datasets
+yourself. `upload_huggingface.py` is a helper for publishing a dataset directory
+to your own HuggingFace dataset repo.
 
 ### Preprocessing pipeline
 
@@ -177,6 +178,11 @@ learning_rates:
   layer_decay: 0.1    # discriminative LR: head 1e-3 → layer4 1e-4 → ... → 1e-6
 use_discriminative_lr: true
 ```
+
+## License
+
+This project is released under the [MIT License](LICENSE).
+
 
 
 
