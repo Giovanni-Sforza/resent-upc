@@ -28,6 +28,21 @@ model picks up physically meaningful features.
 
 ## Repository layout
 
+The local Torch forward and the three-way J/psi decay-axis comparison are in
+`upc_deformation/`. See [the calculation and run guide](docs/jpsi_decay_axis.md).
+Run `python3 scripts/compare_jpsi_decay_axis.py` to generate fixed-b/known-axis,
+fixed-b/decay-axis, and b-integrated/decay-axis images from the same amplitudes.
+The four-panel layout also includes the lepton relative-momentum distribution
+with its own linear color scale. The fixed-b panels now use b = 20 fm;
+the integrated panels use 20–60 fm. To augment saved results without rerunning
+the b integral, use `python3 scripts/add_jpsi_kt_panel.py`.
+For the two-row spherical/deformed/skin-type comparison with isotropic
+incoherent background and shape ratios, run
+`python3 scripts/compare_structure_noise.py`; see
+[the comparison definition](docs/structure_noise_contract.md).
+Both figure configurations cover J/psi momentum components from -0.2 to
+0.2 GeV/c and retain unit-yield normalization in the original qT < 0.17 GeV/c disk.
+
 The repository is organized as a series of experiments, roughly in chronological
 order of the study. Each directory is self-contained (own `config.yaml`,
 `train*.py`, `inference.py` / `test_*.py`).
@@ -182,7 +197,3 @@ use_discriminative_lr: true
 ## License
 
 This project is released under the [MIT License](LICENSE).
-
-
-
-

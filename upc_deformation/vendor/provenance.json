@@ -1,0 +1,22 @@
+{
+  "source_project": "/Users/qiuyu/upc-alpha",
+  "source_commit": "6fd616305af2317a0b27bf07bfd307c59b4940c7",
+  "files": [
+    {
+      "source_relative_path": "physics/upc_forward.py",
+      "destination": "upc_deformation/vendor/upc_forward.py",
+      "source_sha256": "410421c4814ec3491b58489e03b306f24ef9314dc90c0f06b7e43e152ddf8f05",
+      "local_sha256": "01fb8e7fc3b25bd7a0915c5e74245d0af51d64d1b43d1a688b351291f7fc83b8",
+      "adaptation": "local relative import only"
+    },
+    {
+      "source_relative_path": "utils/cluster_geometry.py",
+      "destination": "upc_deformation/vendor/cluster_geometry.py",
+      "source_sha256": "cbe30642ce26d9d9cf1958cf364a820824f4ed3d9523218b138fd902b448b7b1",
+      "local_sha256": "cbe30642ce26d9d9cf1958cf364a820824f4ed3d9523218b138fd902b448b7b1",
+      "adaptation": "byte-for-byte copy"
+    }
+  ],
+  "copied_on": "2026-09-28",
+  "numpy_physics_used": false
+}

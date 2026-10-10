@@ -1,0 +1,115 @@
+physics:
+  collision_parameters:
+    b: 12.0
+    y: 0.0
+    gamma: 106.578902493
+  nuclear_parameters:
+    density_model: woods_saxon
+    Z: 40
+    A: 96
+    N: 56
+    R_ws_p: 5.02
+    R_ws_n: 5.02
+    d_ws_p: 0.46
+    d_ws_n: 0.46
+    beta2: 0.0
+    beta3: 0.0
+  physical_constants:
+    hbar_c: 0.197
+    Mjpsi: 3.097
+    alpha: 0.0073
+    mass_proton: 0.938272
+  incoherent_parameters:
+    bv_Jpsi: 4.0
+    vmphotoncoupling_Jpsi: 0.0237
+    NQ: 1.0
+  grid_parameters:
+    WS:
+      N: 64
+      L: 24.0
+    T_prim:
+      N: 64
+      L: 24.0
+    output:
+      N: 320
+      L: 160.0
+  output_settings:
+    safe_padding_factor: 4
+    p_limit_q: 0.2
+    target_size_q: 425
+    b_slope_incoh: 4.0
+  incoherent_quadrature:
+    r_max: 44.0
+    n_r: 256
+    n_phi: 512
+study:
+  longitudinal_units: physical
+  fixed_b_fm: 12.0
+  b_min_fm: 12.0
+  b_max_fm: 60.0
+  ymax: 1.0
+  n_y: 5
+  y_quadrature: gauss_legendre
+  sample: diagnostic_hard_b_window_no_neutron_tag
+  survival_probability: unity_inside_registered_b_window
+  reference_axis: parallel_to_lepton_relative_transverse_momentum
+  qmax: 0.17
+  q0: 0.02
+  n_radial: 757
+  n_phi: 256
+  b_step_fm: 0.5
+  b_nodes: 97
+  y_batch_size: 1
+  cases:
+  - name: spherical
+    label: Spherical
+    beta2: 0.0
+    beta3: 0.0
+    skin_fm: 0.0
+    role: baseline
+  - name: beta2
+    label: Quadrupole deformation
+    beta2: 0.3
+    beta3: 0.0
+    skin_fm: 0.0
+    role: exploration
+  - name: beta3
+    label: Octupole deformation
+    beta2: 0.0
+    beta3: 0.2
+    skin_fm: 0.0
+    role: exploration
+  - name: skin
+    label: Neutron skin
+    beta2: 0.0
+    beta3: 0.0
+    skin_fm: 0.2
+    role: exploration
+orientations:
+  n_orientations: 64
+  block_size: 32
+  seed: 2026101000
+  import_bank: ../assets/panel_d_orientation_prefix512.npz
+  import_sha256: fce638c6e6cd51509c4e295c4b912f5e7d29ca8dbad3e4406a30ecfcb37ccd36
+runtime:
+  device: cuda
+  dtype: float64
+  batch_size: 1
+  threads: 1
+  fft_mode: combined
+  output: outputs/panel_d_precision/pilots_n64/baseline
+analysis:
+  q_points: 341
+  angular_points: 720
+  diagnostic_edges_GeV:
+  - 0.03
+  - 0.08
+  - 0.13
+  - 0.17
+  fixed_pT_GeV:
+  - 0.05
+  - 0.1
+  - 0.13
+  - 0.15
+  - 0.17
+  uncertainty_scope: orientation Monte Carlo only; inspect b/y/grid convergence separately

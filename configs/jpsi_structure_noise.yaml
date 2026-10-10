@@ -1,0 +1,69 @@
+physics:
+  collision_parameters:
+    b: 20.0
+    y: 0.0
+    gamma: 106.578902493
+  nuclear_parameters:
+    density_model: woods_saxon
+    Z: 40
+    A: 96
+    N: 56
+    R_ws_p: 5.02
+    R_ws_n: 5.02
+    d_ws_p: 0.46
+    d_ws_n: 0.46
+    beta2: 0.0
+    beta3: 0.0
+  physical_constants:
+    hbar_c: 0.197
+    Mjpsi: 3.097
+    alpha: 0.0073
+    mass_proton: 0.938272
+  incoherent_parameters:
+    bv_Jpsi: 4.0
+    vmphotoncoupling_Jpsi: 0.0237
+    NQ: 1.0
+  grid_parameters:
+    WS:
+      N: 64
+      L: 24.0
+    T_prim:
+      N: 64
+      L: 24.0
+    output:
+      N: 320
+      L: 160.0
+  output_settings:
+    safe_padding_factor: 4
+    p_limit_q: 0.2
+    target_size_q: 425
+    b_slope_incoh: 4.0
+  incoherent_quadrature:
+    r_max: 44.0
+    n_r: 256
+    n_phi: 512
+comparison:
+  longitudinal_units: physical
+  y: 0.0
+  fixed_b_fm: 20.0
+  b_min_fm: 20.0
+  b_max_fm: 60.0
+  b_nodes: 41
+  n_radial: 757
+  n_phi: 512
+  normalization_radius_GeV: 0.17
+  n_orientations: 64
+  orientation_chunk: 2
+  b_chunk: 3
+  seed: 20260928
+  threads: 4
+  device: cpu
+  timeout_seconds: 2400
+  ratio_floor_fraction: 0.001
+structure_study:
+  deformed_beta2: 0.3
+  deformed_beta3: 0.2
+  skin_type: skin
+  skin_rms_fm: 0.2
+  normalization: unit_yield_in_common_q_disk
+  incoherent: source_empirical_yield_isotropic_in_decay_axis

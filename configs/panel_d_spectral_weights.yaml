@@ -1,0 +1,8 @@
+source: outputs/jpsi_observables_revision/b12_20261007
+output: outputs/panel_d_spectral_weights/b12_original32_20261009
+cases: [spherical, beta2_mid, beta2, beta3_mid, beta3, skin_mid, skin]
+edges_GeV: [0.03, 0.08, 0.13, 0.17]
+stage: decay_by
+branch: full
+normalization: selected_window
+boundary_policy: illustrative_common_bins_not_optimized

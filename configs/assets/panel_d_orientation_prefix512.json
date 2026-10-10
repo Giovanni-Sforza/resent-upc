@@ -1,0 +1,9 @@
+{
+  "description": "Original 512 independent paired nuclear orientations, copied without changing the archived matrices. This contains rotations only, not cached forward results.",
+  "source": "outputs/panel_d_c2_convergence/b12_512_czt_20261010/orientation_banks.npz",
+  "sha256": "fce638c6e6cd51509c4e295c4b912f5e7d29ca8dbad3e4406a30ecfcb37ccd36",
+  "count_per_nucleus": 512,
+  "keys": ["rotation_bank_1", "rotation_bank_2", "new_block_seeds"],
+  "precision": "Archived float32 rotation values are retained exactly when promoted to float64. Both nuclei have independent draws; deformation cases share the same bank.",
+  "reuse": "Recompute every orientation at the new precision and quadrature. Do not append old coarse-grid intensities into a refined-grid mean."
+}

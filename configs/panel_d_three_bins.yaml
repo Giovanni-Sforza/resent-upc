@@ -1,0 +1,8 @@
+source: outputs/jpsi_observables_revision/b12_20261007
+decomposition: outputs/panel_d_ratio_decomposition/b12_original32_20261009/decomposition.npz
+output: outputs/panel_d_three_bins/b12_original32_skin_boundaries_20261009
+cases: [spherical, beta2, beta3, skin]
+qmax: 0.17
+root_search_min: 0.01
+boundary_source: skin_minus_spherical_conditional_C2_zero_crossings
+primary_estimator: direct_cartesian_pixel_intensity_weighted_C2

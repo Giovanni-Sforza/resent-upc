@@ -1,0 +1,10 @@
+source: outputs/jpsi_observables_revision/b12_20261007
+output: outputs/panel_d_ratio_decomposition/b12_original32_20261009
+cases: [spherical, beta2, beta3, skin]
+qmax: 0.17
+n_radii: 341
+n_angles: 720
+floor_fraction: 0.001
+stage: decay_by
+branch: full
+input_scope: same_original_32_orientation_structure_ratio_figure

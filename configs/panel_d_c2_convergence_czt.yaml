@@ -1,0 +1,16 @@
+source: outputs/jpsi_observables_revision/b12_20261007
+extension: outputs/jpsi_angular_revision/b12_20261008/orientation_extension
+original_curves: outputs/panel_d_c2_curves/b12_original32_20261009/curves.npz
+output: outputs/panel_d_c2_convergence/b12_512_czt_20261010
+dense_checkpoint_source: outputs/panel_d_c2_convergence/b12_512_20261010
+n_orientations: 512
+new_block_size: 32
+new_block_seeds: [20261030, 20261040, 20261050, 20261060, 20261070, 20261080, 20261090, 20261100, 20261110, 20261120, 20261130, 20261140, 20261150, 20261160]
+cases: [beta2, beta3]
+workers: 2
+threads_per_worker: 2
+fft_mode: combined
+prefix_counts: [32, 64, 128, 256, 512]
+q_points: 341
+angular_points: 720
+diagnostic_edges_GeV: [0.03, 0.08, 0.13, 0.17]

@@ -10,3 +10,6 @@ data_O16
 AI_physicist
 *.npg
 *.pdf
+/outputs/
+.pytest_cache/
+__pycache__/

@@ -1,0 +1,21 @@
+source: outputs/jpsi_observables_revision/b12_20261007
+orientation_extension: outputs/jpsi_angular_revision/b12_20261008/orientation_extension
+study:
+  angular_bins_gev: [[0.03, 0.06], [0.06, 0.10], [0.10, 0.14], [0.14, 0.17]]
+  qmax: 0.17
+  curve_points: 251
+  curve_qmin: 0.005
+  response_events: 1000000
+  truth_anchored_response: true
+  response_seed: 20261008
+  fractional_resolutions: [0.0, 0.005, 0.01]
+  include_angular_toy: true
+  angular_toy_sigma_rad: 0.001
+  angular_toy_fractional_sigma: 0.005
+  mass_gev: 3.097
+  fixed_b_fm: 12.0
+  b_min_fm: 12.0
+  b_max_fm: 60.0
+  ymax: 1.0
+  definitions_status: exploration_following_discussion_not_blind_validation
+  response_scope: uncalibrated_track_toy_no_acceptance_no_material_effects
