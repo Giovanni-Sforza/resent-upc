@@ -13,3 +13,5 @@ AI_physicist
 /outputs/
 .pytest_cache/
 __pycache__/
+*.gz.sha*
+*.tar.gz
