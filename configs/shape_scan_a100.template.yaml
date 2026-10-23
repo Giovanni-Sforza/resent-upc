@@ -1,0 +1,102 @@
+# TEMPLATE: scan values await the author's numerical grid and density table.
+# Copy to shape_scan_a100.yaml, then fill all three scan lists before running.
+# Empty lists deliberately fail validation. These are NOT inferred paper grids.
+# Retains the existing production quadrature and precision as a starting point.
+# Every variant requires an id, type (none/skin/halo), mode and explicit R_p/a_p.
+# direct_ws: additionally R_n/a_n; rms_matched: instead delta_r_np_fm.
+# none requires R_n=R_p, a_n=a_p or delta=0. Three none variants need three
+# explicitly chosen common R/a sets; no independent skin-strength axis exists.
+# The physics nuclear R/a below are legacy defaults, overridden by every variant.
+physics:
+  collision_parameters:
+    b: 12.0
+    y: 0.0
+    gamma: 106.578902493
+  nuclear_parameters:
+    density_model: woods_saxon
+    Z: 40
+    A: 96
+    N: 56
+    R_ws_p: 5.02
+    R_ws_n: 5.02
+    d_ws_p: 0.46
+    d_ws_n: 0.46
+    beta2: 0.0
+    beta3: 0.0
+  physical_constants:
+    hbar_c: 0.197
+    Mjpsi: 3.097
+    alpha: 0.0073
+    mass_proton: 0.938272
+  incoherent_parameters:
+    bv_Jpsi: 4.0
+    vmphotoncoupling_Jpsi: 0.0237
+    NQ: 1.0
+  grid_parameters:
+    WS:
+      N: 64
+      L: 24.0
+    T_prim:
+      N: 64
+      L: 24.0
+    output:
+      N: 320
+      L: 160.0
+  output_settings:
+    safe_padding_factor: 4
+    p_limit_q: 0.2
+    target_size_q: 425
+    b_slope_incoh: 4.0
+  incoherent_quadrature:
+    r_max: 44.0
+    n_r: 256
+    n_phi: 512
+study:
+  longitudinal_units: physical
+  fixed_b_fm: 12.0
+  b_min_fm: 12.0
+  b_max_fm: 60.0
+  ymax: 1.0
+  n_y: 5
+  y_quadrature: gauss_legendre
+  sample: diagnostic_hard_b_window_no_neutron_tag
+  survival_probability: unity_inside_registered_b_window
+  reference_axis: parallel_to_lepton_relative_transverse_momentum
+  qmax: 0.17
+  q0: 0.02
+  n_radial: 757
+  n_phi: 256
+  b_step_fm: 0.5
+  b_nodes: 97
+  y_batch_size: 1
+orientations:
+  n_orientations: 32768
+  block_size: 32
+  seed: 2026101000
+  import_bank: assets/panel_d_orientation_prefix512.npz
+  import_sha256: fce638c6e6cd51509c4e295c4b912f5e7d29ca8dbad3e4406a30ecfcb37ccd36
+runtime:
+  device: cuda
+  dtype: float64
+  batch_size: 8
+  threads: 1
+  fft_mode: separate
+  output: outputs/shape_scan/a100_paper_grid
+  checkpoint_size: 128
+analysis:
+  bootstrap_draws: 1024
+  bootstrap_seed: 20261024
+  bootstrap_block_size: 32
+  bootstrap_batch_size: 32
+  prefixes:
+  - 32
+  - 128
+  - 512
+  - 2048
+  - 8192
+  - 32768
+  uncertainty_scope: orientation MC only; not detector/event/model uncertainty
+scan:
+  beta2_values: []
+  beta3_values: []
+  density_variants: []

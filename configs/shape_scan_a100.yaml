@@ -1,0 +1,135 @@
+# Registered 300-point scan selected by the author on 2026-10-24.
+# beta2 = numpy.linspace(0.0, 0.3, 10); beta3 = numpy.linspace(0.0, 0.2, 10).
+# Float64 nodes below are round-trip values, not two-decimal plot labels.
+# This is the newly selected grid, not a verified reconstruction of the old paper grid.
+# Three representative density families: one none, one skin, one halo, not three strengths each.
+# R_p=5.02 fm and a_p=0.46 fm retain the declared diagnostic baseline.
+# These representatives are our explicit scan choices, NOT the original manuscript WS table.
+# Skin and halo have the same origin-based neutron-minus-proton RMS radius (0.2 fm),
+# solved separately at every deformation; no centering or volume-radius correction is added.
+# Proton/neutron deformation and orientation are shared; each density is normalized to Z/N.
+# Existing production quadrature and float64 precision are retained from the template.
+# Start with 2048 orientation pairs; retain this output directory when extending to 32768.
+# The n2048 text in the directory name records the first-round target, not a fixed ceiling.
+# Analysis prefixes beyond the active target remain registered for later extension.
+# The physics nuclear R/a below are defaults, overridden by every density variant.
+physics:
+  collision_parameters:
+    b: 12.0
+    y: 0.0
+    gamma: 106.578902493
+  nuclear_parameters:
+    density_model: woods_saxon
+    Z: 40
+    A: 96
+    N: 56
+    R_ws_p: 5.02
+    R_ws_n: 5.02
+    d_ws_p: 0.46
+    d_ws_n: 0.46
+    beta2: 0.0
+    beta3: 0.0
+  physical_constants:
+    hbar_c: 0.197
+    Mjpsi: 3.097
+    alpha: 0.0073
+    mass_proton: 0.938272
+  incoherent_parameters:
+    bv_Jpsi: 4.0
+    vmphotoncoupling_Jpsi: 0.0237
+    NQ: 1.0
+  grid_parameters:
+    WS:
+      N: 64
+      L: 24.0
+    T_prim:
+      N: 64
+      L: 24.0
+    output:
+      N: 320
+      L: 160.0
+  output_settings:
+    safe_padding_factor: 4
+    p_limit_q: 0.2
+    target_size_q: 425
+    b_slope_incoh: 4.0
+  incoherent_quadrature:
+    r_max: 44.0
+    n_r: 256
+    n_phi: 512
+study:
+  longitudinal_units: physical
+  fixed_b_fm: 12.0
+  b_min_fm: 12.0
+  b_max_fm: 60.0
+  ymax: 1.0
+  n_y: 5
+  y_quadrature: gauss_legendre
+  sample: diagnostic_hard_b_window_no_neutron_tag
+  survival_probability: unity_inside_registered_b_window
+  reference_axis: parallel_to_lepton_relative_transverse_momentum
+  qmax: 0.17
+  q0: 0.02
+  n_radial: 757
+  n_phi: 256
+  b_step_fm: 0.5
+  b_nodes: 97
+  y_batch_size: 1
+orientations:
+  n_orientations: 2048
+  block_size: 32
+  seed: 2026101000
+  import_bank: assets/panel_d_orientation_prefix512.npz
+  import_sha256: fce638c6e6cd51509c4e295c4b912f5e7d29ca8dbad3e4406a30ecfcb37ccd36
+runtime:
+  device: cuda
+  dtype: float64
+  batch_size: 8
+  threads: 1
+  fft_mode: separate
+  output: outputs/shape_scan/a100_grid300_n2048_extendable
+  checkpoint_size: 128
+analysis:
+  bootstrap_draws: 1024
+  bootstrap_seed: 20261024
+  bootstrap_block_size: 32
+  bootstrap_batch_size: 32
+  prefixes:
+  - 32
+  - 128
+  - 512
+  - 2048
+  - 8192
+  - 32768
+  uncertainty_scope: orientation MC only; not detector/event/model uncertainty
+scan:
+  beta2_values: [0.0, 0.033333333333333333, 0.066666666666666666, 0.10000000000000001, 0.13333333333333333, 0.16666666666666666, 0.20000000000000001, 0.23333333333333334, 0.26666666666666666, 0.29999999999999999]
+  beta3_values: [0.0, 0.022222222222222223, 0.044444444444444446, 0.066666666666666666, 0.088888888888888892, 0.11111111111111112, 0.13333333333333333, 0.15555555555555556, 0.17777777777777778, 0.20000000000000001]
+  density_variants:
+  - id: none
+    type: none
+    mode: rms_matched
+    R_p: 5.02
+    a_p: 0.46
+    delta_r_np_fm: 0.0
+    label: None
+    source: Representative baseline selected for the 2026-10-24 scan; not a recovered manuscript WS table.
+    notes: Identical proton and neutron R/a; shared deformation and orientation.
+  - id: skin
+    type: skin
+    mode: rms_matched
+    R_p: 5.02
+    a_p: 0.46
+    delta_r_np_fm: 0.2
+    label: Skin
+    source: Legacy diagnostic delta-r-np 0.2 fm benchmark retained for the 2026-10-24 scan.
+    notes: At each deformation fix a_n=a_p and solve R_n for the origin-based RMS difference.
+  - id: halo
+    type: halo
+    mode: rms_matched
+    R_p: 5.02
+    a_p: 0.46
+    delta_r_np_fm: 0.2
+    label: Halo
+    source: Representative halo matched to the skin benchmark RMS difference; not a recovered manuscript WS table.
+    notes: At each deformation fix R_n=R_p and solve a_n for the origin-based RMS difference.
