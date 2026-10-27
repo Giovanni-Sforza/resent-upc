@@ -1,0 +1,53 @@
+{
+  "schema": "shape_scan_fast_additive_package_v1",
+  "date": "2026-10-27",
+  "install": "Extract at the original repository root. Only added files are included.",
+  "payload_sha256": {
+    "upc_deformation/shape_scan_czt.py": "20ab4be9a54d25abbac2b5db316b726c7664f6de4ba54117384eaac774a3d750",
+    "upc_deformation/shape_scan_fast_forward.py": "a2634ad3b2be8b3e18409a7878df7ce1988b8f42ce5f7b4f3e58a1fd92c56973",
+    "upc_deformation/shape_scan_fast_campaign.py": "7f53b63cf196df7ec5d8b959b1adb7b28fba595f4a2e61205411f862ee4a2c02",
+    "upc_deformation/shape_scan_fast_validation.py": "dd62dd50d4523f86afe72e8797651110eda508761a2237545308318e825bc42b",
+    "scripts/run_shape_scan_fast.py": "9fe5caa8add78f52c4439fbf115e8e91d2ceb50e9d6c648852d2e9fff9b75315",
+    "scripts/benchmark_shape_scan_fast.py": "d71af8cf426874c168e78d8846526694ad310584c2cf26f5cd88c38a2f33518d",
+    "tests/test_shape_scan_czt.py": "014ec342d44b2234ace9c91a22928109225a13846ff35955cb59c375c2529c91",
+    "tests/test_shape_scan_fast_forward.py": "32dd39307b30416432f5d6c3a0f3436fdbc3c342f3978b636c620bae3dd220ca",
+    "tests/test_shape_scan_fast_campaign.py": "46fb15b49dd6e73c4580b44f1da035ee6147cf1bf8afd4df5c14e9c86f39701f",
+    "tests/test_shape_scan_fast_validation.py": "76ce2e5171ced56c0f31e463117148121983cf77d3b4eef467327382d9f19067",
+    "docs/shape_scan_fast_a100_runbook.md": "e397d17aa60e0a16a17852cc9f442fdfde2866e2e22d16b74d8def4b58727ef5",
+    "docs/shape_scan_fast_validation_20261027.json": "d224a0275e21c484872cefe5ae85e2356e4ebfe687d6c170b504d00764ce8bcd"
+  },
+  "reference_source_sha256": {
+    "scripts/run_shape_scan.py": "e924ecc5f8d565502f45bc4efbd8aa5876294b45eb250fbc9449c5830ecd0c70",
+    "upc_deformation/shape_scan_campaign.py": "41c72a1f379a9421618891af590c3d7a0a6595f645e6396d5cb0b9a7f93ce54c",
+    "upc_deformation/shape_scan_physics.py": "b75f39d0dca2edb5cca9b69c17169e73c8ee0fad9d12954d7a4a5db3a94497a8",
+    "upc_deformation/diffraction_forward.py": "4b0db8270d9fd96752c1b67e1fca41b4e4cca309d0f8a858ae61a051ae2dce73",
+    "upc_deformation/precision_forward.py": "b7cc77b3784b72dc0243e14c0c78a3153cddd4e5dc3a61f9bc1e103ec8e4a575",
+    "upc_deformation/precision_campaign.py": "615f957a88d02cd99be99a89cd979af54141bdb3d14165a26083f926c5dec366",
+    "upc_deformation/observables.py": "3c5a90df3b5959a7f94650dde2679d98e82bdca4dfc2c52cdc952a0f6ce155c4",
+    "upc_deformation/forward.py": "279b88d00494ca7d96d33627bd516e94379ed5eb942d776dc092854378c8a353",
+    "upc_deformation/source_amplitudes.py": "37ed5cd9739cf98a628b24cb275d7489e2e0c8a32fb74c9d4b07ce4cfe0c6e9c",
+    "upc_deformation/decay.py": "a8bfd16e9fe6d091634ab98ca25289c60007c9efc029ddd802c1e9584854165c",
+    "upc_deformation/vendor/upc_forward.py": "01fb8e7fc3b25bd7a0915c5e74245d0af51d64d1b43d1a688b351291f7fc83b8"
+  },
+  "all_execution_source_sha256": {
+    "scripts/run_shape_scan.py": "e924ecc5f8d565502f45bc4efbd8aa5876294b45eb250fbc9449c5830ecd0c70",
+    "upc_deformation/shape_scan_campaign.py": "41c72a1f379a9421618891af590c3d7a0a6595f645e6396d5cb0b9a7f93ce54c",
+    "upc_deformation/shape_scan_physics.py": "b75f39d0dca2edb5cca9b69c17169e73c8ee0fad9d12954d7a4a5db3a94497a8",
+    "upc_deformation/diffraction_forward.py": "4b0db8270d9fd96752c1b67e1fca41b4e4cca309d0f8a858ae61a051ae2dce73",
+    "upc_deformation/precision_forward.py": "b7cc77b3784b72dc0243e14c0c78a3153cddd4e5dc3a61f9bc1e103ec8e4a575",
+    "upc_deformation/precision_campaign.py": "615f957a88d02cd99be99a89cd979af54141bdb3d14165a26083f926c5dec366",
+    "upc_deformation/observables.py": "3c5a90df3b5959a7f94650dde2679d98e82bdca4dfc2c52cdc952a0f6ce155c4",
+    "upc_deformation/forward.py": "279b88d00494ca7d96d33627bd516e94379ed5eb942d776dc092854378c8a353",
+    "upc_deformation/source_amplitudes.py": "37ed5cd9739cf98a628b24cb275d7489e2e0c8a32fb74c9d4b07ce4cfe0c6e9c",
+    "upc_deformation/decay.py": "a8bfd16e9fe6d091634ab98ca25289c60007c9efc029ddd802c1e9584854165c",
+    "upc_deformation/vendor/upc_forward.py": "01fb8e7fc3b25bd7a0915c5e74245d0af51d64d1b43d1a688b351291f7fc83b8",
+    "upc_deformation/shape_scan_fast_forward.py": "a2634ad3b2be8b3e18409a7878df7ce1988b8f42ce5f7b4f3e58a1fd92c56973",
+    "upc_deformation/shape_scan_fast_campaign.py": "7f53b63cf196df7ec5d8b959b1adb7b28fba595f4a2e61205411f862ee4a2c02",
+    "upc_deformation/shape_scan_fast_validation.py": "dd62dd50d4523f86afe72e8797651110eda508761a2237545308318e825bc42b",
+    "upc_deformation/shape_scan_czt.py": "20ab4be9a54d25abbac2b5db316b726c7664f6de4ba54117384eaac774a3d750",
+    "upc_deformation/shape_scan_analysis.py": "974963f00e19e22ed760c02e427aecf3632a4013757d4dd1ecb2448efdddd6ea",
+    "scripts/run_shape_scan_fast.py": "9fe5caa8add78f52c4439fbf115e8e91d2ceb50e9d6c648852d2e9fff9b75315",
+    "scripts/benchmark_shape_scan_fast.py": "d71af8cf426874c168e78d8846526694ad310584c2cf26f5cd88c38a2f33518d"
+  },
+  "validation_summary": "docs/shape_scan_fast_validation_20261027.json"
+}
