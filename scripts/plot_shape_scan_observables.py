@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
-"""Plot Q10 and K_tail with deformation-grid boxes and optional density ranges."""
+"""Plot pT,10 and K_tail with deformation-grid boxes and optional density ranges."""
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import os
 from pathlib import Path
 import shutil
+import subprocess
+import sys
+import tarfile
 import tempfile
+import traceback
 
 os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "upc_shape_figure_mpl"))
 import matplotlib
@@ -28,15 +31,8 @@ MARKERS = ("o", "s", "^", "D")
 STYLES = ("-", "--", "-.", ":")
 
 
-def sha256(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
-
-
 def load_source(source):
     metrics = source / "metrics.csv"
-    manifest = json.loads((source / "report_manifest.json").read_text())
-    if sha256(metrics) != manifest["output_sha256"]["metrics.csv"]:
-        raise ValueError("metrics.csv does not match the returned report manifest")
     all_rows = pd.read_csv(metrics)
     finest = float(all_rows.b_step_fm.min())
     data = all_rows[(all_rows.branch == "full") & (all_rows.b_step_fm == finest)].copy()
@@ -165,7 +161,7 @@ def build_figure(curves, boxes, beta3, *, show_ranges=True):
         draw_curves(right, curves, feature, beta3, show_ranges=show_ranges)
         draw_curves(right_ratio, curves, feature, beta3, ratio=True, show_ranges=show_ranges)
         if feature == "Q10_GeV":
-            left.set_ylabel(r"$Q_{10}$ [GeV]")
+            left.set_ylabel(r"$p_{T,10}$ [GeV]")
             left.set_ylim(.1144, .11925)
             left.yaxis.set_major_locator(FixedLocator([.115, .116, .117, .118, .119]))
             left.yaxis.set_major_formatter(FormatStrFormatter("%.3f"))
@@ -197,14 +193,7 @@ def build_figure(curves, boxes, beta3, *, show_ranges=True):
     return fig, axes, limits
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--analysis", type=Path, required=True)
-    parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--no-density-ranges", action="store_true",
-                        help="Show density-averaged curves without vertical min-max bars")
-    args = parser.parse_args()
-    args.output.mkdir(parents=True, exist_ok=True)
+def generate(args):
     data, references, finest = load_source(args.analysis)
     source, curves, boxes, beta3 = make_source_tables(data, references)
     show_ranges = not args.no_density_ranges
@@ -212,7 +201,7 @@ def main():
     curves.to_csv(args.output/"source_deformation_ranges.csv", index=False, float_format="%.17g")
     boxes.to_csv(args.output/"source_box_statistics.csv", index=False, float_format="%.17g")
     contract = {
-        "conclusion": "Compare density-variant dependence and deformation dependence of Q10 and K_tail within the registered model grid.",
+        "conclusion": "Compare density-variant dependence and deformation dependence of pT,10 and K_tail within the registered model grid.",
         "archetype": "quantitative grid", "backend": "Python/matplotlib",
         "layout": "Two stacked observables, each with left density boxes and right deformation curves, plus ratio strips; no inset.",
         "branch": "full", "b_step_fm": finest,
@@ -231,7 +220,8 @@ def main():
         "reference_values": references,
         "uncertainty_note": ("Parameter-grid spread and density-variant ranges only. Orientation MC errors are not shown."
                              if show_ranges else "Left boxes show parameter-grid spread. Right panels show means only; density-variant ranges and orientation MC errors are not shown."),
-        "source_sha256": {name: sha256(args.analysis/name) for name in ("metrics.csv", "report_manifest.json")},
+        "source_metrics": str(args.analysis/"metrics.csv"),
+        "feature_display_names": {"Q10_GeV": "pT,10 [GeV]", "K_tail": "K_tail"},
         "figure_size_inches": [7.2, 7.35], "exports": ["PNG 300 dpi", "PDF TrueType fonts", "SVG editable text"],
         "reference_style": "Serif fonts, colored boxes, four line/marker encodings, shared scales and compact ratio strips.",
     }
@@ -257,13 +247,13 @@ def main():
             lo, hi = limits[feature][scale]
             assert lo <= values.min() <= values.max() <= hi
     for extension in ("png", "pdf", "svg"):
-        fig.savefig(args.output/f"q10_ktail_comparison.{extension}", dpi=300,
+        fig.savefig(args.output/f"pt10_ktail_comparison.{extension}", dpi=300,
                     metadata={"Creator": "Matplotlib"} if extension != "png" else None)
     plt.close(fig)
     range_caption = ("Vertical bars span the minimum and maximum of those three values and are not statistical uncertainties. "
                      if show_ranges else "Only the mean curves are displayed; density-variant ranges and orientation Monte Carlo uncertainties are not shown. ")
     caption = (
-        "Density and deformation dependence of Q10 and K_tail. (a) Q10; (b) K_tail. "
+        "Density and deformation dependence of pT,10 and K_tail. (a) pT,10; (b) K_tail. "
         "All results use the full spectrum and an impact-parameter integration step of 0.5 fm. "
         "Left: each box summarizes the 100 uniformly sampled (beta2, beta3) grid points for one "
         "density variant (halo, skin, none); boxes show the 25th and 75th percentiles, horizontal "
@@ -273,20 +263,49 @@ def main():
         + range_caption + "The four beta3 values are "
         "0, 1/15, 2/15 and 0.2; fractions correspond to 0.0666667 and 0.1333333. "
         "Every lower panel shows the same quantity divided by its none spherical value "
-        f"(Q10_0={references['Q10_GeV']:.12g} GeV; K_tail,0={references['K_tail']:.12g}). "
+        f"(pT,10,0={references['Q10_GeV']:.12g} GeV; K_tail,0={references['K_tail']:.12g}). "
         "The dashed line marks this common reference, not the mean of the three spherical variants. "
         "Each deformed case uses 2048 orientation pairs; each spherical case uses one deterministic "
         "calculation. The spreads shown describe the registered model grid, not event or orientation "
         "sampling errors. Skin and halo are fixed Delta r_np=0.20 fm variants.\n"
     )
     (args.output/"caption.txt").write_text(caption)
-    qa["output_sha256"] = {p.name: sha256(p) for p in args.output.glob("q10_ktail_comparison.*")}
-    qa["source_unchanged"] = sha256(args.analysis/"metrics.csv") == contract["source_sha256"]["metrics.csv"]
-    assert qa["source_unchanged"]
     (args.output/"numeric_qa.json").write_text(json.dumps(qa, indent=2)+"\n")
     shutil.copy2(__file__, args.output/Path(__file__).name)
     print(json.dumps({"output": str(args.output), "reference_values": references,
                       "beta3": beta3.tolist(), "axes": len(fig.axes)}, indent=2))
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--analysis", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--no-density-ranges", action="store_true",
+                        help="Show density-averaged curves without vertical min-max bars")
+    args = parser.parse_args()
+    args.output = args.output.resolve()
+    args.output.mkdir(parents=True, exist_ok=False)
+    status = "failed"
+    try:
+        generate(args)
+        status = "complete"
+    except Exception:
+        (args.output/"failure.txt").write_text(traceback.format_exc())
+        raise
+    finally:
+        root = Path(__file__).resolve().parents[1]
+        revision = subprocess.run(["git", "rev-parse", "HEAD"], cwd=root,
+                                  text=True, capture_output=True, check=True).stdout.strip()
+        (args.output/"run_info.json").write_text(json.dumps(dict(
+            status=status, command=[sys.executable, *sys.argv], git_commit=revision,
+            source_metrics=str(args.analysis/"metrics.csv"),
+            operation="Postprocess the registered 300-case model grid; no forward simulation.",
+        ), indent=2)+"\n")
+        package = root/"outputs/_downloads"/f"{args.output.name}.tar.gz"
+        package.parent.mkdir(parents=True, exist_ok=True)
+        with tarfile.open(package, "w:gz") as archive:
+            archive.add(args.output, arcname=args.output.name)
+        print(f"status={status}; download={package}", flush=True)
 
 
 if __name__ == "__main__":

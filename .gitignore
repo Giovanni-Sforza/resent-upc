@@ -15,3 +15,5 @@ AI_physicist
 __pycache__/
 *.gz.sha*
 *.tar.gz
+*.tgz
+*.png

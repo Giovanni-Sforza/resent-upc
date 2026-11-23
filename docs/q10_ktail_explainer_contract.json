@@ -1,0 +1,23 @@
+{
+  "conclusion": "pT,10 is an outer equal-height momentum coordinate, and K_tail compares two finite-interval logarithmic slopes of the same integrated coherent spectrum; neither requires an exponential fit.",
+  "archetype": "quantitative grid",
+  "backend": "Python/matplotlib, following the existing shape-scan figure workflow",
+  "panels": {
+    "single": "Semilogarithmic peak-normalized yield versus pT squared; three outer peak-height crossings, two secants, and only symbolic pT,f squared and B labels."
+  },
+  "style": "Match the existing physics manuscript: serif text and STIX math, boxed axes, inward major/minor ticks on four sides, black spectrum, thin grey guides, restrained dashed/dash-dot secants. No title, prose, numerical parameter blocks, arrows, shaded bands, or explanatory legend. Conditions and definitions belong in the caption.",
+  "primary_reference": "The saved no-skin spherical full spectrum used for the current Fig. 8, b=12-60 fm, |y|<1, finest saved b step 0.5 fm.",
+  "separate_diagnostic": "The saved free-space-field no-skin spherical calculation, b=12-10000 fm, |y|<1; never substituted for the Fig. 8 reference.",
+  "spectrum": "dN/d(pT squared), proportional to the azimuth-averaged coherent intensity with no radial pT Jacobian; b/y integrated before peak normalization.",
+  "crossing_convention": "Saved-node peak and linear interpolation of the yield in pT on the same descending branch before the first upturn.",
+  "dimensions_mm": [89, 73],
+  "exports": ["PNG preview", "PDF with TrueType fonts", "SVG with editable text", "CSV source data", "JSON numerical diagnostics"],
+  "uncertainty": "Deterministic spherical reference. No orientation MC error; numerical quadrature, detector, event-count and model uncertainties are not represented.",
+  "review_risks": [
+    "pT,f labels denote percentages of peak height, not cumulative-yield quantiles.",
+    "Monotonic decrease in pT squared does not imply a single exponential in pT squared.",
+    "K_tail=1 means equal interval-averaged slopes and does not prove a globally exponential curve.",
+    "A decrease of K_tail alone need not imply a decrease of the absolute B_tail.",
+    "The baseline R=5.02 fm and a=0.46 fm matches Fig. 8's registered scan and is not the original manuscript Woods-Saxon table."
+  ]
+}

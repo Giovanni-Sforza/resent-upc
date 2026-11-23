@@ -1,0 +1,63 @@
+% Proposed replacement for the definitions in Section IV B.
+% The existing manuscript has not been edited. Insert the explanatory figure
+% between the construction below and the parameter-response results.
+The bright-region scale and dark-fringe filling in Fig.~\ref{fig:AD}
+motivate two observables of the one-dimensional coherent momentum spectrum.
+We average the coherent intensity over momentum azimuth and nuclear orientations.
+After integrating over impact parameter and rapidity, we normalize the yield to its peak:
+\begin{equation}
+\frac{dN/dp_T^2}{(dN/dp_T^2)_{\rm max}}
+=
+\frac{\displaystyle
+\int dy\int 2\pi b\,db\,
+\left\langle\frac{1}{2\pi}\int_0^{2\pi}d\phi\,
+I(p_T,\phi;b,y,\Omega_1,\Omega_2)\right\rangle_{\Omega_1,\Omega_2}
+}{\displaystyle
+\max_{p_T^2}\left[\int dy\int 2\pi b\,db\,
+\left\langle\frac{1}{2\pi}\int_0^{2\pi}d\phi\,
+I(p_T,\phi;b,y,\Omega_1,\Omega_2)\right\rangle_{\Omega_1,\Omega_2}\right]}.
+\label{eq:radial_spectrum}
+\end{equation}
+Here $b$ and $y$ denote the impact-parameter magnitude and meson rapidity,
+and $I$ includes the photon fields and two-source interference.
+The resulting yield is expressed per unit $p_T^2$.
+The spectrum $dN/dp_T$ contains an additional factor of $p_T$ and is therefore
+not used for the definitions below.
+
+To make the construction explicit, we normalize the integrated yield
+to its own maximum.
+Starting from the principal peak, we locate the first outward crossings
+of three fixed heights on the same descending branch, before any local minimum:
+\begin{equation}
+\left.\frac{dN}{dp_T^2}\right|_{p_T=p_{T,f}}
+=\frac{f}{100}\left(\frac{dN}{dp_T^2}\right)_{\max},
+\qquad f=50,10,1.
+\label{eq:radial_thresholds}
+\end{equation}
+Thus $p_{T,50}<p_{T,10}<p_{T,1}$ are momentum coordinates at 50\%, 10\%,
+and 1\% of the peak height, rather than cumulative-yield quantiles.
+The no-skin spherical reference in Fig.~\ref{fig:radial_construction}
+illustrates these three crossings.
+In particular, $p_{T,10}$ measures the momentum scale of the outer peak flank.
+
+We then compare the decline over the adjacent 50\%--10\% and
+10\%--1\% intervals. In terms of the natural logarithm of the peak-normalized yield,
+the magnitudes of the secant slopes against $p_T^2$ are
+\begin{equation}
+B_{\rm mid}=\frac{\ln 5}{p_{T,10}^2-p_{T,50}^2},\qquad
+B_{\rm tail}=\frac{\ln 10}{p_{T,1}^2-p_{T,10}^2},\qquad
+K_{\rm tail}=\frac{B_{\rm tail}}{B_{\rm mid}}.
+\label{eq:radial_tail_slopes}
+\end{equation}
+The same figure displays the two secants.
+At $K_{\rm tail}=1$, the two intervals have equal logarithmic slopes. The 10\%--1\% tail is flatter than the 50\%--10\% interval for $K_{\rm tail}<1$, and steeper for $K_{\rm tail}>1$. A uniform momentum rescaling changes $p_{T,10}$ by the same factor while leaving $K_{\rm tail}$ unchanged.
+
+
+% Keep the existing Fig. 8 response results after this construction.
+% Replace absolute "tail flattening" by "relative tail flattening" where
+% the claim is supported only by K_tail. The no-skin spherical example
+% illustrates the definitions; deformation sensitivity still comes from
+% the orientation-averaged parameter scan, not from this example alone.
+
+% Subsection closing paragraph agreed with the author.
+Together, $p_{T,10}$ and $K_{\rm tail}$ retain complementary sensitivity to neutron-density type and deformation after integration over impact parameter and rapidity. These results illustrate how interpreting the network's learned features can guide the construction of radial observables for probing nuclear structure.
