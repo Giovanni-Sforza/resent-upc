@@ -3,6 +3,7 @@ from copy import deepcopy
 
 import pytest
 
+from upc_deformation.fig9_skin_scan import resolve_spherical_profile
 from upc_deformation.observables import case_physics, deformed_ws_rms
 from upc_deformation.shape_scan_physics import build_cases, resolve_case
 
@@ -54,6 +55,20 @@ def test_rms_skin_matches_unchanged_legacy_point(beta2, beta3):
     assert info["R_ws_n_fm"] > info["R_ws_p_fm"]
     assert info["delta_r_np_fm"] == pytest.approx(.2, abs=2e-10)
     assert cfg == original and "skin_fm" not in case
+
+
+def test_fig9_mixed_profile_matches_skin_at_midpoint_diffuseness():
+    cfg = _config()
+    _, _, radius = resolve_spherical_profile(cfg, .2, "radius")
+    _, _, diffuse = resolve_spherical_profile(cfg, .2, "diffuseness")
+    resolved, case, mixed = resolve_spherical_profile(cfg, .2, "mixed")
+    physics, _ = case_physics(resolved, case)
+    nuc = physics["nuclear_parameters"]
+    assert nuc["d_ws_n"] == (radius["a_n_fm"] + diffuse["a_n_fm"]) / 2
+    assert diffuse["R_ws_n_fm"] < nuc["R_ws_n"] < radius["R_ws_n_fm"]
+    assert nuc["R_ws_n"] == pytest.approx(mixed["R_ws_n_fm"], abs=1e-12)
+    delta = deformed_ws_rms(nuc["R_ws_n"], nuc["d_ws_n"]) - deformed_ws_rms(nuc["R_ws_p"], nuc["d_ws_p"])
+    assert delta == pytest.approx(.2, rel=0, abs=2e-9)
 
 
 @pytest.mark.parametrize("beta2,beta3", [(0., 0.), (.3, .2), (-.3, .2)])

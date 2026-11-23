@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Plot the fixed-diffuseness skin scan and the no-skin deformation scan of Fig. 9."""
+"""Plot the equal-skin-thickness profile ranges and deformation estimates of Fig. 9."""
 import argparse
 import csv
 from pathlib import Path
@@ -13,6 +13,8 @@ import numpy as np
 
 
 FEATURES = ["Q10_GeV", "K_tail"]
+PROFILE_FIELDS = ("profile", "target_delta_r_np_fm", "delta_r_np_fm", "R_ws_p_fm", "R_ws_n_fm",
+                  "a_p_fm", "a_n_fm", "proton_rms_fm", "neutron_rms_fm", *FEATURES, "source")
 SKIN_GRID = np.arange(6) * 0.04
 BETA2_GRID = np.linspace(0, 0.30, 10)
 BETA3_CURVES = [
@@ -31,33 +33,64 @@ class Point(NamedTuple):
     Q10_GeV: float
     K_tail: float
     source: str
+    interval_kind: str
+    Q10_GeV_low: float
+    Q10_GeV_high: float
+    K_tail_low: float
+    K_tail_high: float
 
 
-def load_points(reference_file, new_file):
-    left, deformation = [], []
-    endpoints = {"none": 0.0, "skin": 0.20}
+def load_skin_profiles(existing_file, new_file):
+    grouped = {}
+    for path, source in ((existing_file, "existing_spherical_scan"), (new_file, "new_spherical_scan")):
+        with path.open(newline="") as stream:
+            for row in csv.DictReader(stream):
+                target = float(row["target_delta_r_np_fm"])
+                profile = row["profile"]
+                rows = grouped.setdefault(target, {})
+                if profile in rows:
+                    raise ValueError(f"Duplicate {profile} profile at {target} fm")
+                if abs(float(row["delta_r_np_fm"]) - target) > 2e-9:
+                    raise ValueError(f"Achieved RMS difference for {profile} differs from {target} fm")
+                row["source"] = row.get("source", source)
+                rows[profile] = row
+
+    if set(grouped) != set(SKIN_GRID):
+        raise ValueError(f"Expected six target skin thicknesses on {SKIN_GRID}")
+    left, profiles = [], []
+    for target in SKIN_GRID:
+        rows = grouped[target]
+        # All three prescriptions coincide with the one computed zero-skin sphere.
+        profile_names = ("radius",) if target == 0 else ("radius", "mixed", "diffuseness")
+        if set(rows) != set(profile_names):
+            raise ValueError(f"Expected {profile_names} for skin thickness {target} fm, got {tuple(rows)}")
+        central = rows["radius" if target == 0 else "mixed"]
+        bounds = []
+        for feature in FEATURES:
+            values = [float(rows[name][feature]) for name in profile_names]
+            if not np.isfinite(values).all():
+                raise ValueError(f"Undefined {feature} at {target} fm")
+            bounds.extend((min(values), max(values)))
+        left.append(Point("skin", target, 0.0, 0.0, float(central["Q10_GeV"]), float(central["K_tail"]),
+                          central["source"], "profile_range", *bounds))
+        profiles.extend(rows[name] for name in profile_names)
+    return left, profiles
+
+
+def load_points(reference_file, existing_file, new_file):
+    points, profiles = load_skin_profiles(existing_file, new_file)
+    deformation = []
     with reference_file.open(newline="") as stream:
         for row in csv.DictReader(stream):
-            if row["branch"] != "full" or float(row["b_step_fm"]) != 0.5:
+            if row["branch"] != "full" or float(row["b_step_fm"]) != 0.5 or row["density_id"] != "none":
                 continue
-            density = row["density_id"]
             beta2, beta3 = float(row["beta2"]), float(row["beta3"])
             q10, k_tail = float(row["Q10_GeV"]), float(row["K_tail"])
-            if density in endpoints and beta2 == beta3 == 0:
-                left.append(Point("skin", endpoints[density], beta2, beta3, q10, k_tail, "archived_grid"))
-            if density == "none":
-                deformation.append(Point("deformation", 0.0, beta2, beta3, q10, k_tail, "archived_grid"))
-    with new_file.open(newline="") as stream:
-        for row in csv.DictReader(stream):
-            left.append(Point("skin", float(row["delta_r_np_fm"]), 0.0, 0.0,
-                              float(row["Q10_GeV"]), float(row["K_tail"]), "new_spherical_scan"))
-    left.sort(key=lambda p: p.delta_r_np_fm)
-    if len(left) != len(SKIN_GRID) or not np.allclose(
-        [p.delta_r_np_fm for p in left], SKIN_GRID, atol=1e-8, rtol=0
-    ):
-        raise ValueError("Fig. 9 requires all six skin thicknesses, including the archived 0 and 0.20 fm endpoints")
-
-    points = list(left)
+            q_se, k_se = (float(row[f"{f}_orientation_se"]) for f in FEATURES)
+            if not np.isfinite([q10, k_tail, q_se, k_se]).all() or min(q_se, k_se) < 0:
+                raise ValueError(f"Invalid observable or orientation standard error for {row['case']}")
+            deformation.append(Point("deformation", 0.0, beta2, beta3, q10, k_tail, "archived_grid",
+                                     "orientation_1se", q10-q_se, q10+q_se, k_tail-k_se, k_tail+k_se))
     for beta3, *_ in BETA3_CURVES:
         curve = sorted((p for p in deformation if abs(p.beta3 - beta3) <= 1e-10), key=lambda p: p.beta2)
         if len(curve) != len(BETA2_GRID) or not np.allclose(
@@ -65,15 +98,21 @@ def load_points(reference_file, new_file):
         ):
             raise ValueError(f"Incomplete no-skin deformation curve for beta3={beta3}")
         points.extend(curve)
-    if not np.isfinite([(p.Q10_GeV, p.K_tail) for p in points]).all():
-        raise ValueError("A plotted crossing or tail-slope ratio is undefined")
-    return points
+    return points, profiles
 
 
-def draw_curve(main, ratio, x, values, baseline, **style):
+def draw_curve(main, ratio, x, points, feature, baseline, **style):
+    values = np.array([getattr(p, feature) for p in points])
+    low = np.array([getattr(p, f"{feature}_low") for p in points])
+    high = np.array([getattr(p, f"{feature}_high") for p in points])
+    errors = np.stack((values - low, high - values))
+    nonzero = high > low
     line = dict(linewidth=1.2, markeredgecolor="#222222", markeredgewidth=0.35, zorder=4, **style)
-    main.plot(x, values, markersize=4.5, **line)
-    ratio.plot(x, np.asarray(values) / baseline, markersize=3.6, **line)
+    for ax, scale, marker_size in ((main, 1.0, 4.5), (ratio, baseline, 3.6)):
+        ax.errorbar(np.asarray(x)[nonzero], values[nonzero] / scale, yerr=errors[:, nonzero] / scale,
+                    fmt="none", ecolor=style["color"],
+                    elinewidth=0.8, capsize=2.4, capthick=0.8, zorder=3)
+        ax.plot(x, values / scale, markersize=marker_size, **line)
 
 
 def build_figure(points, sphere):
@@ -97,12 +136,11 @@ def build_figure(points, sphere):
         deformation_ratio = fig.add_subplot(grid[1, 1], sharex=deformation, sharey=skin_ratio)
 
         baseline = getattr(sphere, feature)
-        draw_curve(skin, skin_ratio, [p.delta_r_np_fm for p in left], [getattr(p, feature) for p in left],
+        draw_curve(skin, skin_ratio, [p.delta_r_np_fm for p in left], left, feature,
                    baseline, color="#BD7150", marker="o", markerfacecolor="#E99572")
         for beta3, label, color, marker, style in BETA3_CURVES:
             curve = [p for p in right if abs(p.beta3 - beta3) <= 1e-10]
-            draw_curve(deformation, deformation_ratio, [p.beta2 for p in curve],
-                       [getattr(p, feature) for p in curve], baseline,
+            draw_curve(deformation, deformation_ratio, [p.beta2 for p in curve], curve, feature, baseline,
                        label=label, color=color, marker=marker, linestyle=style)
 
         for ax in (skin, deformation, skin_ratio, deformation_ratio):
@@ -123,6 +161,10 @@ def build_figure(points, sphere):
         skin_ratio.set_ylabel("Ratio")
         skin_ratio.yaxis.set_major_formatter(FormatStrFormatter("%.2f"))
         if feature == "Q10_GeV":
+            skin.text(0.04, 0.94, "Mixed profile\nRange across three profiles", transform=skin.transAxes,
+                      va="top", fontsize=8.5)
+            deformation.text(0.04, 0.94, r"Orientation sampling $\pm 1$ SE", transform=deformation.transAxes,
+                             va="top", fontsize=8.5)
             skin.set_ylabel(r"$p_{T,10}$ [GeV]")
             skin.set_yticks([0.115, 0.116, 0.117, 0.118, 0.119])
             # Allow room above the no-skin curves for the two-row legend.
@@ -148,18 +190,26 @@ def build_figure(points, sphere):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--reference", type=Path, required=True, help="Archived Fig. 9 source-grid rows")
-    parser.add_argument("--new-points", type=Path, required=True, help="Four new spherical skin spectra summarized as CSV")
+    parser.add_argument("--reference", type=Path, required=True, help="No-skin deformation grid with orientation SE")
+    parser.add_argument("--existing-skin", type=Path, required=True, help="Seven reusable spherical profiles")
+    parser.add_argument("--new-points", type=Path, required=True, help="Nine new diffuseness and mixed profiles")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    points = load_points(args.reference, args.new_points)
+    points, profiles = load_points(args.reference, args.existing_skin, args.new_points)
     sphere = next(p for p in points if p.panel_column == "skin" and p.delta_r_np_fm == 0)
     args.output.mkdir(parents=True, exist_ok=True)
     with (args.output / "fig9_plot_data.csv").open("w", newline="") as stream:
         writer = csv.writer(stream, lineterminator="\n")
-        writer.writerow((*Point._fields, "Q10_GeV_ratio", "K_tail_ratio"))
+        writer.writerow((*Point._fields, "Q10_GeV_ratio", "K_tail_ratio",
+                         "Q10_GeV_ratio_low", "Q10_GeV_ratio_high", "K_tail_ratio_low", "K_tail_ratio_high"))
         for point in points:
-            writer.writerow((*point, point.Q10_GeV / sphere.Q10_GeV, point.K_tail / sphere.K_tail))
+            writer.writerow((*point, point.Q10_GeV / sphere.Q10_GeV, point.K_tail / sphere.K_tail,
+                             point.Q10_GeV_low / sphere.Q10_GeV, point.Q10_GeV_high / sphere.Q10_GeV,
+                             point.K_tail_low / sphere.K_tail, point.K_tail_high / sphere.K_tail))
+    with (args.output / "fig9_skin_profiles.csv").open("w", newline="") as stream:
+        writer = csv.writer(stream, lineterminator="\n")
+        writer.writerow(PROFILE_FIELDS)
+        writer.writerows([row[field] for field in PROFILE_FIELDS] for row in profiles)
     fig = build_figure(points, sphere)
     for extension in ("pdf", "svg", "png"):
         fig.savefig(args.output / f"fig9_skin_deformation.{extension}", dpi=300)
